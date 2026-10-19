@@ -1,0 +1,88 @@
+<article
+    class="feature-card relative "
+    [ngClass]="classes()">
+
+    <!-- ===========================================
+         STEP NUMBER
+    ============================================ -->
+
+    @if(step()){
+
+        <div class="feature-card__step">
+
+            {{ step() }}
+
+        </div>
+
+    }
+
+    <!-- ===========================================
+         ICON
+    ============================================ -->
+
+    @if(icon()){
+
+        <div class="feature-card__icon flex-center">
+
+            <i
+                class="ic-base bg-cover"
+                [class]="'ic-' + icon()">
+            </i>
+
+        </div>
+
+    }
+
+    <!-- ===========================================
+         LEADING
+    ============================================ -->
+
+    @else if(leading()){
+
+        <div
+            class="feature-card__leading"
+            [innerHTML]="leading()">
+
+        </div>
+
+    }
+
+    <!-- ===========================================
+         TITLE
+    ============================================ -->
+
+    <div class="feature-card__title">
+
+        {{ title() }}
+
+    </div>
+
+    <!-- ===========================================
+         DESCRIPTION
+    ============================================ -->
+
+    @if(description()){
+
+        <div class="feature-card__description">
+
+            {{ description() }}
+
+        </div>
+
+    }
+
+    <!-- ===========================================
+         ARROW
+    ============================================ -->
+
+    @if(arrow()){
+
+        <div class="feature-card__arrow">
+
+            <i class="ic-base bg-cover ic-s18 ic-arrow-right bg-cover"></i>
+
+        </div>
+
+    }
+
+</article>

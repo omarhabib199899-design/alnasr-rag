@@ -1,0 +1,11 @@
+<div class="why-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
+    <!-- Iterate through the collection of features -->
+    @for(item of items(); track item.title){
+        <app-feature-card
+            size="sm"
+            className="flex items-center gap-14 card main-card radius-lg p-16"
+            [icon]="item.icon"
+            [title]="item.title">
+        </app-feature-card>
+    }
+</div>

@@ -1,0 +1,203 @@
+@use '../../../../../styles/abstract/variables' as *;
+@use '../../../../../styles/abstract/mixins' as *;
+
+
+/* ===========================================
+   LARGE
+=========================================== */
+
+.info-card--lg{
+    /* ===========================================
+    LEADING
+    =========================================== */
+    .info-card__icon{
+        @include radius(map-get($radius,'lg'));
+        @include spacing(p, 10);
+        i{
+            width: 22px;
+            height: 22px;
+        }
+    }
+    /* ===========================================
+    TITLE
+    =========================================== */
+    .info-card__title{
+        font-size: map-get($font-sizes,'16');
+        font-weight: map-get($font-weights,'bold');
+    }
+
+    // Badge styling with uppercase transformation and spacing
+    .info-card__badge{
+        font-size: map-get($font-sizes,'12');
+        font-weight: map-get($font-weights,'medium');
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        line-height: 1;
+    }
+
+
+    .info-card__leading{
+        border-radius: map-get($radius,'lg');
+        font-size: map-get($font-sizes,'16');
+        font-weight: map-get($font-weights,'bold');
+        @include spacing(px, 18);
+        @include spacing(py, 10);
+
+    }
+
+    .info-card__description {
+        font-size: map-get($font-sizes,'14');
+        font-weight: map-get($font-weights,'medium');
+    }
+
+
+}
+
+/* ===========================================
+   LARGE IN MOBILE
+=========================================== */
+// Responsive adjustments for small screens
+@include respond-to('sm', 'down') {
+
+    .info-card--lg {
+        .info-card__title {
+            font-size: map-get($font-sizes,'14');
+        }
+        .info-card__badge{
+            font-size: map-get($font-sizes,'10');
+        }
+        .info-card__leading{
+            border-radius: map-get($radius,'lg');
+            font-size: map-get($font-sizes,'14');
+            @include spacing(px, 16);
+            @include spacing(py, 8);
+
+        }
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================================
+   DEFAULT
+=========================================== */
+
+.info-card--default {
+    /* ===========================================
+    ICON
+    =========================================== */
+    .info-card__icon{
+
+        background-color: var(--primary);
+        i{
+            color: var(--surface);
+        }
+    }
+
+    .info-card__leading {
+        color: var(--surface);
+        background-color: var(--primary);
+    }
+
+    .info-card__title {
+
+        color: var(--foreground);
+
+    }
+
+    .info-card__badge{
+        color: var(--muted-foreground);
+    }
+
+
+
+    .info-card__description {
+
+        color: var(--muted);
+
+    }
+}
+
+
+
+
+/* ===========================================
+   WARNING
+=========================================== */
+
+.info-card--warning {
+    /* ===========================================
+    ICON
+    =========================================== */
+    .info-card__icon{
+
+        background-color: var(--accent);
+        i{
+            color: var(--accent-foreground);
+        }
+    }
+    .info-card__leading {
+        color: var(--surface);
+        background-color: var(--primary);
+    }
+
+    .info-card__title {
+
+        color: var(--foreground);
+
+    }
+
+    .info-card__badge{
+        color: var(--muted-foreground);
+    }
+
+
+
+    .info-card__description {
+
+        color: var(--muted);
+
+    }
+}
+
+
+
+
+
+
+
+/* ===========================================
+   ARROW
+=========================================== */
+
+// Positioning and hover transition for the arrow indicator
+.info-card__arrow{
+
+    position: absolute;
+    top: 50%;
+    @include spacing(p, 4);
+    @include radius(map-get($radius,'rounded'));
+    @include flex-center;
+    right: 20px;
+    transform: translateY(-50%);
+    color: var(--muted-foreground);
+    z-index: 5;
+    transition: .25s;
+
+}
+
+// Hover effect: animate arrow and change color
+.info-card:hover{
+    .info-card__arrow{
+        transform:translateY(-6px);
+        color: var(--primary);
+    }
+}

@@ -1,0 +1,167 @@
+@use '../abstract/variables' as *;
+
+/* ==========================================================
+   COLOR UTILITIES
+   ----------------------------------------------------------
+   Generates utility classes from the Design System tokens.
+   Supports Light/Dark themes automatically through CSS Variables.
+========================================================== */
+
+/* ==========================================================
+   THEME COLOR MAP
+========================================================== */
+
+$theme-colors: (
+
+  /* ========================================================
+     Brand
+  ======================================================== */
+
+  "primary": var(--primary),
+  "primary-surface": var(--primary-surface),
+  "primary-hover": var(--primary-hover),
+  "primary-soft": var(--primary-soft),
+  "primary-foreground": var(--primary-foreground),
+
+  "accent": var(--accent),
+  "accent-hover": var(--accent-hover),
+  "accent-foreground": var(--accent-foreground),
+
+  /* ========================================================
+     Surfaces
+  ======================================================== */
+
+  "background": var(--background),
+  "foreground": var(--foreground),
+
+  "surface": var(--surface),
+  "surface-2": var(--surface-2),
+
+  "card": var(--card),
+  "card-foreground": var(--card-foreground),
+
+  "popover": var(--popover),
+  "popover-foreground": var(--popover-foreground),
+
+  /* ========================================================
+     UI
+  ======================================================== */
+
+  "secondary": var(--secondary),
+  "secondary-foreground": var(--secondary-foreground),
+
+  "muted": var(--muted),
+  "muted-foreground": var(--muted-foreground),
+
+  "border": var(--border),
+  "input": var(--input),
+  "ring": var(--ring),
+
+  /* ========================================================
+     Status
+  ======================================================== */
+
+  "success": var(--success),
+  "warning": var(--warning),
+  "danger": var(--danger),
+  "info": var(--info),
+
+  /* ========================================================
+     Static
+  ======================================================== */
+
+  "white": $white,
+  "black": $black,
+
+  /* ========================================================
+     Gray Palette
+  ======================================================== */
+
+  "gray-50": $gray-50,
+  "gray-100": $gray-100,
+  "gray-200": $gray-200,
+  "gray-300": $gray-300,
+  "gray-400": $gray-400,
+  "gray-500": $gray-500,
+  "gray-600": $gray-600,
+  "gray-700": $gray-700,
+  "gray-800": $gray-800,
+  "gray-900": $gray-900,
+
+);
+
+/* ==========================================================
+   GENERATOR
+========================================================== */
+
+
+
+
+
+
+
+
+
+
+
+
+@mixin generate-color-utilities($prefix, $property) {
+
+  @each $name, $value in $theme-colors {
+
+    .#{$prefix}-#{$name} {
+
+      #{$property}: $value !important;
+
+    }
+
+  }
+
+}
+
+/* ==========================================================
+   BACKGROUND
+========================================================== */
+
+@include generate-color-utilities(bg, background-color);
+
+/* ==========================================================
+   TEXT
+========================================================== */
+
+@include generate-color-utilities(text, color);
+
+/* ==========================================================
+   BORDER
+========================================================== */
+
+@include generate-color-utilities(border, border-color);
+
+/* ==========================================================
+   SVG FILL
+========================================================== */
+
+@include generate-color-utilities(fill, fill);
+
+/* ==========================================================
+   SVG STROKE
+========================================================== */
+
+@include generate-color-utilities(stroke, stroke);
+
+/**
+ * Utility Class Generator:
+ * Iterates through the color map to generate helper classes 
+ * for background and text colors (e.g., .bg-primary, .text-muted).
+ */
+@each $name, $value in $theme-colors {
+    // Background Utility: Forces application via !important for layout consistency
+    .bg-#{$name} { 
+      background-color: $value !important; 
+    }
+
+    // Text Utility: Ensures typography colors align with the design system
+    .text-#{$name} { 
+      color: $value !important; 
+    }
+}

@@ -1,0 +1,2249 @@
+// ==========================================================
+// Bundled component-level styles (from the ported Angular design)
+// ==========================================================
+
+@use 'abstract/variables' as *;
+@use 'abstract/mixins' as *;
+
+/* ---- features/public/components/home/homeComponent/home.component.scss ---- */
+
+/* ---- features/public/components/home/sections/aboutSection/aboutComponent/about-section.component.scss ---- */
+
+/* ==========================================================
+   ABOUT SECTION
+========================================================== */
+.about-section {
+    padding-block: map-get($spacings, '96');
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+@include respond-to('md') {
+    .about-section__wrapper {
+        // Adjust column proportions for medium-sized screens
+        grid-template-columns: 1.05fr .95fr;
+    }
+}
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+@include respond-to('lg') {
+    .about-section {
+        // Increase vertical padding for larger desktop viewports
+        padding-block: map-get($spacings, '120');
+    }
+}
+
+/* ---- features/public/components/home/sections/aboutSection/components/about-content.component/about-content.component.scss ---- */
+/* ==========================================================
+   TITLE
+========================================================== */
+.about-content__title{
+    font-size: map-get($font-sizes,'display-2');
+    line-height: map-get($line-heights, 'none');
+    font-weight: map-get($font-weights,'bold');
+    color: var(--foreground);
+    letter-spacing: -0.1rem;
+    word-spacing: -5px;
+}
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+.about-content__description{
+    line-height: map-get($line-heights, 'snug');
+}
+
+/* ---- features/public/components/home/sections/aboutSection/components/feature-grid.component/feature-grid.component.scss ---- */
+
+/* ---- features/public/components/home/sections/aboutSection/components/stats-grid.component/stats-grid.component.scss ---- */
+
+/* ---- features/public/components/home/sections/businessSection/business-section/business-section.component.scss ---- */
+
+/* ==========================================================
+   BUSINESS SECTION
+========================================================== */
+
+.business-section {
+    position: relative;
+    // padding-block gives the section its own internal breathing room; margin-top adds a
+    // further break from whatever section sits above it, so adjacent sections never touch
+    // even when their own padding is thin.
+    margin-top: map-get($spacings, '48');
+    padding-block: map-get($spacings, '64');
+
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md') {
+    .business-section__wrapper {
+        // Increase gap for better visual separation on tablet screens
+        gap: map-get($spacings, '48');
+    }
+}
+
+/* ---- features/public/components/home/sections/businessSection/components/business-content/business-content.component.scss ---- */
+
+.business-content {
+    // Restricting width for optimal readability
+    max-width: 40rem;
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.business-content__title {
+    font-size: map-get($font-sizes, 'display-2');
+    line-height: map-get($line-heights, 'none');
+    font-weight: map-get($font-weights, 'bold');
+    color: var(--foreground);
+    // Adjusted spacing for balanced typography
+    word-spacing: -8px;
+    letter-spacing: -.02em;
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.business-content__description {
+    // Ensuring readability with snug line height
+    line-height: map-get($line-heights, 'snug');
+    color: var(--muted);
+}
+
+/* ---- features/public/components/home/sections/businessSection/components/business-grid/business-grid.component.scss ---- */
+
+/* ---- features/public/components/home/sections/contactSection/components/contact-content/contact-content.component.scss ---- */
+
+/* ==========================================================
+   CONTACT CONTENT
+========================================================== */
+
+.contact-content {
+
+    max-width: 30rem;
+
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.contact-content__header {
+
+    width: 100%;
+
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.contact-content__title {
+
+    font-size: map-get($font-sizes,'display-2');
+
+    line-height: map-get($line-heights,'none');
+
+    font-weight: map-get($font-weights,'bold');
+
+    color: var(--foreground);
+
+    letter-spacing: -.02em;
+
+    word-spacing: -8px;
+
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.contact-content__description {
+
+    line-height: map-get($line-heights,'snug');
+
+    color: var(--muted);
+
+}
+
+/* ==========================================================
+   CARDS
+========================================================== */
+
+.contact-content__cards {
+
+    width: 100%;
+
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@include respond-to('md', 'down') {
+
+    .contact-content {
+
+        max-width: 100%;
+
+    }
+
+    .contact-content__title {
+
+        font-size: map-get($font-sizes,'display-3');
+
+    }
+
+}
+
+/* ---- features/public/components/home/sections/contactSection/components/contact-form/contact-form.component.scss ---- */
+
+
+
+
+/* ==========================================================
+   LABEL
+========================================================== */
+.contact-form__label{
+    font-size: map-get($font-sizes,'10');
+    font-weight: map-get($font-weights,'semibold');
+    color: var(--foreground);
+}
+
+
+/* ==========================================================
+   FIELD
+========================================================== */
+.contact-form__field{
+    @include spacing(gap, 6);
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* ==========================================================
+   INPUTS
+========================================================== */
+
+.contact-form__input,
+.contact-form__select,
+.contact-form__textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--foreground);
+    outline: none;
+    @include radius(map-get($radius,'lg'));
+    @include spacing(py,8);
+    @include spacing(px,12);
+    transition: .25s ease;
+
+}
+
+.contact-form__select{
+    font-size: map-get($font-sizes,'12');
+}
+
+
+.contact-form__textarea{
+    font-size: map-get($font-sizes,'12');
+    resize: vertical;
+    min-height: 110px;
+}
+
+/* ==========================================================
+   PLACEHOLDER
+========================================================== */
+
+.contact-form__input::placeholder,
+.contact-form__textarea::placeholder{
+    font-size: map-get($font-sizes,'12');
+    color: var(--muted);
+
+}
+
+/* ==========================================================
+   FOCUS
+========================================================== */
+
+.contact-form__input:focus,
+.contact-form__select:focus,
+.contact-form__textarea:focus{
+
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 3px color-mix(in oklab,var(--primary) 12%,transparent);
+
+}
+
+/* ==========================================================
+   SELECT
+========================================================== */
+
+.contact-form__select{
+
+    cursor: pointer;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 8 9 11 12 8'/%3E%3C/svg%3E");
+
+    background-repeat: no-repeat;
+
+    background-position: right 12px center;
+
+    padding-right: 42px;
+
+}
+
+/* ==========================================================
+   BUTTON
+========================================================== */
+
+.contact-form app-button{
+
+    align-self: flex-start;
+
+}
+
+
+/* ==========================================================
+   STATUS MESSAGE
+========================================================== */
+
+.contact-form__status{
+    @include radius(map-get($radius,'lg'));
+    @include spacing(py,8);
+    @include spacing(px,12);
+}
+
+.contact-form__status--success{
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+.contact-form__status--error{
+    background: color-mix(in oklab, var(--danger) 10%, transparent);
+    color: var(--danger);
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@include respond-to('md','down'){
+
+    .contact-form{
+
+        max-width: 100%;
+
+        @include spacing(p,24);
+
+    }
+
+}
+
+/* ---- features/public/components/home/sections/contactSection/contact-section/contact-section.component.scss ---- */
+
+/* ==========================================================
+   CONTACT SECTION
+========================================================== */
+
+.contact-section {
+    position: relative;
+    margin-top: map-get($spacings, '48');
+    // Add vertical padding for consistent section spacing
+    padding-block: map-get($spacings, '64');
+}
+
+/* ==========================================================
+   WRAPPER
+========================================================== */
+
+.contact-section__wrapper {
+    display: grid;
+    gap: map-get($spacings, '40');
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md') {
+    .contact-section__wrapper {
+        // Increase gap for better visual separation on larger screens
+        gap: map-get($spacings, '48');
+    }
+}
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+
+@include respond-to('lg') {
+    .contact-section__wrapper {
+        // Define column ratio for split-screen contact layout
+        grid-template-columns: .9fr 1.1fr;
+        align-items: start;
+        // Adjust gap for desktop composition
+        gap: map-get($spacings, '80');
+    }
+}
+
+/* ---- features/public/components/home/sections/developedSection/components/developed-company/developed-company.component.scss ---- */
+
+/* ==========================================================
+   DEVELOPED COMPANY
+========================================================== */
+
+/* ---- features/public/components/home/sections/developedSection/components/developed-content/developed-content.component.scss ---- */
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+.developed-content {
+    // Restricting width for optimal readability
+    max-width: 38rem;
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.developed-content__title {
+    font-size: map-get($font-sizes, 'display-2');
+    line-height: map-get($line-heights, 'none');
+    font-weight: map-get($font-weights, 'bold');
+    color: var(--foreground);
+    // Adjusted spacing for balanced typography
+    letter-spacing: -.02em;
+    word-spacing: -8px;
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.developed-content__description {
+    // Ensuring readability with relaxed line height for longer text
+    line-height: map-get($line-heights, 'relaxed');
+    color: var(--muted);
+}
+
+/* ---- features/public/components/home/sections/developedSection/developed-section/developed-section.component.scss ---- */
+
+/* ==========================================================
+   DEVELOPED SECTION
+========================================================== */
+
+.developed-section {
+    position: relative;
+    margin-top: map-get($spacings, '48');
+}
+
+/* ==========================================================
+   WRAPPER
+========================================================== */
+
+.developed-section__wrapper {
+    overflow: hidden;
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@include respond-to('lg', 'down') {
+    .developed-section__wrapper {
+        // Apply consistent padding for smaller viewports
+        @include spacing(p, 24);
+    }
+}
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+
+@include respond-to('lg') {
+    .developed-section__wrapper {
+        // Increase horizontal and vertical padding for desktop layout
+        @include spacing(px, 56);
+        @include spacing(py, 48);
+    }
+}
+
+/* ---- features/public/components/home/sections/featuresSection/components/features-content/features-content.component.scss ---- */
+
+/* ==========================================================
+   FEATURES CONTENT
+========================================================== */
+
+.features-content {
+    // Restricting width for better focus and readability
+    max-width: 40rem;
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.features-content__title {
+    font-size: map-get($font-sizes, 'display-2');
+    line-height: map-get($line-heights, 'none');
+    font-weight: map-get($font-weights, 'bold');
+    color: var(--foreground);
+    // Tightening spacing for a modern, bold headline aesthetic
+    word-spacing: -8px;
+    letter-spacing: -.02em;
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.features-content__description {
+    // Using a snug line-height to maintain clear text block hierarchy
+    line-height: map-get($line-heights, 'snug');
+    color: var(--muted);
+}
+
+/* ---- features/public/components/home/sections/featuresSection/components/features-grid/features-grid.component.scss ---- */
+
+/* ==========================================================
+   FEATURES GRID
+========================================================== */
+
+
+
+/* ---- features/public/components/home/sections/featuresSection/features-section/features-section.component.scss ---- */
+
+/* ==========================================================
+   FEATURES SECTION
+========================================================== */
+
+.features-section {
+    position: relative;
+    // padding-block gives the section its own internal breathing room; margin-top adds a
+    // further break from whatever section sits above it.
+    margin-top: map-get($spacings, '48');
+    padding-block: map-get($spacings, '64');
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md') {
+    .features-section__wrapper {
+        // Increase gap for better visual breathing room on tablet screens
+        gap: map-get($spacings, '48');
+    }
+}
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+
+@include respond-to('lg') {
+    .features-section__wrapper {
+        // Further increase gap for optimal desktop layout alignment
+        gap: map-get($spacings, '80');
+    }
+}
+
+/* ---- features/public/components/home/sections/heroSection/components/hero-content/hero-content.component.scss ---- */
+
+.hero-content {
+    max-width: 650px;
+}
+
+/* ========================================
+   Badge
+======================================== */
+
+.hero-content__badge {
+    @include inline-flex-center;
+    gap: map-get($spacings, '8');
+    padding: map-get($spacings, '6') map-get($spacings, '12');
+    background-color: var(--primary-surface);
+    @include border;
+    font-size: map-get($font-sizes, '12');
+    font-weight: map-get($font-weights, 'semibold');
+    border-radius: map-get($radius, 'full');
+}
+
+/* ========================================
+   Heading
+======================================== */
+
+.hero-content__title {
+    font-size: map-get($font-sizes, 'display-1');
+    line-height: map-get($line-heights, 'none');
+    font-weight: map-get($font-weights, 'bold');
+    color: var(--foreground);
+    letter-spacing: -0.25rem;
+}
+
+/* ========================================
+   Description
+======================================== */
+
+.hero-content__description {
+    line-height: map-get($line-heights, 'snug');
+}
+
+/* ========================================
+   Features
+======================================== */
+
+.hero-content__feature {
+    @include inline-flex-center;
+    gap: map-get($spacings, '8');
+    font-weight: map-get($font-weights, 'medium');
+    color: var(--foreground);
+}
+
+/* ========================================
+   Desktop
+======================================== */
+
+@include respond-to('lg') {
+    .hero-content {
+        max-width: 650px;
+    }
+}
+
+/* ---- features/public/components/home/sections/heroSection/components/hero-dashboard/components/browser-bar/browser-bar.component.scss ---- */
+
+/* ==========================================================
+   BROWSER
+========================================================== */
+
+.browser {
+    @include border(bottom);
+    background: var(--background);
+}
+
+
+
+/* ==========================================================
+   CENTER
+========================================================== */
+
+.browser__title {
+
+    text-align: center;
+
+    font-size: map-get($font-sizes,'10');
+    font-weight:map-get($font-weights,'semibold');
+
+    color: var(--muted);
+
+    letter-spacing: .3px;
+
+    user-select: none;
+
+}
+
+/* ---- features/public/components/home/sections/heroSection/components/hero-dashboard/components/growth-card.component/growth-card.component.scss ---- */
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.growth-card{
+
+    position:absolute;
+
+    top:-20px;
+
+    right:-10px;
+    z-index:5;
+        padding:
+        map-get($spacings, '6')
+        map-get($spacings, '10');
+    display:flex;
+    align-items:center;
+    gap:6px;
+    @include shadow-lg;
+
+}
+
+/* ==========================================================
+   ICON
+========================================================== */
+
+.growth-card__icon{
+    background:
+
+        color-mix(
+            in oklab,
+            var(--primary) 12%,
+            transparent
+        );
+}
+
+
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@include respond-to('md',down){
+
+    .growth-card{
+
+        right:-10px;
+
+        top:-18px;
+
+        width:136px;
+
+    }
+
+}
+
+/* ---- features/public/components/home/sections/heroSection/components/hero-dashboard/components/orders-table/orders-table.component.scss ---- */
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.orders-table__header{
+
+
+    @include border(bottom);
+
+    background:color-mix(
+        in oklab,
+        var(--background) 65%,
+        white
+    );
+
+}
+
+
+
+
+/* ==========================================================
+   ROW
+========================================================== */
+
+.orders-table__row{
+
+    @include smooth-transition(
+        .2s,
+        background
+    );
+
+}
+
+.orders-table__row:not(:last-child){
+
+    @include border(bottom);
+
+}
+
+.orders-table__row:hover{
+
+    background:
+        color-mix(
+            in oklab,
+            var(--primary) 4%,
+            white
+        );
+
+}
+
+
+
+
+/* ---- features/public/components/home/sections/heroSection/components/hero-dashboard/components/sales-chart/sales-chart.component.scss ---- */
+/* ==========================================================
+   CANVAS
+========================================================== */
+.sales-chart__canvas{
+    position:relative;
+    height:170px;
+    @include flex-column;
+    border-radius:map-get($radius,'lg');
+    overflow:hidden;
+    @include border;
+}
+/* ==========================================================
+   GRID
+========================================================== */
+.sales-chart__canvas::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(
+            to right,
+            rgba(0,0,0,.03) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.03) 1px,
+            transparent 1px
+        );
+    background-size:52px 52px;
+    opacity:.45;
+}
+
+/* ===========================================
+   Line
+=========================================== */
+.sales-chart__line {
+    stroke-dasharray: 700;
+    stroke-dashoffset: 700;
+    animation: chart-line 1.3s ease forwards;
+}
+/* ===========================================
+   Animation
+=========================================== */
+@keyframes chart-line {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* ---- features/public/components/home/sections/heroSection/components/hero-dashboard/components/stats-cards/stats-cards.component.scss ---- */
+
+
+
+@include respond-to('md'){
+
+    .stats{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}
+
+/* ---- features/public/components/home/sections/heroSection/components/hero-dashboard/hero-dashboard.component.scss ---- */
+
+/* ==========================================================
+   HERO DASHBOARD
+========================================================== */
+
+.hero-dashboard {
+    position: relative;
+    width: 100%;
+    margin-inline: auto;
+    max-width: 640px;
+    z-index: 2;
+    transition: filter .6s ease;
+}
+
+/* ==========================================================
+   WINDOW
+========================================================== */
+
+.hero-dashboard__window {
+    position: relative;
+    overflow: hidden;
+    border-radius: map-get($radius, '2xl');
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+    background: color-mix(
+        in oklab,
+        var(--background) 96%,
+        white
+    );
+    backdrop-filter: blur(18px);
+    @include shadow-xl;
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md') {
+    .hero-dashboard {
+        max-width: 700px;
+    }
+}
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+
+@include respond-to('lg') {
+    .hero-dashboard {
+        max-width: 620px;
+    }
+}
+
+/* ---- features/public/components/home/sections/heroSection/heroComponent/hero.component.scss ---- */
+
+/* ==========================================================
+   HERO BACKGROUND EFFECTS
+========================================================== */
+
+// Base decorative background gradients
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        // Top-right accent glow
+        radial-gradient(
+            900px 500px at 85% -10%,
+            color-mix(in oklab, var(--accent) 18%, transparent),
+            transparent 60%
+        ),
+        // Bottom-left primary glow
+        radial-gradient(
+            900px 500px at -10% 10%,
+            color-mix(in oklab, var(--primary) 18%, transparent),
+            transparent 55%
+        ),
+        // Surface background base
+        linear-gradient(
+            180deg,
+            var(--surface),
+            var(--surface-2)
+        );
+}
+
+// Grid overlay effect with radial mask
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+        linear-gradient(
+            to right,
+            color-mix(in oklab, var(--primary) 8%, transparent) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            color-mix(in oklab, var(--primary) 8%, transparent) 1px,
+            transparent 1px
+        );
+    background-size: 48px 48px;
+
+    // Fading the grid towards the edges for a cleaner focus
+    mask-image: radial-gradient(
+        circle,
+        #000 35%,
+        transparent 90%
+    );
+}
+
+
+@include respond-to('md', 'down'){
+    .hero__container{
+        @include spacing(g, 40)
+    }
+}
+
+/* ---- features/public/components/home/sections/how-worksSection/components/how-works-content/how-works-content.component.scss ---- */
+
+/* ==========================================================
+   HOW WORKS CONTENT
+========================================================== */
+
+.how-works-content{
+
+    max-width: 42rem;
+
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.how-works-content__title{
+
+    white-space: pre-line;
+
+    font-size: map-get($font-sizes,'display-2');
+
+    line-height: map-get($line-heights,'none');
+
+    font-weight: map-get($font-weights,'bold');
+
+    color: var(--foreground);
+
+    letter-spacing: -.02em;
+
+    word-spacing: -8px;
+
+}
+
+/* ---- features/public/components/home/sections/how-worksSection/components/how-works-grid/how-works-grid.component.scss ---- */
+
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md'){
+
+    .how-works-grid{
+
+        gap: map-get($spacings,'24');
+
+    }
+
+}
+
+/* ---- features/public/components/home/sections/how-worksSection/how-works-section/how-works-section.component.scss ---- */
+
+/* ==========================================================
+   HOW WORKS SECTION
+========================================================== */
+
+.how-works-section {
+
+    position: relative;
+    margin-top: map-get($spacings, '48');
+    padding-block: map-get($spacings, '96');
+
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md') {
+
+    .how-works-section__wrapper {
+
+        gap: map-get($spacings, '48');
+
+    }
+
+}
+
+/* ---- features/public/components/home/sections/whySection/components/why-content/why-content.component.scss ---- */
+
+.why-content{
+
+    max-width: 40rem;
+
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.why-content__title{
+
+    font-size: map-get($font-sizes,'display-2');
+
+    line-height: map-get($line-heights,'none');
+
+    font-weight: map-get($font-weights,'bold');
+
+    color: var(--foreground);
+
+    word-spacing: -8px;
+
+    letter-spacing: -.02em;
+
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.why-content__description{
+
+    line-height: map-get($line-heights,'snug');
+
+    color: var(--muted);
+
+}
+
+/* ---- features/public/components/home/sections/whySection/components/why-grid/why-grid.component.scss ---- */
+
+
+/* ---- features/public/components/home/sections/whySection/why-section/why-section.component.scss ---- */
+
+/* ==========================================================
+   WHY SECTION
+========================================================== */
+
+.why-section {
+    position: relative;
+    margin-top: map-get($spacings, '48');
+    padding-block: map-get($spacings, '96');
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md') {
+
+    .why-section__wrapper {
+
+        gap: map-get($spacings, '48');
+
+    }
+
+}
+
+/* ---- features/public/shared/components/footer/footer.component.scss ---- */
+
+
+/* ==========================================================
+   COLUMNS
+========================================================== */
+// Container for footer columns with vertical stack alignment
+.footer__column{
+    @include flex-column;
+    @include spacing(gap,14)
+}
+
+// Styling for navigation and contact links
+.footer__link {
+    font-size: map-get($font-sizes,'12');
+    color: var(--primary-foreground);
+    opacity: .85;
+}
+
+// Hover state for links with color change and bolding
+.footer__link:hover {
+
+    color: var(--surface);
+    opacity: 1;
+    font-weight: map-get($font-weights, bold);
+
+}
+
+// Description styling for the development company info
+.footer__company-description {
+
+    line-height: 1.8;
+
+    color: rgba(255,255,255,.8);
+
+}
+
+/* ==========================================================
+   BOTTOM
+========================================================== */
+
+// Footer bottom section with top border and padding
+.footer__bottom {
+
+    @include border(top, 1px, rgba(255, 255, 255, 0.12));
+    @include spacing(py, 20);
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+// Tablet layout: adjust grid to two columns
+@include respond-to('lg', 'down') {
+
+    .footer__wrapper {
+
+        grid-template-columns: repeat(2,1fr);
+
+    }
+
+}
+
+// Mobile layout: stack columns and center bottom content
+@include respond-to('md', 'down') {
+
+    .footer__wrapper {
+
+        grid-template-columns: 1fr;
+        @include spacing(g, 40);
+
+    }
+
+    .footer__bottom-container {
+        @include flex-column;
+        align-items: center;
+        @include spacing(g, 18);
+
+    }
+
+}
+
+/* ---- features/public/shared/components/header/header.component.scss ---- */
+
+.header {
+    position: sticky;
+    height: 60px;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(16px);
+    background: color-mix(in srgb, var(--background) 88%, transparent);
+    @include border(bottom);
+    @include spacing(py, 6)
+}
+
+/*====================================*/
+
+.header__wrapper {
+    @include flex-between;
+}
+
+/*====================================*/
+
+.header__nav {
+    display: none;
+}
+
+/*====================================*/
+
+.header__toggle {
+    background: transparent;
+    cursor: pointer;
+    @include border;
+    color: var(--foreground);
+    @include flex-center;
+}
+
+/* Mobile navigation overlay */
+.header__mobile {
+    position: fixed;
+    z-index: 1;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: var(--background);
+    @include border('bottom');
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-16px);
+    @include smooth-transition(
+        .35s,
+        max-height,
+        opacity,
+        transform
+    );
+    
+    a {
+        font-size: map-get($font-sizes, '14');
+        font-weight: map-get($font-weights, 'medium');
+        color: var(--foreground);
+        transition: .25s;
+        
+        &:hover {
+            color: var(--primary);
+        }
+    }
+}
+
+.header__mobile--open {
+    max-height: 450px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/*====================================*/
+/* Desktop View */
+/*====================================*/
+
+@include respond-to('lg') {
+    .header__cta {
+        display: flex !important;
+    }
+
+    .header__auth-actions {
+        display: flex !important;
+    }
+
+    .header__toggle {
+        display: none;
+    }
+    
+    .header__nav {
+        @include flex-center;
+        @include spacing(g, 40);
+        
+        a {
+            font-size: map-get($font-sizes, '14');
+            font-weight: map-get($font-weights, 'medium');
+            color: var(--muted-foreground);
+            transition: .25s;
+            
+            &:hover {
+                color: var(--primary);
+                font-weight: map-get($font-weights, 'bold');
+            }
+        }
+    }
+    
+    .header__mobile {
+        display: none;
+    }
+}
+
+/* ---- shared/components/button/button.component.scss ---- */
+
+/* ==========================================================
+   TOKENS
+========================================================== */
+
+$button-sizes: (
+  xs: (
+    py: map-get($spacings, '6'),
+    px: map-get($spacings, '12'),
+    fs: map-get($font-sizes, '12'),
+    icon: 14px
+  ),
+  sm: (
+    py: map-get($spacings, '8'),
+    px: map-get($spacings, '16'),
+    fs: map-get($font-sizes, '14'),
+    icon: 16px
+  ),
+  md: (
+    py: map-get($spacings, '10'),
+    px: map-get($spacings, '20'),
+    fs: map-get($font-sizes, '16'),
+    icon: 18px
+  ),
+  lg: (
+    py: map-get($spacings, '12'),
+    px: map-get($spacings, '24'),
+    fs: map-get($font-sizes, '18'),
+    icon: 20px
+  ),
+  xl: (
+    py: map-get($spacings, '14'),
+    px: map-get($spacings, '32'),
+    fs: map-get($font-sizes, '20'),
+    icon: 22px
+  )
+);
+
+$button-variants: (
+  primary: (
+    bg: var(--primary),
+    color: var(--primary-foreground),
+    border: transparent,
+    box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+    ),
+    hover: (
+      bg: var(--primary-hover),
+      box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+      )
+    )
+  ),
+  secondary: (
+    bg: var(--secondary),
+    color: var(--secondary-foreground),
+    border: transparent,
+    hover: (
+      bg: var(--surface-2),
+    )
+  ),
+  outline: (
+    bg: transparent,
+    color: var(--primary),
+    border: var(--primary),
+    hover: (
+      bg: var(--primary-soft),
+    )
+  ),
+  ghost: (
+    bg: transparent,
+    color: var(--foreground),
+    border: transparent,
+    hover: (
+      bg: var(--surface-2),
+      box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+      )
+    )
+  ),
+  success: (
+    bg: var(--success),
+    color: #fff,
+    border: transparent,
+    hover: (
+      bg: color-mix(in srgb, var(--success) 88%, black),
+      box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+      )
+    )
+  ),
+  warning: (
+    bg: var(--warning),
+    color: #fff,
+    border: transparent,
+    hover: (
+      bg: color-mix(in srgb, var(--warning) 88%, black),
+      box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+      )
+    )
+  ),
+  danger: (
+    bg: var(--danger),
+    color: #fff,
+    border: transparent,
+    hover: (
+      bg: color-mix(in srgb, var(--danger) 88%, black),
+      box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+      )
+    )
+  )
+);
+
+/* ==========================================================
+   BASE
+========================================================== */
+
+.app-btn {
+  @include inline-flex-center;
+  gap: map-get($spacings, '10');
+  position: relative;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-weight: map-get($font-weights, 'semibold');
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  overflow: hidden;
+  user-select: none;
+  @include smooth-transition(
+    .25s,
+    background-color,
+    color,
+    border-color,
+    box-shadow,
+    transform,
+    opacity
+  );
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    @include shadow-sm;
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--ring);
+  }
+
+  &:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+  }
+}
+
+/* ==========================================================
+   SIZES
+========================================================== */
+
+@each $size, $config in $button-sizes {
+  .app-btn--#{$size} {
+    padding-block: map-get($config, py);
+    padding-inline: map-get($config, px);
+    font-size: map-get($config, fs);
+  }
+
+  .app-btn--#{$size} .app-btn__icon {
+    width: map-get($config, icon);
+    height: map-get($config, icon);
+    font-size: map-get($config, icon);
+  }
+}
+
+/* ==========================================================
+   RADIUS
+========================================================== */
+
+@each $name, $value in $radius {
+  .app-btn--radius-#{$name} {
+    border-radius: $value;
+  }
+}
+
+/* ==========================================================
+   VARIANTS
+========================================================== */
+
+@each $name, $config in $button-variants {
+  $hover-config: map-get($config, hover);
+
+  .app-btn--#{$name} {
+    background: map-get($config, bg);
+    color: map-get($config, color);
+    border-color: map-get($config, border);
+    box-shadow: map-get($config, box-shadow);
+  }
+
+  .app-btn--#{$name}:hover:not(:disabled) {
+    background-color: map-get($hover-config, bg);
+    box-shadow: map-get($hover-config, box-shadow);
+  }
+}
+
+/* ==========================================================
+   MODIFIERS
+========================================================== */
+
+.app-btn--block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.app-btn--rounded {
+  border-radius: 999px !important;
+}
+
+.app-btn--elevated {
+  @include shadow-md;
+}
+
+.app-btn--loading {
+  pointer-events: none;
+}
+
+.app-btn--loading .app-btn__content,
+.app-btn--loading .app-btn__icon {
+  opacity: 0;
+}
+
+.app-btn--icon {
+  padding-inline: map-get($spacings, '10');
+}
+
+.app-btn--icon .app-btn__content {
+  display: none;
+}
+
+/* ==========================================================
+   ELEMENTS
+========================================================== */
+
+.app-btn__content {
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-btn__icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.app-btn__spinner {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  translate: -50% -50%;
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: app-btn-spin .7s linear infinite;
+}
+
+/* ==========================================================
+   ANIMATION
+========================================================== */
+
+@keyframes app-btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- shared/components/cards/feature-card/feature-card.component.scss ---- */
+
+/* ===========================================
+   SMALL
+=========================================== */
+.feature-card--sm{
+    /* ===========================================
+    LEADING
+    =========================================== */
+    .feature-card__icon{
+        @include spacing(p, 8);
+        @include radius(map-get($radius,'md'));
+        i{
+            width: 16px;
+            height: 16px;
+        }
+    }
+    /* ===========================================
+    TITLE
+    =========================================== */
+    .feature-card__title{
+        font-size: map-get($font-sizes,'14');
+        font-weight: map-get($font-weights,'medium');
+    }
+
+    .feature-card__description {
+        font-size: map-get($font-sizes,'10');
+    }
+
+}
+
+/* ===========================================
+   MEDIUM
+=========================================== */
+.feature-card--md{
+    /* ===========================================
+    LEADING
+    =========================================== */
+    .feature-card__icon{
+        @include spacing(p, 8);
+        @include radius(map-get($radius,'md'));
+        i{
+            width: 20px;
+            height: 20px;
+        }
+    }
+    /* ===========================================
+    TITLE
+    =========================================== */
+    .feature-card__title{
+        font-size: map-get($font-sizes,'16');
+        font-weight: map-get($font-weights,'semi-bold');
+    }
+
+    .feature-card__description {
+        font-size: map-get($font-sizes,'12');
+    }
+    
+    // Step indicator styling for medium variant
+    .feature-card__step{
+        font-size: map-get($font-sizes,'48');
+        font-weight: map-get($font-weights,'bold');
+        color: color-mix(in oklab, var(--primary) 15%, transparent);
+    }
+
+}
+
+/* ===========================================
+   LARGE
+=========================================== */
+.feature-card--lg{
+    /* ===========================================
+    LEADING
+    =========================================== */
+    .feature-card__icon{
+        @include radius(map-get($radius,'lg'));
+        @include spacing(p, 10);
+        i{
+            width: 22px;
+            height: 22px;
+        }
+    }
+    /* ===========================================
+    TITLE
+    =========================================== */
+    .feature-card__title{
+        font-size: map-get($font-sizes,'20');
+        font-weight: map-get($font-weights,'bold');
+    }
+
+    .feature-card__description {
+        font-size: map-get($font-sizes,'14');
+        font-weight: map-get($font-weights,'medium');
+    }
+}
+
+/* ===========================================
+   DEFAULT
+=========================================== */
+
+.feature-card--default {
+    /* ===========================================
+    ICON
+    =========================================== */
+    .feature-card__icon{
+
+        background-color: var(--primary-surface);
+        i{
+            color: var(--primary);
+        }
+    }
+
+    .feature-card__leading {
+
+        color: var(--primary);
+
+        background: transparent;
+
+    }
+
+    .feature-card__title {
+
+        color: var(--foreground);
+
+    }
+
+    .feature-card__description {
+
+        color: var(--muted);
+
+    }
+}
+
+/* ===========================================
+   PRIMARY
+=========================================== */
+
+.feature-card--primary {
+    background-color: var(--primary) !important;
+
+    /* ===========================================
+    ICON
+    =========================================== */
+    .feature-card__icon{
+        background-color: color-mix(in oklab, var(--surface) 15%, transparent);
+        i{
+            width: 20px;
+            height: 20px;
+            color: var(--surface);
+        }
+    }
+
+    .feature-card__title {
+
+        color: var(--surface);
+
+    }
+
+    .feature-card__description {
+
+       color: color-mix(in oklab, var(--surface) 85%, transparent);
+
+    }
+}
+
+/* ===========================================
+   ARROW
+=========================================== */
+
+// Arrow element positioning and base styling
+.feature-card__arrow{
+
+    position: absolute;
+    background-color: var(--background);
+    top: 50%;
+    @include spacing(p, 4);
+    @include radius(map-get($radius,'rounded'));
+    @include flex-center;
+    right: -22px;
+    transform: translateY(-50%);
+    color: color-mix(in oklab, var(--primary) 40%, transparent);
+    z-index: 5;
+    transition: .25s;
+
+}
+
+// Arrow interaction state on card hover
+.feature-card:hover .feature-card__arrow{
+    transform:translateY(-6px);
+    color: var(--primary);
+}
+
+/* ---- shared/components/cards/info-card/info-card.component.scss ---- */
+
+
+/* ===========================================
+   LARGE
+=========================================== */
+
+.info-card--lg{
+    /* ===========================================
+    LEADING
+    =========================================== */
+    .info-card__icon{
+        @include radius(map-get($radius,'lg'));
+        @include spacing(p, 10);
+        i{
+            width: 22px;
+            height: 22px;
+        }
+    }
+    /* ===========================================
+    TITLE
+    =========================================== */
+    .info-card__title{
+        font-size: map-get($font-sizes,'16');
+        font-weight: map-get($font-weights,'bold');
+    }
+
+    // Badge styling with uppercase transformation and spacing
+    .info-card__badge{
+        font-size: map-get($font-sizes,'12');
+        font-weight: map-get($font-weights,'medium');
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        line-height: 1;
+    }
+
+
+    .info-card__leading{
+        border-radius: map-get($radius,'lg');
+        font-size: map-get($font-sizes,'16');
+        font-weight: map-get($font-weights,'bold');
+        @include spacing(px, 18);
+        @include spacing(py, 10);
+
+    }
+
+    .info-card__description {
+        font-size: map-get($font-sizes,'14');
+        font-weight: map-get($font-weights,'medium');
+    }
+
+
+}
+
+/* ===========================================
+   LARGE IN MOBILE
+=========================================== */
+// Responsive adjustments for small screens
+@include respond-to('sm', 'down') {
+
+    .info-card--lg {
+        .info-card__title {
+            font-size: map-get($font-sizes,'14');
+        }
+        .info-card__badge{
+            font-size: map-get($font-sizes,'10');
+        }
+        .info-card__leading{
+            border-radius: map-get($radius,'lg');
+            font-size: map-get($font-sizes,'14');
+            @include spacing(px, 16);
+            @include spacing(py, 8);
+
+        }
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================================
+   DEFAULT
+=========================================== */
+
+.info-card--default {
+    /* ===========================================
+    ICON
+    =========================================== */
+    .info-card__icon{
+
+        background-color: var(--primary);
+        i{
+            color: var(--surface);
+        }
+    }
+
+    .info-card__leading {
+        color: var(--surface);
+        background-color: var(--primary);
+    }
+
+    .info-card__title {
+
+        color: var(--foreground);
+
+    }
+
+    .info-card__badge{
+        color: var(--muted-foreground);
+    }
+
+
+
+    .info-card__description {
+
+        color: var(--muted);
+
+    }
+}
+
+
+
+
+/* ===========================================
+   WARNING
+=========================================== */
+
+.info-card--warning {
+    /* ===========================================
+    ICON
+    =========================================== */
+    .info-card__icon{
+
+        background-color: var(--accent);
+        i{
+            color: var(--accent-foreground);
+        }
+    }
+    .info-card__leading {
+        color: var(--surface);
+        background-color: var(--primary);
+    }
+
+    .info-card__title {
+
+        color: var(--foreground);
+
+    }
+
+    .info-card__badge{
+        color: var(--muted-foreground);
+    }
+
+
+
+    .info-card__description {
+
+        color: var(--muted);
+
+    }
+}
+
+
+
+
+
+
+
+/* ===========================================
+   ARROW
+=========================================== */
+
+// Positioning and hover transition for the arrow indicator
+.info-card__arrow{
+
+    position: absolute;
+    top: 50%;
+    @include spacing(p, 4);
+    @include radius(map-get($radius,'rounded'));
+    @include flex-center;
+    right: 20px;
+    transform: translateY(-50%);
+    color: var(--muted-foreground);
+    z-index: 5;
+    transition: .25s;
+
+}
+
+// Hover effect: animate arrow and change color
+.info-card:hover{
+    .info-card__arrow{
+        transform:translateY(-6px);
+        color: var(--primary);
+    }
+}
+
+/* ---- shared/components/cards/stat-card/stat-card.component.scss ---- */
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+// Base styling for the statistic card container
+.stat-card {
+    gap: map-get($spacings,'4');
+    border-radius: map-get($radius,'xl');
+
+}
+
+/*==========================================================
+   TITLE
+=========================================== */
+
+// Label styling for the statistic description
+.stat-card__title {
+
+    font-size: map-get($font-sizes,'10');
+
+    text-transform: uppercase;
+
+    letter-spacing: .08em;
+
+    font-weight: map-get($font-weights,'medium');
+
+    color: var(--muted);
+
+}
+
+/* ==========================================================
+   VALUE
+========================================================== */
+
+// Main display value styling
+.stat-card__value {
+    font-size: map-get($font-sizes,'14');
+    font-weight: map-get($font-weights,'bold');
+    color: var(--foreground);
+}
+
+/* ==========================================================
+   BADGE
+========================================================== */
+
+ // Status indicator styling
+ .stat-card__badge {
+    font-size: map-get($font-sizes,'12');
+    font-weight: map-get($font-weights,'semibold');
+    color: var(--success);
+ }
+
+/* ---- shared/components/data-list.component/data-list.component.scss ---- */
+// @use '../../../styles/abstract/variables' as *;
+// @use '../../../styles/abstract/mixins' as *;
+
+// /* ==========================================================
+//    LIST
+// ========================================================== */
+
+// .data-list{
+
+//     @include flex-column;
+
+// }
+
+// /* ==========================================================
+//    HEADER
+// ========================================================== */
+
+// .data-list__header{
+
+//     padding-bottom:16px;
+
+//     border-bottom:1px solid var(--border);
+
+// }
+
+// .data-list__title{
+
+//     font-size:14px;
+
+//     font-weight:map-get($font-weights,'semibold');
+
+//     color:var(--foreground);
+
+// }
+
+// /* ==========================================================
+//    BODY
+// ========================================================== */
+
+// .data-list__body{
+
+//     @include flex-column;
+
+// }
+
+// /* ==========================================================
+//    ROW
+// ========================================================== */
+
+// .data-list__row{
+
+//     @include flex-between;
+
+//     gap:16px;
+
+//     padding:14px 0;
+
+//     border-bottom:1px solid var(--border);
+
+//     @include smooth-transition(.25s);
+
+//     &:last-child{
+
+//         border-bottom:none;
+
+//     }
+
+//     &:hover{
+
+//         padding-inline:8px;
+
+//         background:rgba(0,0,0,.02);
+
+//     }
+
+// }
+
+// /* ==========================================================
+//    LEFT
+// ========================================================== */
+
+// .data-list__left{
+
+//     display:flex;
+
+//     gap:12px;
+
+//     align-items:center;
+
+// }
+
+// .data-list__id{
+
+//     color:var(--muted);
+
+//     font-size:11px;
+
+//     font-family:monospace;
+
+//     min-width:42px;
+
+// }
+
+// /* ==========================================================
+//    CONTENT
+// ========================================================== */
+
+// .data-list__content{
+
+//     @include flex-column;
+
+//     gap:2px;
+
+// }
+
+// .data-list__name{
+
+//     font-size:13px;
+
+//     color:var(--foreground);
+
+//     font-weight:500;
+
+// }
+
+// .data-list__subtitle{
+
+//     font-size:12px;
+
+//     color:var(--muted);
+
+// }
+
+// /* ==========================================================
+//    RIGHT
+// ========================================================== */
+
+// .data-list__right{
+
+//     @include flex-column;
+
+//     align-items:flex-end;
+
+//     gap:4px;
+
+// }
+
+// .data-list__value{
+
+//     font-size:13px;
+
+//     font-weight:700;
+
+//     color:var(--primary);
+
+// }
+
+// /* ==========================================================
+//    BADGE
+// ========================================================== */
+
+// .data-list__badge{
+
+//     padding:2px 8px;
+
+//     border-radius:999px;
+
+//     font-size:11px;
+
+//     font-weight:600;
+
+// }
+
+// .data-list__badge--success{
+
+//     color:#16a34a;
+
+//     background:rgba(34,197,94,.12);
+
+// }
+
+// .data-list__badge--warning{
+
+//     color:#d97706;
+
+//     background:rgba(245,158,11,.12);
+
+// }
+
+// .data-list__badge--danger{
+
+//     color:#dc2626;
+
+//     background:rgba(239,68,68,.12);
+
+// }
+
+// .data-list__badge--primary{
+
+//     color:var(--primary);
+
+//     background:color-mix(in oklab,var(--primary) 12%,transparent);
+
+// }
+

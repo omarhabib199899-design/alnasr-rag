@@ -1,0 +1,16 @@
+<div class="hero-dashboard fade-right dashboard-float">
+    <!-- Overlay growth card for visual depth -->
+    <app-growth-card />
+    <div class="hero-dashboard__window">
+        <div class="hero-dashboard__frame px-10">
+            <!-- Browser window controls -->
+            <app-browser-bar />
+            <!-- Dashboard workspace area -->
+            <div class="hero-dashboard__body flex flex-col gap-12 p-20">
+                <app-stats-cards />
+                <app-sales-chart />
+                <app-orders-table />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+@use '../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   WHY SECTION
+========================================================== */
+
+.why-section {
+    position: relative;
+    margin-top: map-get($spacings, '48');
+    padding-block: map-get($spacings, '96');
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md') {
+
+    .why-section__wrapper {
+
+        gap: map-get($spacings, '48');
+
+    }
+
+}

@@ -1,0 +1,12 @@
+<div class="feature-grid grid grid-cols-2 gap-16">
+    <!-- Iterate through the list of features and render a card for each -->
+    @for(feature of features(); track feature.title){
+        <app-feature-card
+            className="flex flex-col items-start gap-12 card main-card radius-lg p-16 card--hover-primary"
+            variant="default"
+            size="md"
+            [icon]="feature.icon"
+            [title]="feature.title">
+        </app-feature-card>
+    }
+</div>

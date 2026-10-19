@@ -1,0 +1,13 @@
+<div class="how-works-grid relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-24">
+    <!-- Iterate through the onboarding steps array -->
+    @for(step of steps(); track step.step; let last = $last){
+        <app-feature-card
+            variant="step"
+            size="md"
+            className="card main-card radius-xl p-24 h-full"
+            [step]="step.step"
+            [title]="step.title"
+            [arrow]="!last"> <!-- Arrow indicator logic to hide it on the last step -->
+        </app-feature-card>
+    }
+</div>

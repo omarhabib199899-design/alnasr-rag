@@ -1,0 +1,83 @@
+@use '../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../styles/abstract/mixins' as *;
+
+
+/* ==========================================================
+   COLUMNS
+========================================================== */
+// Container for footer columns with vertical stack alignment
+.footer__column{
+    @include flex-column;
+    @include spacing(gap,14)
+}
+
+// Styling for navigation and contact links
+.footer__link {
+    font-size: map-get($font-sizes,'12');
+    color: var(--primary-foreground);
+    opacity: .85;
+}
+
+// Hover state for links with color change and bolding
+.footer__link:hover {
+
+    color: var(--surface);
+    opacity: 1;
+    font-weight: map-get($font-weights, bold);
+
+}
+
+// Description styling for the development company info
+.footer__company-description {
+
+    line-height: 1.8;
+
+    color: rgba(255,255,255,.8);
+
+}
+
+/* ==========================================================
+   BOTTOM
+========================================================== */
+
+// Footer bottom section with top border and padding
+.footer__bottom {
+
+    @include border(top, 1px, rgba(255, 255, 255, 0.12));
+    @include spacing(py, 20);
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+// Tablet layout: adjust grid to two columns
+@include respond-to('lg', 'down') {
+
+    .footer__wrapper {
+
+        grid-template-columns: repeat(2,1fr);
+
+    }
+
+}
+
+// Mobile layout: stack columns and center bottom content
+@include respond-to('md', 'down') {
+
+    .footer__wrapper {
+
+        grid-template-columns: 1fr;
+        @include spacing(g, 40);
+
+    }
+
+    .footer__bottom-container {
+        @include flex-column;
+        align-items: center;
+        @include spacing(g, 18);
+
+    }
+
+}

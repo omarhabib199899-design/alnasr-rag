@@ -1,0 +1,6 @@
+:host{
+    // Ensure the component occupies space correctly in the layout
+    display:inline-block;
+    // Use tabular figures to prevent layout shifting during animation
+    font-variant-numeric:tabular-nums;
+}

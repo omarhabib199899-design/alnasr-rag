@@ -1,0 +1,14 @@
+@use '../../../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../../../styles/abstract/mixins' as *;
+
+
+
+@include respond-to('md'){
+
+    .stats{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}

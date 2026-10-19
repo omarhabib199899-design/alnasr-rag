@@ -1,0 +1,351 @@
+@use '../abstract/variables' as *;
+@use '../abstract/mixins' as *;
+
+/* ==========================================================
+   CARD BASE
+========================================================== */
+
+.card {
+    position: relative;
+    background: var(--background);
+    @include border;
+    @include smooth-transition(
+        .3s,
+        transform,
+        box-shadow,
+        border-color,
+        background
+    );
+}
+
+/* ==========================================================
+   SIZES
+========================================================== */
+.main-card{
+    background: color-mix(in oklab, var(--background) 96%, white);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ==========================================================
+   SHADOWS
+========================================================== */
+
+.card--shadow-sm{
+
+    @include shadow-sm;
+
+}
+
+.card--shadow{
+
+    @include shadow-md;
+
+}
+
+.card--shadow-lg{
+
+    @include shadow-lg;
+
+}
+
+.card--shadow-xl{
+
+    @include shadow-xl;
+
+}
+
+/* ==========================================================
+   BORDER COLORS
+========================================================== */
+
+.card--primary-border{
+
+    border-color:color-mix(in oklab,var(--primary) 25%,var(--border));
+
+}
+
+.card--success-border{
+
+    border-color:color-mix(in oklab,var(--success) 25%,var(--border));
+
+}
+
+.card--warning-border{
+
+    border-color:color-mix(in oklab,var(--warning) 25%,var(--border));
+
+}
+
+.card--danger-border{
+
+    border-color:color-mix(in oklab,var(--error) 25%,var(--border));
+
+}
+
+/* ==========================================================
+   SURFACES
+========================================================== */
+
+.card--surface{
+
+    background:var(--surface);
+
+}
+
+.card--glass{
+
+    @include glass;
+
+}
+
+.card--primary{
+    --tw-gradient-to: color-mix(in oklab, var(--primary) 80%, transparent);
+}
+
+.card--secondry{
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(230,245,255,.95),
+        rgba(242,249,255,.92)
+    );
+
+}
+
+.card--success{
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(236,253,245,.95),
+        rgba(240,253,250,.92)
+    );
+
+}
+
+.card--warning{
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(255,251,235,.95),
+        rgba(254,249,195,.92)
+    );
+
+}
+
+.card--danger{
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(254,242,242,.95),
+        rgba(254,226,226,.92)
+    );
+
+}
+
+/* ==========================================================
+   HOVER
+========================================================== */
+
+.card--hover{
+
+    &:hover{
+
+        transform:translateY(-6px);
+
+        @include shadow-md;
+
+    }
+
+}
+
+.card--hover-primary{
+
+    &:hover{
+
+        transform:translateY(-6px);
+
+        border-color:var(--primary);
+
+        @include shadow-lg;
+
+    }
+
+}
+
+.card--hover-scale{
+
+    &:hover{
+
+        transform:scale(1.02);
+
+        @include shadow-md;
+
+    }
+
+}
+
+.card--static{
+
+    pointer-events:none;
+
+}
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+.card__header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:map-get($spacings,'16');
+
+}
+
+.card__body{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:map-get($spacings,'12');
+
+    flex:1;
+
+}
+
+.card__footer{
+
+    margin-top:auto;
+
+    padding-top:map-get($spacings,'16');
+
+}
+
+/* ==========================================================
+   ICON
+========================================================== */
+
+.card__icon{
+
+    width:48px;
+
+    height:48px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:14px;
+
+    background:color-mix(in oklab,var(--primary) 10%,transparent);
+
+    color:var(--primary);
+
+    font-size:22px;
+
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.card__title{
+
+    font-size:12px;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+    color:var(--muted);
+
+    font-weight:map-get($font-weights,'medium');
+
+}
+
+/* ==========================================================
+   VALUE
+========================================================== */
+
+.card__value{
+
+    margin:0;
+
+    color:var(--foreground);
+
+    font-weight:map-get($font-weights,'bold');
+
+    font-size:clamp(1.5rem,3vw,2rem);
+
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.card__description{
+
+    color:var(--muted);
+
+    line-height:1.7;
+
+}
+
+/* ==========================================================
+   BADGES
+========================================================== */
+
+.card__badge{
+
+    width:fit-content;
+
+    padding:4px 10px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+.card__badge--success{
+
+    background:rgba(34,197,94,.12);
+
+    color:#16a34a;
+
+}
+
+.card__badge--warning{
+
+    background:rgba(245,158,11,.12);
+
+    color:#d97706;
+
+}
+
+.card__badge--danger{
+
+    background:rgba(239,68,68,.12);
+
+    color:#dc2626;
+
+}
+
+.card__badge--primary{
+
+    background:color-mix(in oklab,var(--primary) 12%,transparent);
+
+    color:var(--primary);
+
+}

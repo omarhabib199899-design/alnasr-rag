@@ -1,0 +1,29 @@
+@use '../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   ABOUT SECTION
+========================================================== */
+.about-section {
+    padding-block: map-get($spacings, '96');
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+@include respond-to('md') {
+    .about-section__wrapper {
+        // Adjust column proportions for medium-sized screens
+        grid-template-columns: 1.05fr .95fr;
+    }
+}
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+@include respond-to('lg') {
+    .about-section {
+        // Increase vertical padding for larger desktop viewports
+        padding-block: map-get($spacings, '120');
+    }
+}

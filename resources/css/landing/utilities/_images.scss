@@ -1,0 +1,35 @@
+@use '../abstract/mixins' as *;
+/**
+ * Background & Image Helpers:
+ * Ensures consistent rendering of media assets across different container sizes.
+ */
+
+/* Background Cover: Fills the container, cropping edges if necessary to maintain ratio */
+.bg-cover {
+    @include img-base; // Resets position and repeat via central mixin
+    background-size: cover;
+}
+
+/* Background Contain: Shows the full image within the container boundaries */
+.bg-contain {
+    @include img-base;
+    background-size: contain;
+}
+
+/**
+ * Object-Fit Utility:
+ * The modern way to handle <img> tags to behave like background-images.
+ * Essential for responsive avatars, cards, and hero banners.
+ */
+.img-fit {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     // Maintains aspect ratio while filling the box
+    object-position: center; // Keeps the focus on the middle of the asset
+}
+.img-contain{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center; 
+}

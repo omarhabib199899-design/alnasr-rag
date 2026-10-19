@@ -1,0 +1,122 @@
+<header class="header">
+    <div class="container-page">
+        <div class="header__wrapper">
+            <!-- ===================== -->
+            <!-- BRAND -->
+            <!-- ===================== -->
+            <div class="branding">
+                <a
+                    routerLink="/"
+                    class="header__logo flex-center gap-10">
+
+                    <img
+                        src="/assets/images/wekala-logo.jpeg"
+                        alt="Wekala POS Logo"
+                        class="bg-cover ic-s38 radius-lg">
+
+                    <div class="flex flex-col leading-tight">
+                        <h1 class="text-primary fs-18 fw-bold font-monospace">Wekala POS</h1>
+                        <span class="text-muted fs-12 font-monospace">Smart Store System</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- ===================== -->
+            <!-- Desktop Navigation -->
+            <!-- ===================== -->
+            <nav class="header__nav">
+                @for(item of navItems; track item.fragment){
+                    <a
+                        [routerLink]="[]"
+                        [fragment]="item.fragment">
+                        {{item.label}}
+                    </a>
+                }
+            </nav>
+
+            <!-- ===================== -->
+            <!-- Actions -->
+            <!-- ===================== -->
+            <div class="header__actions flex items-center gap-12">
+                <div class="header__cta hidden">
+                    <app-button
+                        [routerLink]="[]" fragment="contact"
+                        className="flex-center gap-5 app-btn--rounded"
+                        variant="primary"
+                        size="md"
+                        rightIcon="arrow-right ic-s16 text-surface bg-cover">
+                        Request Demo
+                    </app-button>
+                </div>
+
+                <div class="header__auth-actions hidden flex items-center gap-12">
+                    <app-button
+                        link="/login"
+                        className="app-btn--rounded"
+                        variant="ghost"
+                        size="md">
+                        Sign In
+                    </app-button>
+
+                    <app-button
+                        link="/business/register"
+                        className="app-btn--rounded"
+                        variant="outline"
+                        size="md">
+                        Register
+                    </app-button>
+                </div>
+
+                <button
+                    class="header__toggle px-10 py-10 radius-lg"
+                    (click)="toggleMenu()">
+                    <i
+                        class="ic-base ic-s22 text-foreground bg-cover"
+                        [class]="menuOpen() ?  'ic-close' : 'ic-menu'">
+                    </i>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===================== -->
+<!-- Mobile Menu -->
+<!-- ===================== -->
+<nav class="header__mobile flex flex-col gap-20 p-24"
+     [class.header__mobile--open]="menuOpen()">
+    @for(item of navItems; track item.fragment){
+        <a
+            [routerLink]="[]"
+            [fragment]="item.fragment"
+            (click)="closeMenu()">
+            {{item.label}}
+        </a>
+    }
+    
+    <app-button
+        link="/login"
+        className="app-btn--rounded w-full"
+        variant="ghost"
+        size="md">
+        Sign In
+    </app-button>
+
+    <app-button
+        link="/business/register"
+        className="app-btn--rounded w-full"
+        variant="outline"
+        size="md">
+        Register
+    </app-button>
+
+    <app-button
+        [routerLink]="[]" fragment="contact"
+        className="flex-center gap-5 app-btn--rounded w-full"
+        variant="primary"
+        size="md"
+        rightIcon="arrow-right ic-s16 text-surface bg-cover"
+        (click)="closeMenu()">
+        Request Demo
+    </app-button>
+</nav>

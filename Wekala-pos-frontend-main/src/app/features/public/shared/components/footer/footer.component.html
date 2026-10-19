@@ -1,0 +1,125 @@
+<footer class="footer bg-primary text-scurface">
+
+    <div class="container-page">
+
+        <div class="footer__wrapper grid gap-30 md:grid-cols-2 lg:grid-cols-4 py-48">
+            <!-- ===================== -->
+            <!-- BRAND -->
+            <!-- ===================== -->
+             <div class="flex flex-col flex-start gap-10">
+                <a
+                    routerLink="/"
+                    class="footer__logo flex-center gap-12">
+                    <img
+                        src="/assets/images/wekala-logo.jpeg"
+                        alt="Wekala POS Logo"
+                        class="bg-cover ic-s38 radius-md">
+
+                    <div class="flex flex-col leading-tight">
+                    <h1 class="text-surface fs-18 fw-bold font-monospace">Wekala POS</h1>
+                    <span class="text-surface opacity-70 fs-12 font-monospace">Smart Store System</span>
+                    </div>
+                </a>   
+                <!-- Brief overview of the software's capabilities -->
+                <p class="footer__description opacity-80 text-surface fs-12 lh-relaxed">A flexible point of sale and store management platform for
+                    restaurants, retail, clothing and e-commerce.</p>            
+             </div>
+
+
+            <!-- ===================================== -->
+            <!-- NAVIGATION -->
+            <!-- ===================================== -->
+
+            <div class="footer__column">
+
+                <span class="footer__heading fs-12 fw-semibold opacity-60 text-surface text-uppercase">
+                    Navigate
+                </span>
+
+                <nav class="footer__nav flex flex-col gap-12">
+
+                    <!-- Render dynamic navigation links from the component -->
+                    @for(link of links(); track link.title){
+
+                        <a
+                            class="footer__link fs-12 text-primary-foreground lh-tight opacity-85" 
+                            [href]="link.href">
+
+                            {{ link.title }}
+
+                        </a>
+
+                    }
+
+                </nav>
+
+            </div>
+
+            <!-- ===================================== -->
+            <!-- CONTACT -->
+            <!-- ===================================== -->
+
+            <div class="footer__column">
+
+                <span class="footer__heading fs-12 fw-semibold opacity-60 text-surface text-uppercase">
+                    Contact
+                </span>
+                <div class="footer__contact flex flex-col gap-8">
+                    <!-- Phone contact link -->
+                    <a
+                        class="footer__link flex items-center gap-10"
+                        href="tel:01101129991">
+                        <i class="ic-base ic-phone ic-s14 bg-cover text-surface"></i>
+                        01101129991
+                    </a>
+
+                    <!-- Email contact link -->
+                    <a
+                        class="footer__link flex items-center gap-10"
+                        href="mailto:sales@elwekalaa.com">
+                        <i class="ic-base ic-envelope ic-s14 bg-cover text-surface"></i>
+                        sales@elwekalaa.com
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- ===================================== -->
+            <!-- DEVELOPED -->
+            <!-- ===================================== -->
+
+            <div class="footer__column">
+
+                <span class="footer__heading fs-12 fw-semibold opacity-60 text-surface text-uppercase">
+
+                    Developed By
+
+                </span>
+
+                <h4 class="footer__company fw-bold fs-16 text-surface">
+                    Technique Software
+                </h4>
+                <!-- Company mission statement -->
+                <p class="footer__company-description opacity-80 text-surface fs-12 lh-tight">
+                    Reliable software solutions and business systems.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Footer bottom section containing copyright and attribution -->
+    <div class="footer__bottom fs-10 text-surface opacity-80">
+        <div class="footer__bottom-container flex justify-between container">
+            <span>
+                © 2026 Wekala POS. All rights reserved.
+            </span>
+            <span>
+                Developed by Technique Software
+            </span>
+        </div>
+    </div>
+
+
+</footer>

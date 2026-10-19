@@ -1,0 +1,31 @@
+@use '../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../styles/abstract/mixins' as *;
+
+.business-content {
+    // Restricting width for optimal readability
+    max-width: 40rem;
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.business-content__title {
+    font-size: map-get($font-sizes, 'display-2');
+    line-height: map-get($line-heights, 'none');
+    font-weight: map-get($font-weights, 'bold');
+    color: var(--foreground);
+    // Adjusted spacing for balanced typography
+    word-spacing: -8px;
+    letter-spacing: -.02em;
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.business-content__description {
+    // Ensuring readability with snug line height
+    line-height: map-get($line-heights, 'snug');
+    color: var(--muted);
+}

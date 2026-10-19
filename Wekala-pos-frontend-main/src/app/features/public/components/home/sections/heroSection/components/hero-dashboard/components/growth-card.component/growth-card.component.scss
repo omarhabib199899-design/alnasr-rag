@@ -1,0 +1,59 @@
+@use '../../../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.growth-card{
+
+    position:absolute;
+
+    top:-20px;
+
+    right:-10px;
+    z-index:5;
+        padding:
+        map-get($spacings, '6')
+        map-get($spacings, '10');
+    display:flex;
+    align-items:center;
+    gap:6px;
+    @include shadow-lg;
+
+}
+
+/* ==========================================================
+   ICON
+========================================================== */
+
+.growth-card__icon{
+    background:
+
+        color-mix(
+            in oklab,
+            var(--primary) 12%,
+            transparent
+        );
+}
+
+
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@include respond-to('md',down){
+
+    .growth-card{
+
+        right:-10px;
+
+        top:-18px;
+
+        width:136px;
+
+    }
+
+}

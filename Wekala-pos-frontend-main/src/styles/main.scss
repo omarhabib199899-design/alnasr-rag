@@ -1,0 +1,112 @@
+/**
+ * ==========================================================
+ * WEKALA POS
+ * MAIN SCSS ENTRY
+ * ----------------------------------------------------------
+ * Global entry point for the Design System.
+ * Import order is intentionally structured to avoid conflicts.
+ * ==========================================================
+ */
+
+
+/* ==========================================================
+   1. ABSTRACTS
+   Design Tokens, Mixins, Functions
+========================================================== */
+
+@use './abstract/variables' as *;
+@use 'abstract/functions' as *;
+@use 'abstract/mixins' as *;
+@use 'abstract/placeholders' as *;
+@use 'abstract/icons' as *;
+
+
+
+
+/* ==========================================================
+   2. BASE
+========================================================== */
+
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/colors';
+
+
+/* ==========================================================
+   3. THEMES
+========================================================== */
+
+@use 'themes/light';
+@use 'themes/dark';
+
+
+/* ==========================================================
+   4. UTILITIES
+========================================================== */
+
+@use 'utilities/text';
+@use 'utilities/shadow';
+@use 'utilities/flex';
+@use 'utilities/radius';
+@use 'utilities/images';
+@use 'utilities/opacity';
+@use 'utilities/spacing';
+@use 'utilities/z-index';
+@use 'utilities/animations';
+@use 'utilities/helpers';
+
+
+
+
+
+/* ==========================================================
+   5. LAYOUT
+========================================================== */
+
+@use 'layout/container';
+
+
+
+
+/* ==========================================================
+   6. COMPONENTS
+========================================================== */
+
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/inputs';
+
+
+
+/**
+ * Global Root Configuration:
+ * Applies base styles to the body while leveraging CSS Variables for theming.
+ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+
+  min-height: 100vh;
+
+  background: var(--background);
+
+  color: var(--foreground);
+
+  font-family: var(--main-font);
+
+  direction: var(--main-dir);
+
+  line-height: 1.6;
+
+  overflow-x: hidden;
+
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+
+  -moz-osx-font-smoothing: grayscale;
+
+  @include scrollbar;
+}

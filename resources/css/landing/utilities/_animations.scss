@@ -1,0 +1,342 @@
+/* ==========================================================
+   GLOBAL ANIMATIONS
+   ----------------------------------------------------------
+   Reusable animations across the entire application.
+   Used by Landing Page sections, Cards, Buttons,
+   Navigation and Dashboard Components.
+========================================================== */
+
+
+/* ==========================================================
+   FADE ANIMATIONS
+========================================================== */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fade-in .6s ease forwards;
+}
+
+
+
+/* ==========================================================
+   FADE UP
+========================================================== */
+
+@keyframes fade-up {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(30px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+.fade-up {
+
+  animation: fade-up .7s ease forwards;
+
+}
+
+
+
+/* ==========================================================
+   FADE DOWN
+========================================================== */
+
+@keyframes fade-down {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(-30px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+.fade-down {
+
+  animation: fade-down .7s ease forwards;
+
+}
+
+
+
+/* ==========================================================
+   FADE LEFT
+========================================================== */
+
+@keyframes fade-left {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateX(-30px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+  }
+
+}
+
+.fade-left {
+
+  animation: fade-left .7s ease forwards;
+
+}
+
+
+
+/* ==========================================================
+   FADE RIGHT
+========================================================== */
+
+@keyframes fade-right {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateX(30px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+  }
+
+}
+
+.fade-right {
+
+  animation: fade-right .7s ease forwards;
+
+}
+
+
+
+/* ==========================================================
+   SCALE
+========================================================== */
+
+@keyframes scale-in {
+
+  from {
+
+    opacity: 0;
+
+    transform: scale(.92);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: scale(1);
+
+  }
+
+}
+
+.scale-in {
+
+  animation: scale-in .5s ease forwards;
+
+}
+
+
+
+/* ==========================================================
+   FLOAT
+========================================================== */
+
+@keyframes floating {
+
+  0% {
+
+    transform: translateY(0);
+
+  }
+
+  50% {
+
+    transform: translateY(-10px);
+
+  }
+
+  100% {
+
+    transform: translateY(0);
+
+  }
+
+}
+
+.floating {
+
+  animation: floating 4s ease-in-out infinite;
+
+}
+
+
+
+/* ==========================================================
+   PULSE
+========================================================== */
+
+@keyframes pulse {
+
+  0% {
+
+    transform: scale(1);
+
+  }
+
+  50% {
+
+    transform: scale(1.04);
+
+  }
+
+  100% {
+
+    transform: scale(1);
+
+  }
+
+}
+
+.pulse {
+
+  animation: pulse 2s infinite;
+
+}
+
+
+
+/* ==========================================================
+   ROTATE
+========================================================== */
+
+@keyframes rotate {
+
+  from {
+
+    transform: rotate(0);
+
+  }
+
+  to {
+
+    transform: rotate(360deg);
+
+  }
+
+}
+
+.rotate {
+
+  animation: rotate 8s linear infinite;
+
+}
+
+
+
+
+/* ==========================================================
+   DASHBOARD FLOAT
+========================================================== */
+
+@keyframes dashboard-float {
+
+  0%,
+  100% {
+
+    transform: translateY(0);
+
+  }
+
+  50% {
+
+    transform: translateY(-8px);
+
+  }
+
+}
+
+.dashboard-float {
+
+  animation: dashboard-float 6s ease-in-out infinite;
+
+  will-change: transform;
+
+}
+
+@keyframes dashboard-shadow {
+
+  0% {
+
+    filter: drop-shadow(0 18px 30px rgba(0,0,0,.10));
+
+  }
+
+  50% {
+
+    filter: drop-shadow(0 28px 45px rgba(0,0,0,.18));
+
+  }
+
+  100% {
+
+    filter: drop-shadow(0 18px 30px rgba(0,0,0,.10));
+
+  }
+
+}
+
+.dashboard-shadow{
+
+    animation: dashboard-shadow 8s ease-in-out infinite;
+
+}

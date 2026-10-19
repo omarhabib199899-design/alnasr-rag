@@ -1,0 +1,192 @@
+@use '../../../../../styles/abstract/variables' as *;
+@use '../../../../../styles/abstract/mixins' as *;
+
+/* ===========================================
+   SMALL
+=========================================== */
+.feature-card--sm{
+    /* ===========================================
+    LEADING
+    =========================================== */
+    .feature-card__icon{
+        @include spacing(p, 8);
+        @include radius(map-get($radius,'md'));
+        i{
+            width: 16px;
+            height: 16px;
+        }
+    }
+    /* ===========================================
+    TITLE
+    =========================================== */
+    .feature-card__title{
+        font-size: map-get($font-sizes,'14');
+        font-weight: map-get($font-weights,'medium');
+    }
+
+    .feature-card__description {
+        font-size: map-get($font-sizes,'10');
+    }
+
+}
+
+/* ===========================================
+   MEDIUM
+=========================================== */
+.feature-card--md{
+    /* ===========================================
+    LEADING
+    =========================================== */
+    .feature-card__icon{
+        @include spacing(p, 8);
+        @include radius(map-get($radius,'md'));
+        i{
+            width: 20px;
+            height: 20px;
+        }
+    }
+    /* ===========================================
+    TITLE
+    =========================================== */
+    .feature-card__title{
+        font-size: map-get($font-sizes,'16');
+        font-weight: map-get($font-weights,'semi-bold');
+    }
+
+    .feature-card__description {
+        font-size: map-get($font-sizes,'12');
+    }
+    
+    // Step indicator styling for medium variant
+    .feature-card__step{
+        font-size: map-get($font-sizes,'48');
+        font-weight: map-get($font-weights,'bold');
+        color: color-mix(in oklab, var(--primary) 15%, transparent);
+    }
+
+}
+
+/* ===========================================
+   LARGE
+=========================================== */
+.feature-card--lg{
+    /* ===========================================
+    LEADING
+    =========================================== */
+    .feature-card__icon{
+        @include radius(map-get($radius,'lg'));
+        @include spacing(p, 10);
+        i{
+            width: 22px;
+            height: 22px;
+        }
+    }
+    /* ===========================================
+    TITLE
+    =========================================== */
+    .feature-card__title{
+        font-size: map-get($font-sizes,'20');
+        font-weight: map-get($font-weights,'bold');
+    }
+
+    .feature-card__description {
+        font-size: map-get($font-sizes,'14');
+        font-weight: map-get($font-weights,'medium');
+    }
+}
+
+/* ===========================================
+   DEFAULT
+=========================================== */
+
+.feature-card--default {
+    /* ===========================================
+    ICON
+    =========================================== */
+    .feature-card__icon{
+
+        background-color: var(--primary-surface);
+        i{
+            color: var(--primary);
+        }
+    }
+
+    .feature-card__leading {
+
+        color: var(--primary);
+
+        background: transparent;
+
+    }
+
+    .feature-card__title {
+
+        color: var(--foreground);
+
+    }
+
+    .feature-card__description {
+
+        color: var(--muted);
+
+    }
+}
+
+/* ===========================================
+   PRIMARY
+=========================================== */
+
+.feature-card--primary {
+    background-color: var(--primary) !important;
+
+    /* ===========================================
+    ICON
+    =========================================== */
+    .feature-card__icon{
+        background-color: color-mix(in oklab, var(--surface) 15%, transparent);
+        i{
+            width: 20px;
+            height: 20px;
+            color: var(--surface);
+        }
+    }
+
+    .feature-card__title {
+
+        color: var(--surface);
+
+    }
+
+    .feature-card__description {
+
+       color: color-mix(in oklab, var(--surface) 85%, transparent);
+
+    }
+}
+
+/* ===========================================
+   ARROW
+=========================================== */
+
+// Arrow element positioning and base styling
+.feature-card__arrow{
+
+    position: absolute;
+    background-color: var(--background);
+    top: 50%;
+    @include spacing(p, 4);
+    @include radius(map-get($radius,'rounded'));
+    @include flex-center;
+    right: -22px;
+    transform: translateY(-50%);
+    color: color-mix(in oklab, var(--primary) 40%, transparent);
+    z-index: 5;
+    transition: .25s;
+
+}
+
+// Arrow interaction state on card hover
+.feature-card:hover .feature-card__arrow{
+    transform:translateY(-6px);
+    color: var(--primary);
+}

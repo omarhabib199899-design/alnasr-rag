@@ -1,0 +1,44 @@
+@use '../abstract/variables' as *;
+@use '../abstract/mixins' as *;
+
+
+/* ==========================================================
+   CONTAINER
+   ----------------------------------------------------------
+   Responsive content container used across the application.
+========================================================== */
+
+
+.container-page{
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    @include spacing(px, 18)
+}
+
+
+.container-sm {
+
+  max-width: 720px;
+
+}
+
+.container-md {
+
+  max-width: 960px;
+
+}
+
+.container-lg {
+
+  max-width: 1200px;
+
+}
+
+.container-fluid {
+
+  width: 100%;
+
+  max-width: none;
+
+}

@@ -1,0 +1,80 @@
+@use '../abstract/mixins' as *;
+@use '../abstract/variables' as *;
+
+/* ==========================================================
+   TYPOGRAPHY SYSTEM
+========================================================== */
+
+/*-----------------------------------------------------------
+ Root Variables
+-----------------------------------------------------------*/
+
+:root {
+  --main-font: #{$font-en};
+  --main-dir: ltr;
+  --main-align: left;
+}
+
+[dir='rtl'] {
+  --main-font: #{$font-ar};
+  --main-dir: rtl;
+  --main-align: right;
+}
+
+/*-----------------------------------------------------------
+ Font Faces
+-----------------------------------------------------------*/
+
+/* ---------- Plus Jakarta Sans ---------- */
+
+@include font-face('Plus Jakarta Sans', 400, 'plus-jakarta', 'PlusJakartaSans-Regular');
+@include font-face( 'Plus Jakarta Sans', 500, 'plus-jakarta','PlusJakartaSans-Medium');
+@include font-face('Plus Jakarta Sans', 600, 'plus-jakarta', 'PlusJakartaSans-SemiBold');
+@include font-face('Plus Jakarta Sans', 700, 'plus-jakarta', 'PlusJakartaSans-Bold');
+@include font-face('Plus Jakarta Sans', 800, 'plus-jakarta', 'PlusJakartaSans-ExtraBold');
+
+/* ---------- Cairo ---------- */
+@include font-face('Montserrat-Arabic', 400, 'montserrat', 'Montserrat-Regular');
+@include font-face('Montserrat-Arabic', 500, 'montserrat', 'Montserrat-Medium');
+@include font-face('Montserrat-Arabic', 600, 'montserrat', 'Montserrat-SemiBold');
+@include font-face('Montserrat-Arabic', 700, 'montserrat', 'Montserrat-Bold');
+@include font-face('Montserrat-Arabic', 800, 'montserrat', 'Montserrat-ExtraBold');
+/*-----------------------------------------------------------
+ Font Size Utilities
+-----------------------------------------------------------*/
+
+@each $size, $value in $font-sizes {
+  .fs-#{$size} {
+    font-size: $value !important;
+  }
+}
+
+/*-----------------------------------------------------------
+ Font Weight Utilities
+-----------------------------------------------------------*/
+
+@each $weight, $value in $font-weights {
+  .fw-#{$weight} {
+    font-weight: $value !important;
+  }
+}
+
+.font-monospace{
+  font-family:monospace;
+}
+
+/*-----------------------------------------------------------
+ Letter Spacing
+-----------------------------------------------------------*/
+
+.ls-tight {
+  letter-spacing: -.02em;
+}
+
+.ls-normal {
+  letter-spacing: normal;
+}
+
+.ls-wide {
+  letter-spacing: .04em;
+}

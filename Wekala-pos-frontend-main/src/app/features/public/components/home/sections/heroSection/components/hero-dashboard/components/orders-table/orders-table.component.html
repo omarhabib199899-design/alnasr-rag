@@ -1,0 +1,31 @@
+<section class="orders-table overflow-hidden card card--glass">
+    <!-- Table header -->
+    <header class="orders-table__header p-4">
+        <h3 class="fs-12 fw-semibold text-foreground">
+            {{ title() }}
+        </h3>
+    </header>
+    <!-- Orders list body -->
+    <div class="orders-table__body flex flex-col">
+        @for(order of orders(); track order.id){
+            <div class="orders-table__row p-4 flex justify-between items-center">
+                <!-- Order basic information -->
+                <div class="orders-table__info flex items-center gap-8 min-w-0">
+                    <span class="orders-table__id fs-12 text-muted fw-semibold font-monospace">
+                        {{ order.id }}
+                    </span>
+                    <span class="orders-table__name text-truncate fs-12 text-foreground">
+                        {{ order.customer }}
+                        ·
+                        {{ order.type }}
+                    </span>
+                </div>
+                <!-- Order monetary amount -->
+                <span class="orders-table__price whitespace-nowrap fs-12 fw-bold text-primary">
+                    EGP {{ order.amount }}
+                </span>
+            </div>
+        }
+    </div>
+
+</section>

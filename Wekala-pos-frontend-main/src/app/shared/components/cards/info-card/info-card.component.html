@@ -1,0 +1,59 @@
+<ng-template #content>
+    <!-- Render icon if provided -->
+    @if(icon()){
+
+        <div class="info-card__icon flex-center">
+
+            <i
+                class="ic-base bg-cover"
+                [class]="'ic-base bg-cover ic-' + icon()">
+            </i>
+
+        </div>
+
+    }
+
+    <!-- Fallback to leading element if no icon is provided -->
+    @else if(leading()){
+        <div class="info-card__leading flex-center">{{ leading() }}</div>
+    }
+
+    <!-- Main card text content -->
+    <div class="info-card__content flex flex-col">
+        <!-- Optional badge element -->
+        @if(badge()){
+            <span class="info-card__badge">
+                {{ badge() }}
+            </span>
+        }
+        <!-- Card title -->
+        <h3 class="info-card__title">
+            {{ title() }}
+        </h3>
+        <!-- Optional description text -->
+        @if(description()){
+            <p class="info-card__description">
+                {{ description() }}
+            </p>
+        }
+    </div>
+    <!-- Optional directional arrow icon -->
+    @if(arrow()){
+        <i class="ic-base ic-s18 ic-arrow-right info-card__arrow"></i>
+    } 
+</ng-template>
+
+<!-- Render as an anchor tag if a link is provided -->
+@if(link()) {
+
+<a [href]="link()" [ngClass]="classes()">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</a>
+
+<!-- Render as an article element if no link is provided -->
+} @else {
+
+<article [ngClass]="classes()">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</article>
+}

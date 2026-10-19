@@ -1,0 +1,88 @@
+/**
+ * ICON SYSTEM (Masking Technique)
+ * ---------------------------------------------------------
+ * This system treats SVGs as masks, allowing them to inherit 
+ * the text color (currentColor). This is the gold standard 
+ * for maintaining icons in Light/Dark mode projects.
+ */
+
+/* Base: Defines the core behavior of all icons */
+.ic-base {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+
+  // Crucial: The icon takes the color of its parent text
+  background-color: currentColor;
+
+  // Masking properties to ensure the SVG scales and centers correctly
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+
+  // Webkit prefix for cross-browser compatibility (Safari/Chrome)
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+
+  vertical-align: middle;
+}
+
+/* Sizes: Standardized sizing tokens for UI consistency */
+.ic-s6 { width: 6px; height: 6px; }
+.ic-s8 { width: 8px; height: 8px; }
+.ic-s10 { width: 10px; height: 10px; }
+.ic-s12 { width: 12px; height: 12px; }
+.ic-s14 { width: 14px; height: 14px; }
+.ic-s16 { width: 16px; height: 16px; }
+.ic-s18 { width: 18px; height: 18px; }
+.ic-s20 { width: 20px; height: 20px; }
+.ic-s22 { width: 22px; height: 22px; }
+.ic-s24 { width: 24px; height: 24px; }
+.ic-s28 { width: 28px; height: 28px; }
+.ic-s32 { width: 32px; height: 32px; }
+.ic-s38 { width: 38px; height: 38px; }
+
+.ic-s64 { width: 64px; height: 64px; }
+
+/**
+ * Icon Registry:
+ * Maps specific SVG paths to utility classes.
+ */
+ .ic-arrow-right { mask-image: url('/assets/icons/arrow-right.svg'); -webkit-mask-image: url('/assets/icons/arrow-right.svg'); }
+ .ic-menu       { mask-image: url('/assets/icons/Menu.svg'); -webkit-mask-image: url('/assets/icons/Menu.svg'); }
+ .ic-close      { mask-image: url('/assets/icons/Close.svg'); -webkit-mask-image: url('/assets/icons/Close.svg'); }
+ .ic-phone      { mask-image: url('/assets/icons/Phone.svg'); -webkit-mask-image: url('/assets/icons/Phone.svg'); }
+ .ic-check      { mask-image: url('/assets/icons/Check.svg'); -webkit-mask-image: url('/assets/icons/Check.svg'); }
+ .ic-arrow-trend-up      { mask-image: url('/assets/icons/arrow-trend-up.svg'); -webkit-mask-image: url('/assets/icons/arrow-trend-up.svg'); }
+ .ic-cart-shopping { mask-image: url('/assets/icons/cart-shopping.svg'); -webkit-mask-image: url('/assets/icons/cart-shopping.svg'); }
+ .ic-file-invoice-dollar       { mask-image: url('/assets/icons/file-invoice-dollar.svg'); -webkit-mask-image: url('/assets/icons/file-invoice-dollar.svg'); }
+ .ic-user-group      { mask-image: url('/assets/icons/user-group.svg'); -webkit-mask-image: url('/assets/icons/user-group.svg'); }
+ .ic-building      { mask-image: url('/assets/icons/building.svg'); -webkit-mask-image: url('/assets/icons/building.svg'); }
+ .ic-cubes      { mask-image: url('/assets/icons/cubes.svg'); -webkit-mask-image: url('/assets/icons/cubes.svg'); }
+ .ic-chart-column      { mask-image: url('/assets/icons/chart-column.svg'); -webkit-mask-image: url('/assets/icons/chart-column.svg'); }
+ .ic-globe       { mask-image: url('/assets/icons/globe.svg'); -webkit-mask-image: url('/assets/icons/globe.svg'); }
+ .ic-utensils     { mask-image: url('/assets/icons/utensils.svg'); -webkit-mask-image: url('/assets/icons/utensils.svg'); }
+ .ic-store      { mask-image: url('/assets/icons/store.svg'); -webkit-mask-image: url('/assets/icons/store.svg'); }
+ .ic-sparkle      { mask-image: url('/assets/icons/sparkle.svg'); -webkit-mask-image: url('/assets/icons/sparkle.svg'); }
+ .ic-shirt      { mask-image: url('/assets/icons/shirt.svg'); -webkit-mask-image: url('/assets/icons/shirt.svg'); }
+ .ic-cube     { mask-image: url('/assets/icons/cube.svg'); -webkit-mask-image: url('/assets/icons/cube.svg'); }
+ .ic-file-invoice      { mask-image: url('/assets/icons/file-invoice.svg'); -webkit-mask-image: url('/assets/icons/file-invoice.svg'); }
+ .ic-clipboard-list      { mask-image: url('/assets/icons/clipboard-list.svg'); -webkit-mask-image: url('/assets/icons/clipboard-list.svg'); }
+ .ic-shield-check      { mask-image: url('/assets/icons/shield-check.svg'); -webkit-mask-image: url('/assets/icons/shield-check.svg'); }
+ .ic-envelope      { mask-image: url('/assets/icons/envelope.svg'); -webkit-mask-image: url('/assets/icons/envelope.svg'); }
+ .ic-bolt      { mask-image: url('/assets/icons/bolt.svg'); -webkit-mask-image: url('/assets/icons/bolt.svg'); }
+ .ic-sliders      { mask-image: url('/assets/icons/sliders.svg'); -webkit-mask-image: url('/assets/icons/sliders.svg'); }
+ .ic-headset      { mask-image: url('/assets/icons/headset.svg'); -webkit-mask-image: url('/assets/icons/headset.svg'); }
+ .ic-credit     { mask-image: url('/assets/icons/credit.svg'); -webkit-mask-image: url('/assets/icons/credit.svg'); }
+ .ic-rotate      { mask-image: url('/assets/icons/rotate.svg'); -webkit-mask-image: url('/assets/icons/rotate.svg'); }
+ .ic-location      { mask-image: url('/assets/icons/clipboard-list.svg'); -webkit-mask-image: url('/assets/icons/clipboard-list.svg'); }
+ .ic-layer-group      { mask-image: url('/assets/icons/layer-group.svg'); -webkit-mask-image: url('/assets/icons/layer-group.svg'); }
+
+
+
+
+
+
+
+

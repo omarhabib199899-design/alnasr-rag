@@ -1,0 +1,47 @@
+@use '../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   CONTACT SECTION
+========================================================== */
+
+.contact-section {
+    position: relative;
+    margin-top: map-get($spacings, '48');
+    // Add vertical padding for consistent section spacing
+    padding-block: map-get($spacings, '64');
+}
+
+/* ==========================================================
+   WRAPPER
+========================================================== */
+
+.contact-section__wrapper {
+    display: grid;
+    gap: map-get($spacings, '40');
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md') {
+    .contact-section__wrapper {
+        // Increase gap for better visual separation on larger screens
+        gap: map-get($spacings, '48');
+    }
+}
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+
+@include respond-to('lg') {
+    .contact-section__wrapper {
+        // Define column ratio for split-screen contact layout
+        grid-template-columns: .9fr 1.1fr;
+        align-items: start;
+        // Adjust gap for desktop composition
+        gap: map-get($spacings, '80');
+    }
+}

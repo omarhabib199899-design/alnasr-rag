@@ -1,0 +1,84 @@
+@use '../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   CONTACT CONTENT
+========================================================== */
+
+.contact-content {
+
+    max-width: 30rem;
+
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.contact-content__header {
+
+    width: 100%;
+
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.contact-content__title {
+
+    font-size: map-get($font-sizes,'display-2');
+
+    line-height: map-get($line-heights,'none');
+
+    font-weight: map-get($font-weights,'bold');
+
+    color: var(--foreground);
+
+    letter-spacing: -.02em;
+
+    word-spacing: -8px;
+
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.contact-content__description {
+
+    line-height: map-get($line-heights,'snug');
+
+    color: var(--muted);
+
+}
+
+/* ==========================================================
+   CARDS
+========================================================== */
+
+.contact-content__cards {
+
+    width: 100%;
+
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@include respond-to('md', 'down') {
+
+    .contact-content {
+
+        max-width: 100%;
+
+    }
+
+    .contact-content__title {
+
+        font-size: map-get($font-sizes,'display-3');
+
+    }
+
+}

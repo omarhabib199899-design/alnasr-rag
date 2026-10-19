@@ -1,0 +1,25 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20">
+    <!-- Render the featured business item with increased span for prominence -->
+    @if (businesses().length > 0) {
+        <app-feature-card
+            class="md:col-span-2 lg:col-span-2"
+            size="lg"
+            variant="primary"
+            className="flex flex-col items-start gap-12 card main-card radius-xl card--hover-primary p-28 h-full"
+            [icon]="businesses()[0].icon"
+            [title]="businesses()[0].title"
+            [description]="businesses()[0].description">
+        </app-feature-card>
+    }
+
+    <!-- Render the remaining business items in the grid -->
+    @for (item of businesses().slice(1); track item.title) {
+        <app-feature-card
+            size="lg"
+            className="flex flex-col items-start gap-12 card main-card radius-xl card--hover-primary p-28 h-full"
+            [icon]="item.icon"
+            [title]="item.title"
+            [description]="item.description">
+        </app-feature-card>
+    }
+</div>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AL NASR PORTAL - Customer 360 Final Mockup - Corrected KPIs</title>
+<style>
+:root{
+  --navy:#16345f;--navy2:#1f4777;--blue:#2f7de1;--blue2:#1f68c8;--blueSoft:#eaf3ff;
+  --line:#d9e6f5;--line2:#e9f0f8;--bg:#f5f8fc;--panel:#fff;--text:#183153;--muted:#6f839d;
+  --green:#139653;--greenSoft:#eaf8f0;--amber:#a96d12;--amberSoft:#fff6e3;--rose:#ad4056;--roseSoft:#fff0f3;
+  --teal:#1c7f78;--tealSoft:#ebfbf9;--violet:#6c50b2;--violetSoft:#f3efff;--shadow:0 6px 22px rgba(27,60,102,.055)
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:12px}
+button,input,select{font:inherit}.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}.main{min-width:0}
+.sidebar{background:linear-gradient(180deg,#15325c,#173a69);color:#dfe9f7;padding:14px 12px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{font-size:16px;font-weight:800;color:#fff;margin:2px 8px 16px;letter-spacing:.4px}.brand small{display:block;font-size:9px;color:#9fc0e7;margin-top:2px}
+.side-title{font-size:9px;letter-spacing:1px;color:#8eb0d7;margin:15px 8px 6px;font-weight:800}.nav-item,.sub-item{padding:8px 9px;border-radius:7px;cursor:pointer;color:#dce8f7;display:flex;gap:8px;align-items:center}.nav-item:hover,.sub-item:hover{background:rgba(255,255,255,.07)}.nav-item.active,.sub-item.active{background:#2b6fbe;color:#fff}.sub-wrap{margin-left:12px;border-left:1px solid rgba(255,255,255,.14);padding-left:7px}
+.dot{width:6px;height:6px;border-radius:50%;background:#7daee0}
+.topbar{height:48px;background:#fff;border-bottom:1px solid var(--line2);display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:sticky;top:0;z-index:30}.topbar .title{font-size:13px;font-weight:800}.topbar .user{color:var(--muted);font-size:10px}
+.content{padding:12px 14px 22px}.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.crumbs{font-size:10px;color:var(--muted)}.crumbs b{color:var(--text)}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;color:#426080;font-weight:700;cursor:pointer}.btn:hover{background:#f7faff}
+.customer-head{background:#fff;border:1px solid var(--line2);border-radius:11px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow);margin-bottom:8px}.customer-title{display:flex;align-items:center;gap:9px}.avatar{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#2f7de1,#7bb2f4);display:grid;place-items:center;color:#fff;font-weight:800;font-size:11px}.customer-title h1{font-size:15px;margin:0 0 2px}.customer-title p{font-size:10px;margin:0;color:var(--muted)}.head-badges{display:flex;gap:6px}.badge{padding:3px 7px;border-radius:999px;font-size:9px;font-weight:800;background:var(--greenSoft);color:var(--green)}.badge.blue{background:#eef5ff;color:#2e68ad}
+.tabs{background:#fff;border:1px solid var(--line2);border-radius:11px 11px 0 0;display:flex;overflow-x:auto;white-space:nowrap;box-shadow:var(--shadow);position:sticky;top:48px;z-index:20}.tab{padding:10px 15px;border:0;background:transparent;color:#425a78;font-weight:700;cursor:pointer;border-bottom:2px solid transparent}.tab.active{color:#1262cc;border-bottom-color:var(--blue);background:linear-gradient(180deg,#fff,#f7fbff)}.tab:hover{background:#f7faff}
+.tab-content{background:#fff;border:1px solid var(--line2);border-top:0;border-radius:0 0 11px 11px;box-shadow:var(--shadow);padding:10px 11px 12px}
+.section-head{background:linear-gradient(90deg,#eaf3ff,#f7fbff);border:1px solid #d8e7fa;border-radius:9px;padding:7px 9px;display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}.section-head h2{font-size:12px;margin:0;display:flex;align-items:center;gap:7px}.section-icon{width:18px;height:18px;border-radius:5px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:9px}
+.kpi-label,.charts-label{font-size:10px;font-weight:800;color:#47617f;margin:5px 0 5px}.kpi-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:7px;overflow:hidden}.kpi-table th,.kpi-table td{padding:5px 7px;border-bottom:1px solid var(--line2);border-right:1px solid var(--line2);text-align:left;line-height:1.15}.kpi-table th:last-child,.kpi-table td:last-child{border-right:0}.kpi-table tr:last-child td{border-bottom:0}.kpi-table th{background:#eef5fd;color:#37516e;font-size:9px}.kpi-table td{font-size:9.5px}.kpi-table tbody tr:nth-child(even) td{background:#fbfdff}.kpi-table td.value{font-weight:800}.change.pos{color:var(--green);font-weight:800}.change.neg{color:#c0392b;font-weight:800}
+.group-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.group{border:1px solid var(--line2);border-radius:8px;overflow:hidden}.group.full{grid-column:1/-1}.group-title{padding:7px 9px;font-weight:800;border-bottom:1px solid var(--line2)}.tint-blue{background:var(--blueSoft);color:#285b9b}.tint-green{background:var(--greenSoft);color:#28794a}.tint-amber{background:var(--amberSoft);color:#8a631b}.tint-rose{background:var(--roseSoft);color:#9d4257}.tint-teal{background:var(--tealSoft);color:#1f716d}.tint-violet{background:var(--violetSoft);color:#654d9a}.rows{display:grid;grid-template-columns:1fr 1fr}.row{display:flex;justify-content:space-between;gap:10px;padding:6px 9px;border-bottom:1px solid #edf2f7;min-height:29px}.row .label{color:#6d8198}.row .val{font-weight:800;text-align:right}.row .val.green{color:var(--green)}
+.period-row{display:flex;justify-content:flex-end;margin:6px 0 5px}.period{border:1px solid var(--line);background:#fff;border-radius:7px;padding:5px 7px;color:#405d7b;font-weight:700;font-size:9px}
+.chart-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.chart-card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:7px 8px;min-height:150px;box-shadow:0 2px 9px rgba(26,58,97,.025)}.chart-card.full{grid-column:1/-1}.chart-title{font-size:10px;font-weight:800;margin-bottom:1px}.chart-sub{font-size:8px;color:var(--muted);margin-bottom:2px}.linebox{height:108px;position:relative}.linebox svg{width:100%;height:100%;overflow:visible}.gridline{stroke:#edf2f7;stroke-width:1}.trend{fill:none;stroke:var(--chartColor,var(--blue));stroke-width:2.7}.pt{fill:var(--chartColor,var(--blue))}.ptval{font-size:7.5px;font-weight:700;fill:var(--chartColor,#365a86);text-anchor:middle}.month-labels{display:flex;justify-content:space-between;padding:0 2px;margin-top:0}.month-labels span{font-size:7.5px;color:#71849a}.month-labels span.current{font-weight:800;color:var(--blue2)}
+.donut-wrap{height:120px;display:flex;align-items:center;justify-content:center;gap:14px}.donut{width:104px;height:104px;border-radius:50%;position:relative;background:conic-gradient(var(--donutColor,var(--blue)) calc(var(--p)*1%),#e9f0f8 0)}.donut:after{content:"";position:absolute;inset:17px;background:#fff;border-radius:50%}.donut-center{position:absolute;inset:0;display:grid;place-items:center;z-index:2;font-weight:800;font-size:15px;color:#21496f}.donut-legend{font-size:9px;color:#5f7590;line-height:1.65}.legend-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;background:var(--donutColor,var(--blue))}.legend-dot.light{background:#e9f0f8;border:1px solid #d5e2f2}
+.stacked-wrap{height:132px;display:flex;align-items:flex-end;gap:8px;padding:5px 4px 18px;border-bottom:1px solid #edf2f7;position:relative}.stack-col{flex:1;display:flex;flex-direction:column-reverse;justify-content:flex-start;height:100%;position:relative}.seg{width:66%;margin:0 auto}.s1{background:#2f7de1}.s2{background:#4fa6ec}.s3{background:#71c1d7}.s4{background:#77c996}.s5{background:#e1c55b}.s6{background:#f0a15e}.s7{background:#e47d76}.s8{background:#bd6273}.stack-month{position:absolute;left:0;right:0;bottom:-15px;text-align:center;font-size:7.5px;color:#71849a}.stack-month.current{font-weight:800;color:var(--blue2)}.legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:5px}.legend span{display:flex;align-items:center;gap:3px;font-size:7.5px;color:#65798f}.legend i{width:7px;height:7px;border-radius:2px;display:inline-block}
+.owner-switch{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 7px}.owner-btn{border:1px solid var(--line);background:#fff;color:#49627f;border-radius:7px;padding:5px 9px;font-size:9px;font-weight:800;cursor:pointer}.owner-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}.item-note{font-size:8.5px;color:var(--muted);margin-left:auto}.table-scroll{overflow-x:auto}.item-kpi-table{min-width:930px}.item-kpi-table th,.item-kpi-table td{text-align:center}.item-kpi-table th:first-child,.item-kpi-table td:first-child{text-align:left;white-space:nowrap}.owner-caption{font-size:9px;color:#607891;font-weight:700;margin:0 0 5px}.insight-list{display:flex;flex-direction:column;gap:6px}.insight{border:1px solid var(--line2);border-radius:8px;padding:8px 9px}.insight h3{font-size:10px;margin:0 0 3px}.insight p{margin:0;color:#607891;font-size:9.5px;line-height:1.4}
+.customer-list{display:none}.filters{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;background:#fff;border:1px solid var(--line2);padding:8px;border-radius:8px;margin-bottom:8px}.filters input{width:100%;padding:6px 7px;border:1px solid var(--line);border-radius:6px;background:#fbfdff}.list-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line2);border-radius:8px;overflow:hidden}.list-table th,.list-table td{padding:7px 8px;border-bottom:1px solid var(--line2);text-align:left;font-size:10px}.list-table th{background:#eef5fd}.list-table tr{cursor:pointer}.list-table tr:hover td{background:#f6faff}.mobile-menu{display:none;border:0;background:#eef5fd;color:#245c9b;width:30px;height:30px;border-radius:7px;font-size:16px}
+@media(max-width:1150px){.chart-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.app{grid-template-columns:200px 1fr}.filters{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.app{display:block}.sidebar{position:fixed;left:-250px;z-index:60;width:230px;transition:.22s}.sidebar.open{left:0}.mobile-menu{display:inline-grid;place-items:center}.topbar{padding:0 10px}.content{padding:9px}.customer-head{align-items:flex-start;flex-direction:column}.tabs{top:48px}.group-grid{grid-template-columns:1fr}.group.full{grid-column:auto}.rows{grid-template-columns:1fr}.chart-grid{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.tab{padding:9px 12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand">AL NASR PORTAL<small>View-only reporting portal</small></div>
+  <div class="side-title">EXECUTIVE LAYER</div><div class="nav-item"><span class="dot"></span>Executive</div>
+  <div class="side-title">BUSINESS LAYERS</div><div class="nav-item active"><span class="dot"></span>Commercial</div>
+  <div class="sub-wrap"><div class="sub-item active" onclick="showCustomerList()">Customers</div><div class="sub-item">Sales Representative</div><div class="sub-item">Sales Owner</div><div class="sub-item">Management</div></div>
+  <div class="nav-item"><span class="dot"></span>Purchasing</div><div class="nav-item"><span class="dot"></span>Inventory</div><div class="nav-item"><span class="dot"></span>Invoice Operations</div><div class="nav-item"><span class="dot"></span>Finance</div><div class="nav-item"><span class="dot"></span>Reports</div>
+  <div class="side-title">DECISION LAYER</div><div class="nav-item"><span class="dot"></span>AI Decision Center</div>
+  <div class="side-title">INFORMATION LAYER</div><div class="nav-item"><span class="dot"></span>Data Quality</div><div class="nav-item"><span class="dot"></span>KPI Master</div><div class="nav-item"><span class="dot"></span>User Administration</div>
+</aside>
+<main class="main">
+  <header class="topbar"><div style="display:flex;gap:8px;align-items:center"><button class="mobile-menu" onclick="toggleSidebar()">☰</button><div class="title">Commercial / Customers</div></div><div class="user">View-only reporting portal</div></header>
+  <div class="content">
+    <section class="customer-list" id="customerList">
+      <div class="toolbar"><div class="crumbs">Commercial / <b>Customers</b></div></div>
+      <div class="filters"><input placeholder="Customer Number"><input placeholder="Customer Name"><input placeholder="Sales Representative"><input placeholder="Sales Owner"><input placeholder="Management"></div>
+      <table class="list-table"><thead><tr><th>Customer Number</th><th>Customer Name</th><th>Sales Representative</th><th>Sales Owner</th><th>Management</th></tr></thead><tbody>
+        <tr onclick="show360()"><td>CUS-0001</td><td>Alpha Medical Center</td><td>ABDELAZIZ DORGHAM</td><td>Ahmed Saleh</td><td>Hospitals</td></tr>
+        <tr><td>CUS-0104</td><td>Kingdom Clinic</td><td>Mahmoud Adel</td><td>Omar Hassan</td><td>Clinics</td></tr>
+        <tr><td>CUS-0259</td><td>Prime Care</td><td>Ahmed Sameh</td><td>Ahmed Saleh</td><td>Private</td></tr>
+      </tbody></table>
+    </section>
+
+    <section id="customer360">
+      <div class="toolbar"><div class="crumbs">Commercial / Customers / <b>Customer 360</b></div><button class="btn" onclick="showCustomerList()">Back to Customers</button></div>
+      <div class="customer-head"><div class="customer-title"><div class="avatar">AM</div><div><h1>Alpha Medical Center</h1><p>Customer No. CUS-0001 · Hospital · Jeddah</p></div></div><div class="head-badges"><span class="badge">ACTIVE</span><span class="badge blue">VIEW ONLY</span></div></div>
+      <div class="tabs" id="tabs"></div>
+      <div class="tab-content" id="tabContent"></div>
+    </section>
+  </div>
+</main>
+</div>
+<script>
+const months=['Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'];
+const currentMonthIndex=11;
+const KPI={
+ sales:['Net Sales','Gross Sales','Sales Average','Sales Median','Revenue Volatility %','Revenue Contribution %','Revenue Rank - Company','Invoice Count','Average Invoice Value','Largest Invoice','SKU Count','Average SKU Revenue','Average Purchase Interval'],
+ ret:['Return','Return Average','Credit Notes Count','Return Rate %','Average Credit Note','SKU Count','Average SKU Revenue'],
+ so:['Sales Order Value','Sales Order SKU Count','Sales Order Quantity','Pending Value','Pending SKU Count','Pending Quantity','Lost Sales Value','Lost SKU Count','Lost Quantity','Value Fulfillment Rate %','Quantity Fulfillment Rate %','SKU Fulfillment Rate %','Lost Sales Rate %','Pending Rate %'],
+ profit:['Gross Profit','Gross Margin %','GP Contribution %','GP Rank','Average GP% per Invoice'],
+ coll:['Collection','Collection Ratio vs Sales','Collection Average','Collection Median','Collection Volatility %','Collection Contribution %','Collection Rank - Company','Payment Count','Average Payment Value','Largest Payment Value','Average Payment Interval'],
+ ar:['Outstanding AR','Outstanding Invoices Count','Outstanding Contribution %','Overdue Amount','Overdue Invoices Count','Overdue Ratio %','Overdue Contribution %','Due This Month','Due This Month Ratio %','Open Invoices Count'],
+ ages:['Aging Value %','Aging 0-30','Aging 31-60','Aging 61-90','Aging 91-120','Aging 121-150','Aging 151-180','Aging 181-210','Aging >210','Outstanding AR'],
+ credit:['Credit Limit','Credit Utilisation %','Available Credit','DSO 12M','DSO 6M','DSO 3M','DSO Insight / Trend','Recommended Credit Limit']
+};
+const charts={sales:['Net Sales','Sales Average','Sales Median','Invoice Count','Average Invoice Value','SKU Count','Average SKU Revenue'],ret:['Return','Return Average','Credit Notes Count','Average Credit Note','SKU Count','Average SKU Revenue'],so:['Sales Order Value','Sales Order SKU Count','Lost Sales Value','Lost SKU Count','Value Fulfillment Rate %','Quantity Fulfillment Rate %','SKU Fulfillment Rate %','Lost Sales Rate %'],profit:['Gross Profit','Gross Margin %','Average GP% per Invoice'],coll:['Collection','Collection Ratio vs Sales','Collection Average','Collection Median','Payment Count','Average Payment Value']};
+const tabDefs=[['Overview','overview'],['Sales','sales'],['Return','ret'],['Sales Orders','so'],['Profitability','profit'],['Collection','coll'],['Accounts Receivable','ar'],['Due Ages','ages'],['Credit Limit','credit'],['Item Performance','items'],['Insights (7)','insights']];
+let active='overview';
+let itemOwner='Owner 1';
+const itemOwners=['Owner 1','Owner 2','Owner 3','Owner 4','Owner 5'];
+const itemKPIs=['Net Sales','Avg Sales','Sales Contribution %','SKU Count','SKU Avg Sales','Profit %','Profit Contribution %'];
+const standardPeriods=['Lifetime','Previous Year','YTD','Previous Month','MTD','YESTRDAY','TODAY'];
+const itemPeriods=['Lifetime','Previous Year','YTD','Previous Month','MTD','YESTRDAY','TODAY'];
+const chartPalette=['#2f7de1','#21a59a','#7b61d8','#ef9a42','#2f9b61','#d05a7a','#3979a8','#b078d4'];
+const sampleSeries=[62,72,92,76,86,79,89,98,96,84,90,99];
+const samplePct=[8.4,9.9,11.2,10.5,12.1,13.5,14.1,15.3,14.8,13.9,14.6,12.7];
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function showCustomerList(){document.getElementById('customer360').style.display='none';document.getElementById('customerList').style.display='block'}
+function show360(){document.getElementById('customerList').style.display='none';document.getElementById('customer360').style.display='block';render()}
+function renderTabs(){document.getElementById('tabs').innerHTML=tabDefs.map(([label,key])=>`<button class="tab ${active===key?'active':''}" onclick="active='${key}';render()">${label}</button>`).join('')}
+function fmtValue(name,idx){
+  if(name==='Average Purchase Interval'||name==='Average Payment Interval') return (17+idx)+' days';
+  if(name.startsWith('DSO')) return (58-idx*4)+' days';
+  if(name.includes('Rank')) return '#'+(11+idx);
+  if(name.includes('%')) return (12.4+idx*1.9).toFixed(1)+'%';
+  if(name.includes('Count')||name.includes('SKU')||name.includes('Quantity')) return (131+idx*37).toLocaleString();
+  if(name.includes('Date')) return '10 Sep 2026';
+  if(name.includes('Insight')) return 'Stable / Improving';
+  return 'SAR '+(407311+idx*38290).toLocaleString();
+}
+function periodValue(name,kpiIdx,pIdx){
+  const baseIdx=kpiIdx+pIdx;
+  if(name==='Average Purchase Interval'||name==='Average Payment Interval') return (14+((baseIdx*3)%19))+' days';
+  if(name.startsWith('DSO')) return (42+((baseIdx*5)%47))+' days';
+  if(name.includes('Rank')) return '#'+(6+((baseIdx*7)%43));
+  if(name==='DSO Insight / Trend') return pIdx<2?'Stable':(pIdx<5?'Improving':'Watch');
+  if(name.includes('%')) return (8.7+((baseIdx*2.3)%27)).toFixed(1)+'%';
+  if(name.includes('Count')||name.includes('SKU')||name.includes('Quantity')) return (85+((baseIdx*41)%520)).toLocaleString();
+  return 'SAR '+(185000+((baseIdx*82750)%1850000)).toLocaleString();
+}
+function tableSection(key){
+  const rows=KPI[key].map((x,i)=>`<tr><td>${x}</td>${standardPeriods.map((p,j)=>`<td class="${j===2||j===4||j===6?'value':''}">${periodValue(x,i,j)}</td>`).join('')}</tr>`).join('');
+  return `<div class="kpi-label">KPIs</div><div class="table-scroll"><table class="kpi-table item-kpi-table"><thead><tr><th>KPI</th>${standardPeriods.map(p=>`<th>${p}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`
+}
+function lineChart(title,idx,seriesOverride){
+  const vals=seriesOverride||(title.includes('%')?samplePct:sampleSeries).map((v,j)=>title.includes('%')?+(v+(idx%3)*1.2).toFixed(1):Math.round(v*(9000+idx*1400)));
+  const W=420,H=108,left=16,right=8,top=18,bottom=10; const min=Math.min(...vals),max=Math.max(...vals); const span=Math.max(1,max-min); const xStep=(W-left-right)/11;
+  const pts=vals.map((v,j)=>[left+j*xStep, top+(H-top-bottom)*(1-(v-min)/span)]);
+  const labels=pts.map((p,j)=>`<text class="ptval" x="${p[0]}" y="${Math.max(9,p[1]-7)}">${title.includes('%')?vals[j].toFixed(1)+'%':compact(vals[j])}</text>`).join('');
+  const color=chartPalette[idx%chartPalette.length];
+  return `<div class="chart-card" style="--chartColor:${color}"><div class="chart-title">${title}</div><div class="chart-sub">Rolling last 12 months · current month is MTD</div><div class="linebox"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${[30,55,80].map(y=>`<line class="gridline" x1="0" y1="${y}" x2="${W}" y2="${y}"/>`).join('')}<polyline class="trend" points="${pts.map(p=>p.join(',')).join(' ')}"/>${pts.map(p=>`<circle class="pt" cx="${p[0]}" cy="${p[1]}" r="2.7"/>`).join('')}${labels}</svg></div><div class="month-labels">${months.map((m,j)=>`<span class="${j===currentMonthIndex?'current':''}" style="${j===currentMonthIndex?'color:'+color:''}">${m}${j===currentMonthIndex?'*':''}</span>`).join('')}</div></div>`
+}
+function compact(n){if(n>=1000000)return (n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return String(n)}
+function donutCard(title,pct,mode,idx=0){
+  let l1='',l2='';
+  if(mode==='outstanding'){l1='Customer AR / Company AR';l2='Share of company outstanding debt'}
+  if(mode==='overdueRatio'){l1='Customer overdue / Customer AR';l2='Overdue share of this customer debt'}
+  if(mode==='overdueContribution'){l1='Customer overdue / Company overdue';l2='Share of company overdue debt'}
+  if(mode==='dueMonth'){l1='Due this month / Customer AR';l2='Share due this month from customer debt'}
+  const color=chartPalette[idx%chartPalette.length];
+  return `<div class="chart-card" style="--donutColor:${color}"><div class="chart-title">${title}</div><div class="chart-sub">Current ratio snapshot</div><div class="donut-wrap"><div class="donut" style="--p:${pct};--donutColor:${color}"><div class="donut-center">${pct.toFixed(1)}%</div></div><div class="donut-legend"><div><span class="legend-dot" style="--donutColor:${color}"></span>${l1}</div><div><span class="legend-dot light"></span>${l2}</div></div></div></div>`
+}
+function creditDonut(){const used=72.0;const color='#2f9b61';return `<div class="chart-card" style="--donutColor:${color}"><div class="chart-title">Credit Utilisation %</div><div class="chart-sub">Used vs available credit</div><div class="donut-wrap"><div class="donut" style="--p:${used};--donutColor:${color}"><div class="donut-center">${used.toFixed(0)}% Used</div></div><div class="donut-legend"><div><span class="legend-dot" style="--donutColor:${color}"></span>${used.toFixed(0)}% Used Credit</div><div><span class="legend-dot light"></span>${(100-used).toFixed(0)}% Available / Unused</div></div></div></div>`}
+function agingChart(){
+  const segClasses=['s1','s2','s3','s4','s5','s6','s7','s8'];
+  return `<div class="chart-card full"><div class="chart-title">Due Ages Composition</div><div class="chart-sub">Stacked bars by debt age · rolling last 12 months · current month is MTD</div><div class="stacked-wrap">${months.map((m,j)=>{const heights=[22+(j%3)*2,20+((j+1)%4),18+((j+2)%3),16+((j+3)%4),13+((j+4)%3),11+((j+5)%4),9+((j+6)%3),8+((j+7)%4)];return `<div class="stack-col">${heights.map((h,k)=>`<div class="seg ${segClasses[k]}" style="height:${h}px"></div>`).join('')}<div class="stack-month ${j===currentMonthIndex?'current':''}">${m}${j===currentMonthIndex?'*':''}</div></div>`}).join('')}</div><div class="legend">${['0-30','31-60','61-90','91-120','121-150','151-180','181-210','>210'].map((x,i)=>`<span><i class="s${i+1}"></i>${x}</span>`).join('')}</div></div>`
+}
+function chartsFor(key){
+  if(key==='ar') return `<div class="charts-label">Charts</div><div class="chart-grid">${donutCard('Outstanding Contribution %',2.8,'outstanding',0)}${donutCard('Overdue Ratio %',34.6,'overdueRatio',1)}${donutCard('Overdue Contribution %',3.9,'overdueContribution',2)}${donutCard('Due This Month Ratio %',18.2,'dueMonth',3)}</div>`;
+  if(key==='ages') return `<div class="charts-label">Charts</div><div class="chart-grid">${agingChart()}</div>`;
+  if(key==='credit') return `<div class="charts-label">Charts</div><div class="chart-grid">${creditDonut()}</div>`;
+  return `<div class="charts-label">Charts</div><div class="period-row"><div class="period">Last 12 Months · Current Month MTD</div></div><div class="chart-grid">${charts[key].map((x,i)=>lineChart(x,i)).join('')}</div>`
+}
+function standardTab(title,key){return `<div class="section-head"><h2><span class="section-icon">▦</span>${title}</h2></div>${tableSection(key)}${chartsFor(key)}`}
+function itemMetricValue(kpi,pIdx,oIdx){
+  const mult=1+oIdx*.17;
+  if(kpi==='Net Sales') return 'SAR '+Math.round([14500000,4100000,9200000,780000,835000,28600,32100][pIdx]*mult).toLocaleString();
+  if(kpi==='Avg Sales') return 'SAR '+Math.round([310000,335000,348000,342000,351000,29800,31400][pIdx]*mult).toLocaleString();
+  if(kpi==='Sales Contribution %') return ([18.6,19.2,20.1,20.8,21.3,21.0,21.6][pIdx]+oIdx*.8).toFixed(1)+'%';
+  if(kpi==='SKU Count') return Math.round([186,171,178,174,181,92,97][pIdx]*(1+oIdx*.05)).toLocaleString();
+  if(kpi==='SKU Avg Sales') return 'SAR '+Math.round([77957,23977,51685,4483,4613,311,331][pIdx]*mult).toLocaleString();
+  if(kpi==='Profit %') return ([17.4,18.1,18.7,19.0,19.3,18.9,19.5][pIdx]+oIdx*.4).toFixed(1)+'%';
+  if(kpi==='Profit Contribution %') return ([16.8,17.5,18.4,19.0,19.6,19.1,19.9][pIdx]+oIdx*.7).toFixed(1)+'%';
+  return '—';
+}
+function ownerButtons(){return `<div class="owner-switch">${itemOwners.map(o=>`<button class="owner-btn ${itemOwner===o?'active':''}" onclick="itemOwner='${o}';render()">${o}</button>`).join('')}<span class="item-note">Purchaser / item owner responsible for the assigned SKUs</span></div>`}
+function itemPerformance(){
+  const oIdx=itemOwners.indexOf(itemOwner);
+  const body=itemKPIs.map(k=>`<tr><td>${k}</td>${itemPeriods.map((p,i)=>`<td class="${i===4||i===6?'value':''}">${itemMetricValue(k,i,oIdx)}</td>`).join('')}</tr>`).join('');
+  const chartSeries=itemKPIs.map((k,i)=>{const base=k.includes('%')?samplePct:sampleSeries;return base.map((v,j)=>k.includes('%')?+(v+oIdx*.7+i*.45).toFixed(1):Math.round(v*(7600+i*1100)*(1+oIdx*.12)))});
+  return `<div class="section-head"><h2><span class="section-icon">IP</span>Item Performance</h2></div>${ownerButtons()}<div class="owner-caption">Selected owner: <b>${itemOwner}</b> · 7 KPIs across Lifetime, Previous Year, YTD, Previous Month, MTD, Yesterday and Today</div><div class="kpi-label">KPIs</div><div class="table-scroll"><table class="kpi-table item-kpi-table"><thead><tr><th>KPI</th>${itemPeriods.map(p=>`<th>${p}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div><div class="charts-label">Charts</div><div class="period-row"><div class="period">Last 12 Months · Current Month MTD</div></div><div class="chart-grid">${itemKPIs.map((k,i)=>lineChart(k,i,chartSeries[i])).join('')}</div>`
+}
+function overview(){const groups=[
+ ['Account Information','tint-blue',[['Customer Name','Alpha Medical Center'],['Status','ACTIVE'],['Customer Number','CUS-0001'],['Account Type','Hospital'],['Business Unit','Medical'],['Business Relation Time','4.8 Years']]],
+ ['Classification','tint-green',[['Sales Classification','A - Growing'],['Collection Classification','Healthy'],['Profit Classification','Strong'],['Documents Classification','Complete']]],
+ ['Finance','tint-amber',[['CR Expiry Date','18 Mar 2027'],['Attested account Status','Yes'],['Credit Limit','SAR 1,250,000'],['Last Reconciliation date','10 Sep 2026'],['Payments Terms','60 Days'],['Promissory Note','Available'],['Promissory Note Issue Date','02 Jan 2026']]],
+ ['Operations','tint-rose',[['Rep Name','ABDELAZIZ DORGHAM'],['Sales Owner','Ahmed Saleh'],['Telesales','Maha Ali'],['Data Entry','Sara N.'],['Warehouse City','Jeddah']]],
+ ['Performance','tint-teal',[['YoY Growth %','+11.9%'],['YTD Sales TGT Ach%','93.2%'],['MTD Sales TGT Ach%','87.4%'],['YTD Collection TGT Ach%','91.6%'],['MTD Collection TGT Ach%','84.8%'],['YTD Highest Revenue Month','Aug 2026'],['YTD Lowest Revenue Month','Feb 2026'],['Last Sales order','22 Sep 2026'],['Last Payment','19 Sep 2026'],['Revenue Rank - Company','#14'],['Collection Rank - Company','#11']]],
+ ['Insights','tint-violet',[['Recommendations','7']]]];
+ return `<div class="section-head"><h2><span class="section-icon">360</span>Overview</h2></div><div class="group-grid">${groups.map((g,gi)=>`<div class="group ${gi>=4?'full':''}"><div class="group-title ${g[1]}">${g[0]}</div><div class="rows">${g[2].map(([a,b])=>`<div class="row"><span class="label">${a}</span><span class="val ${['ACTIVE','Yes','Healthy','Complete','Available'].includes(b)||b.startsWith('+')?'green':''}">${b}</span></div>`).join('')}</div></div>`).join('')}</div>`}
+function insights(){const items=[['Documentation','Documentation status and completeness summary.'],['Sales','Sales momentum, purchase behavior and commercial trend summary.'],['Collection','Payment behavior, collection quality and payment pattern summary.'],['Profit','Gross profit and margin quality summary.'],['Accounts Receivable','Receivable exposure, overdue position and concentration summary.'],['Due Ages','Aging migration and debt-age structure summary.'],['Credit Limit','Credit utilization, DSO direction and recommended limit summary.']];return `<div class="section-head"><h2><span class="section-icon">i</span>Insights (7)</h2></div><div class="insight-list">${items.map(([h,p])=>`<div class="insight" data-insight><h3>${h}</h3><p>${p}</p></div>`).join('')}</div>`}
+function render(){renderTabs();const map={overview:overview,sales:()=>standardTab('Sales','sales'),ret:()=>standardTab('Return','ret'),so:()=>standardTab('Sales Orders','so'),profit:()=>standardTab('Profitability','profit'),coll:()=>standardTab('Collection','coll'),ar:()=>standardTab('Accounts Receivable','ar'),ages:()=>standardTab('Due Ages','ages'),credit:()=>standardTab('Credit Limit','credit'),items:itemPerformance,insights:insights};document.getElementById('tabContent').innerHTML=map[active]();}
+render();
+</script>
+</body></html>

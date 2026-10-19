@@ -1,0 +1,84 @@
+<section class="sales-chart card card--glass flex flex-col gap-20">
+    <!-- Chart -->
+    <div class="sales-chart__canvas card--secondry p-14">
+        <!-- Header -->
+        <header class="sales-chart__header flex justify-between items-center">
+            <h3 class="sales-chart__title fs-12 fw-semibold text-foreground">
+                {{ title() }}
+            </h3>
+            <span class="sales-chart__branches fs-10 text-muted">
+                Branches:
+                {{ branches() }}
+            </span>
+        </header>
+        <!-- SVG Chart -->
+<svg
+    class="sales-chart__svg w-full h-[180px] block"
+    viewBox="0 0 300 90"
+    preserveAspectRatio="none">
+
+    <defs>
+
+        <linearGradient
+            id="salesGradient"
+            x1="0"
+            x2="0"
+            y1="0"
+            y2="1">
+
+            <stop
+                offset="0%"
+                stop-color="var(--primary)"
+                stop-opacity=".30" />
+
+            <stop
+                offset="100%"
+                stop-color="var(--primary)"
+                stop-opacity="0" />
+
+        </linearGradient>
+
+    </defs>
+
+    <!-- Area -->
+
+    <path
+
+        class="sales-chart__area opacity-95 "
+
+        [attr.d]="areaPath()"
+
+        fill="url(#salesGradient)" />
+
+    <!-- Line -->
+
+    <path
+
+        class="sales-chart__line"
+
+        [attr.d]="linePath()"
+
+        fill="none"
+
+        stroke="var(--primary)"
+
+        stroke-width="2.5"
+
+        stroke-linecap="round"
+
+        stroke-linejoin="round" />
+
+</svg>
+        <!-- Footer -->
+        <footer class="sales-chart__footer fs-8 text-muted grid grid-cols-7 text-center">
+            @for(label of labels(); track label){
+                <span>
+                    {{ label }}
+                </span>
+            }
+        </footer>
+    </div>
+
+
+
+</section>

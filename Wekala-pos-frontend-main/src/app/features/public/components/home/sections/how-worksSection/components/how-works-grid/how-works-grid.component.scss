@@ -1,0 +1,18 @@
+@use '../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../styles/abstract/mixins' as *;
+
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md'){
+
+    .how-works-grid{
+
+        gap: map-get($spacings,'24');
+
+    }
+
+}

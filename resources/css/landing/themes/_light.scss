@@ -1,0 +1,71 @@
+@use '../abstract/variables' as *;
+
+:root {
+
+  /* Radius */
+  --radius: #{map-get($radius, 'md')};
+
+  /* Background */
+
+  --background: #{$background};
+  --foreground: #{$foreground};
+
+  --surface: #{$surface};
+  --surface-2: #{$surface-2};
+
+  /* Cards */
+
+  --card: #{$card};
+  --card-foreground: #{$foreground};
+
+  --popover: #{$popover};
+  --popover-foreground: #{$foreground};
+
+  /* Brand */
+
+  --primary: #{$primary};
+  --primary-surface: color-mix(in oklab, var(--primary) 8%, var(--surface));
+  --primary-hover: #{$primary-hover};
+  --primary-soft: #{$primary-soft};
+  --primary-foreground: #{$white};
+
+  /* Accent */
+
+  --accent: #{$accent};
+  --accent-hover: #{$accent-hover};
+  --accent-foreground: #{$foreground};
+
+  /* Secondary */
+
+  --secondary: #{$secondary};
+  --secondary-foreground: #{$foreground};
+
+  /* Muted */
+
+  --muted: #{$muted};
+  --muted-foreground: #{$muted-foreground};
+
+  /* Status */
+
+  --success: #{$success};
+  --warning: #{$warning};
+  --danger: #{$error};
+  --info: #{$info};
+
+  /* Inputs */
+
+  --border: #{$border};
+  --input: #{$input};
+  --ring: #{$ring};
+
+  /* Shadows */
+  --shadow-sm: 0 1px 0 0 color-mix(in oklab, var(--primary) 4%, transparent), 0 4px 10px -4px color-mix(in oklab, var(--primary) 10%, transparent);
+  --shadow-md: 0 1px 0 0 color-mix(in oklab, var(--primary) 6%, transparent), 0 10px 30px -12px color-mix(in oklab, var(--primary) 18%, transparent);
+  --shadow-lg: 0 1px 0 0 color-mix(in oklab, var(--primary) 8%, transparent), 0 20px 40px -16px color-mix(in oklab, var(--primary) 25%, transparent);
+  --shadow-xl: 0 1px 0 0 color-mix(in oklab, var(--primary) 10%, transparent), 0 30px 60px -20px color-mix(in oklab, var(--primary) 35%, transparent);
+
+  /* Animation */
+
+  --theme-transition: .35s cubic-bezier(.4, 0, .2, 1);
+
+}

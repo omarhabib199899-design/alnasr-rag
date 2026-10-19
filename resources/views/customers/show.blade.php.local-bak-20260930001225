@@ -1,0 +1,672 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Customers') }}
+        </h2>
+    </x-slot>
+
+    <style>
+        /* Customer 360 — matches the "Al Nasr Portal" reference design (mockup
+           file: al_nasr_customer360_final_mockup_corrected_kpis), scoped under
+           .c360 so it never bleeds into the rest of the app's Tailwind styling. */
+        .c360{
+            --navy:#16345f;--blue:#2f7de1;--blueSoft:#eaf3ff;--line:#d9e6f5;--line2:#e9f0f8;
+            --text:#183153;--muted:#6f839d;--green:#139653;--greenSoft:#eaf8f0;
+            --amber:#a96d12;--amberSoft:#fff6e3;--rose:#ad4056;--roseSoft:#fff0f3;
+            --teal:#1c7f78;--tealSoft:#ebfbf9;--violet:#6c50b2;--violetSoft:#f3efff;
+            --shadow:0 6px 22px rgba(27,60,102,.055);
+            font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);font-size:13px;
+        }
+        .c360 .customer-head{background:#fff;border:1px solid var(--line2);border-radius:11px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow);flex-wrap:wrap;gap:10px}
+        .c360 .customer-title{display:flex;align-items:center;gap:12px}
+        .c360 .avatar{width:40px;height:40px;border-radius:9px;background:linear-gradient(135deg,#2f7de1,#7bb2f4);display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px;flex-shrink:0}
+        .c360 .customer-title h1{font-size:18px;margin:0 0 2px;font-weight:800}
+        .c360 .customer-title p{font-size:12px;margin:0;color:var(--muted)}
+        .c360 .head-badges{display:flex;gap:6px;flex-wrap:wrap}
+        .c360 .badge{padding:4px 9px;border-radius:999px;font-size:10px;font-weight:800;background:var(--greenSoft);color:var(--green)}
+        .c360 .badge.gray{background:#f1f3f6;color:#556}
+        .c360 .badge.soon{background:#fdf1de;color:#a96d12}
+        .c360 .tabs{background:#fff;border:1px solid var(--line2);border-top:none;display:flex;overflow-x:auto;white-space:nowrap;box-shadow:var(--shadow);margin-top:8px}
+        .c360 .tab{padding:11px 15px;border:0;background:transparent;color:#425a78;font-weight:700;cursor:pointer;border-bottom:2px solid transparent;font-size:12.5px}
+        .c360 .tab.active{color:#1262cc;border-bottom-color:var(--blue);background:linear-gradient(180deg,#fff,#f7fbff)}
+        .c360 .tab:hover{background:#f7faff}
+        .c360 .tab-content{background:#fff;border:1px solid var(--line2);border-top:0;padding:14px 16px 18px}
+        .c360 .section-head{background:linear-gradient(90deg,#eaf3ff,#f7fbff);border:1px solid #d8e7fa;border-radius:9px;padding:8px 11px;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+        .c360 .section-head h2{font-size:13px;margin:0;display:flex;align-items:center;gap:8px;font-weight:800}
+        .c360 .section-icon{width:20px;height:20px;border-radius:5px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:10px;font-weight:800}
+        .c360 .group-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .c360 .group{border:1px solid var(--line2);border-radius:9px;overflow:hidden}
+        .c360 .group.full{grid-column:1/-1}
+        .c360 .group-title{padding:8px 11px;font-weight:800;border-bottom:1px solid var(--line2);font-size:12px}
+        .c360 .tint-blue{background:var(--blueSoft);color:#285b9b}
+        .c360 .tint-green{background:var(--greenSoft);color:#28794a}
+        .c360 .tint-amber{background:var(--amberSoft);color:#8a631b}
+        .c360 .tint-rose{background:var(--roseSoft);color:#9d4257}
+        .c360 .tint-teal{background:var(--tealSoft);color:#1f716d}
+        .c360 .tint-violet{background:var(--violetSoft);color:#654d9a}
+        .c360 .c-rows{display:grid;grid-template-columns:1fr 1fr}
+        .c360 .c-row{display:flex;justify-content:space-between;gap:10px;padding:7px 11px;border-bottom:1px solid #edf2f7;min-height:32px;align-items:center}
+        .c360 .c-row .label{color:#6d8198;font-size:12px}
+        .c360 .c-row .val{font-weight:800;text-align:right;font-size:12.5px}
+        .c360 .c-row .val.green{color:var(--green)}
+        .c360 .c-row .val.rose{color:var(--rose)}
+        .c360 .c-row .val.amber{color:var(--amber)}
+        .c360 .placeholder-card{border:1px dashed var(--line);border-radius:9px;padding:24px;text-align:center;color:var(--muted);font-size:12.5px;background:#fbfdff}
+        .c360 .kpi-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+        .c360 .kpi-table th,.c360 .kpi-table td{padding:7px 9px;border-bottom:1px solid var(--line2);border-right:1px solid var(--line2);text-align:left}
+        .c360 .kpi-table th:last-child,.c360 .kpi-table td:last-child{border-right:0}
+        .c360 .kpi-table tr:last-child td{border-bottom:0}
+        .c360 .kpi-table th{background:#eef5fd;color:#37516e;font-size:10px}
+        .c360 .kpi-table td{font-size:12px}
+        .c360 .kpi-table tbody tr:nth-child(even) td{background:#fbfdff}
+        .c360 .kpi-table td.value{font-weight:800}
+        .c360 .charts-label{font-size:11px;font-weight:800;color:#47617f;margin:12px 0 6px}
+        .c360 .chart-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+        .c360 .chart-card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:8px 9px;box-shadow:0 2px 9px rgba(26,58,97,.025)}
+        .c360 .chart-title{font-size:10.5px;font-weight:800;margin-bottom:1px}
+        .c360 .chart-sub{font-size:8.5px;color:var(--muted);margin-bottom:3px}
+        .c360 .linebox{height:96px}
+        .c360 .linebox svg{width:100%;height:100%;overflow:visible}
+        .c360 .month-labels{display:flex;justify-content:space-between;padding:0 2px;margin-top:2px}
+        .c360 .month-labels span{font-size:7.5px;color:#71849a}
+        .c360 .donut-wrap{height:132px;display:flex;align-items:center;justify-content:center;gap:16px}
+        .c360 .donut{width:104px;height:104px;border-radius:50%;position:relative;flex-shrink:0;background:conic-gradient(var(--donutColor,var(--blue)) calc(var(--p)*1%),#e9f0f8 0)}
+        .c360 .donut::after{content:"";position:absolute;inset:17px;background:#fff;border-radius:50%}
+        .c360 .donut-center{position:absolute;inset:0;display:grid;place-items:center;z-index:2;font-weight:800;font-size:15px;color:#21496f}
+        .c360 .donut-legend{font-size:10px;color:#5f7590;line-height:1.9}
+        .c360 .legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:var(--donutColor,var(--blue))}
+        .c360 .legend-dot.light{background:#e9f0f8;border:1px solid #d5e2f2}
+        .c360 .hbar-wrap{display:flex;flex-direction:column;gap:7px}
+        .c360 .hbar-row{display:flex;align-items:center;gap:8px}
+        .c360 .hbar-label{width:76px;flex-shrink:0;font-size:10.5px;color:#47617f;font-weight:700}
+        .c360 .hbar-track{flex:1;height:16px;border-radius:4px;background:#eef3f9;overflow:hidden}
+        .c360 .hbar-fill{height:100%;border-radius:4px;background:var(--blue)}
+        .c360 .hbar-val{width:88px;flex-shrink:0;text-align:right;font-size:10.5px;font-weight:800;color:#21496f}
+        .c360 .sbar-wrap{display:flex;align-items:flex-end;gap:10px;height:150px;padding-top:6px;overflow-x:auto}
+        .c360 .sbar-col{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:28px}
+        .c360 .sbar-bar{width:100%;max-width:34px;height:130px;border-radius:4px 4px 2px 2px;overflow:hidden;display:flex;flex-direction:column-reverse;background:#eef3f9}
+        .c360 .sbar-seg{width:100%}
+        .c360 .sbar-label{font-size:9.5px;color:#8a9bb2}
+        .c360 .sbar-label.current{font-weight:800;color:#21496f}
+        .c360 .sbar-legend{display:flex;flex-wrap:wrap;gap:5px 14px;margin-top:14px;font-size:10px;color:#5f7590}
+        .c360 .owner-tabs{display:flex;flex-wrap:wrap;gap:6px}
+        .c360 .owner-tab{padding:6px 14px;border-radius:8px;font-size:11.5px;font-weight:700;border:1px solid var(--line2);background:#fff;color:#47617f;cursor:pointer}
+        .c360 .owner-tab.active{background:var(--blue);border-color:var(--blue);color:#fff}
+        @media(max-width:900px){.c360 .chart-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+        @media(max-width:800px){.c360 .group-grid{grid-template-columns:1fr}.c360 .group.full{grid-column:auto}.c360 .c-rows{grid-template-columns:1fr}.c360 .chart-grid{grid-template-columns:1fr}}
+        .c360 .crumbs-bar{display:flex;align-items:center;justify-content:space-between;padding:9px 2px 12px}
+        .c360 .crumbs{font-size:11.5px;color:var(--muted)}
+        .c360 .crumbs b{color:var(--text);font-weight:800}
+        .c360 .btn-outline{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;color:#426080;font-weight:700;font-size:12px;text-decoration:none;box-shadow:var(--shadow)}
+        .c360 .btn-outline:hover{background:#f7faff}
+    </style>
+
+    <div class="py-12 c360" x-data="{ tab: '{{ request('tab', 'overview') }}' }">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-0">
+
+            <div class="crumbs-bar">
+                <div class="crumbs">Customers / <b>{{ $customer->customer_name }}</b></div>
+                <a href="{{ route('customers.index') }}" class="btn-outline">Back to Customers</a>
+            </div>
+
+            <div class="customer-head">
+                <div class="customer-title">
+                    <div class="avatar">{{ strtoupper(substr($customer->customer_name ?? '?', 0, 2)) }}</div>
+                    <div>
+                        <h1>{{ $customer->customer_name }}</h1>
+                        <p>
+                            {{ $customer->customer_number ?: '—' }}
+                            @if ($customer->account_type) &middot; {{ $customer->account_type }} @endif
+                            @if ($customer->city) &middot; {{ $customer->city }} @endif
+                        </p>
+                    </div>
+                </div>
+                <div class="head-badges">
+                    <span @class(['badge', 'gray' => $customer->status !== 'Active'])>{{ strtoupper($customer->status ?? '—') }}</span>
+                </div>
+            </div>
+
+            @php
+                $tabs = [
+                    'overview' => 'Overview',
+                    'sales' => 'Sales',
+                    'return' => 'Return',
+                    'sales_orders' => 'Sales Orders',
+                    'profitability' => 'Profitability',
+                    'collection' => 'Collection',
+                    'ar' => 'Accounts Receivable',
+                    'due_ages' => 'Due Ages',
+                    'credit_limit' => 'Credit Limit',
+                    'item_performance' => 'Item Performance',
+                    'insights' => 'Insights ('.count($insights).')',
+                    'sales_history' => 'Sales History ('.array_sum($salesCountsByType).')',
+                    'history' => 'Change History ('.$changeLogs->total().')',
+                ];
+                // Hides disallowed tab buttons for a role-scoped user — a
+                // visual gate only, per the explicit "skip detailed
+                // permission enforcement for now" instruction. The tab's
+                // content still renders in the page (just not linked to),
+                // so this is not a real access-control boundary yet.
+                $tabs = collect($tabs)->filter(fn ($label, $key) => Auth::user()->hasPermission("customers.tab.{$key}"))->all();
+            @endphp
+
+            <div class="tabs">
+                @foreach ($tabs as $key => $label)
+                    <button @click="tab = '{{ $key }}'" :class="tab === '{{ $key }}' ? 'active' : ''" class="tab">{{ $label }}</button>
+                @endforeach
+            </div>
+
+            <div class="tab-content">
+
+                {{-- Overview --}}
+                <div x-show="tab === 'overview'">
+                    <div class="section-head"><h2><span class="section-icon">360</span>Overview</h2></div>
+                    <div class="group-grid">
+
+                        <div class="group">
+                            <div class="group-title tint-blue">Account Information</div>
+                            <div class="c-rows">
+                                <div class="c-row"><span class="label">Customer Name</span><span class="val">{{ $customer->customer_name ?: '—' }}</span></div>
+                                <div class="c-row"><span class="label">Status</span><span class="val {{ $customer->status === 'Active' ? 'green' : '' }}">{{ $customer->status ?: '—' }}</span></div>
+                                <div class="c-row"><span class="label">Customer Number</span><span class="val">{{ $customer->customer_number ?: '—' }}</span></div>
+                                <div class="c-row"><span class="label">Account Type</span><span class="val">{{ $customer->account_type ?: '—' }}</span></div>
+                                <div class="c-row"><span class="label">Business Unit</span><span class="val">{{ $customer->extra['management'] ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">Business Relation Time</span><span class="val">{{ $customer->zoho_created_time ? number_format(now()->diffInYears($customer->zoho_created_time, true), 1).' Years' : '—' }}</span></div>
+                            </div>
+                        </div>
+
+                        <div class="group">
+                            <div class="group-title tint-green">Classification</div>
+                            <div class="c-rows">
+                                @php
+                                    $classTint = fn ($label) => match (true) {
+                                        $label === null => '',
+                                        str_contains($label, 'Critical') || str_contains($label, 'Severe') || str_contains($label, 'Loss') || str_contains($label, 'Lost') => 'rose',
+                                        str_contains($label, 'Attention') || str_contains($label, 'Late') || str_contains($label, 'Declining') || str_contains($label, 'Low') => 'amber',
+                                        default => 'green',
+                                    };
+                                @endphp
+                                <div class="c-row"><span class="label">Sales Classification</span><span class="val {{ $classTint($classifications['sales']->classification ?? null) }}">{{ $classifications['sales']->classification ?? 'Not synced yet' }}</span></div>
+                                <div class="c-row"><span class="label">Collection Classification</span><span class="val {{ $classTint($classifications['collection']->classification ?? null) }}">{{ $classifications['collection']->classification ?? 'Not synced yet' }}</span></div>
+                                <div class="c-row"><span class="label">Profit Classification</span><span class="val {{ $classTint($classifications['profitability']->classification ?? null) }}">{{ $classifications['profitability']->classification ?? 'Not synced yet' }}</span></div>
+                                <div class="c-row"><span class="label">Documents Classification</span><span class="val {{ $classTint($classifications['documents']->classification ?? null) }}">{{ $classifications['documents']->classification ?? 'Not synced yet' }}</span></div>
+                                <div class="c-row"><span class="label">AR Risk Classification</span><span class="val"><span class="badge soon">Coming Soon</span></span></div>
+                            </div>
+                        </div>
+
+                        <div class="group">
+                            <div class="group-title tint-amber">Finance</div>
+                            <div class="c-rows">
+                                <div class="c-row"><span class="label">CR Expiry Date</span><span class="val {{ $customer->cr_expiry_date && $customer->cr_expiry_date->isPast() ? 'rose' : '' }}">{{ optional($customer->cr_expiry_date)->format('Y-m-d') ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">Attested Account</span><span class="val">{{ $customer->attested_account ?: '—' }}</span></div>
+                                <div class="c-row"><span class="label">Credit Limit</span><span class="val">{{ $customer->credit_limit !== null ? number_format((float) $customer->credit_limit, 2).' SAR' : '—' }}</span></div>
+                                <div class="c-row"><span class="label">Last Reconciliation Date</span><span class="val">{{ optional($customer->last_reconciliation_date)->format('Y-m-d') ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">Payment Terms</span><span class="val">{{ $customer->payment_terms_label ?: ($customer->payments_due ? $customer->payments_due.' days' : '—') }}</span></div>
+                                <div class="c-row"><span class="label">Promissory Note</span><span class="val">{{ $customer->extra['promissory_note'] ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">Promissory Note Issue Date</span><span class="val">{{ $customer->extra['promissory_note_issue_date'] ?? '—' }}</span></div>
+                            </div>
+                        </div>
+
+                        <div class="group">
+                            <div class="group-title tint-rose">Operations</div>
+                            <div class="c-rows">
+                                <div class="c-row"><span class="label">Rep Name</span><span class="val">{{ $customer->rep_name ?: '—' }}</span></div>
+                                <div class="c-row"><span class="label">Sales Owner</span><span class="val">{{ $customer->sales_owner ?: '—' }}</span></div>
+                                <div class="c-row"><span class="label">Warehouse City</span><span class="val">{{ $customer->warehouse_city ?: '—' }}</span></div>
+                                <div class="c-row"><span class="label">Telesales</span><span class="val"><span class="badge soon" title="No data source found in the synced customer export yet">Coming Soon</span></span></div>
+                                <div class="c-row"><span class="label">Data Entry</span><span class="val"><span class="badge soon" title="No data source found in the synced customer export yet">Coming Soon</span></span></div>
+                            </div>
+                        </div>
+
+                        <div class="group full">
+                            <div class="group-title tint-teal">Performance</div>
+                            <div class="c-rows">
+                                <div class="c-row"><span class="label">Last Sales Order</span><span class="val">{{ $lastSalesOrderDate ? \Illuminate\Support\Carbon::parse($lastSalesOrderDate)->format('Y-m-d') : '—' }}</span></div>
+                                @php
+                                    $netSalesSeries = collect($salesCharts['Net Sales'] ?? [])->filter(fn ($p) => $p['value'] > 0);
+                                    $highestMonth = $netSalesSeries->sortByDesc('value')->first();
+                                    $lowestMonth = $netSalesSeries->sortBy('value')->first();
+                                @endphp
+                                <div class="c-row"><span class="label">YTD Highest Revenue Month</span><span class="val">{{ $highestMonth['label'] ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">YTD Lowest Revenue Month</span><span class="val">{{ $lowestMonth['label'] ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">Last Payment</span><span class="val">{{ $classifications['collection']->data['Last Settlement Date'] ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">Revenue Rank — Company</span><span class="val">{{ $salesRecommendation?->revenue_rank ? '#'.$salesRecommendation->revenue_rank : '—' }}</span></div>
+                                <div class="c-row"><span class="label">Collection Rank — Company</span><span class="val">{{ isset($collectionKpiTable['Lifetime']['Collection Rank - Company']) && $collectionKpiTable['Lifetime']['Collection Rank - Company'] !== '—' ? $collectionKpiTable['Lifetime']['Collection Rank - Company'] : '—' }}</span></div>
+                                <div class="c-row"><span class="label">Insights Count</span><span class="val">{{ count($insights) }}</span></div>
+                                <div class="c-row"><span class="label">YoY Growth %</span><span class="val {{ ($overviewTargets['yoy_growth_pct'] ?? null) !== null && str_starts_with($overviewTargets['yoy_growth_pct'], '-') ? 'rose' : 'green' }}">{{ $overviewTargets['yoy_growth_pct'] ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">YTD Sales TGT Ach%</span><span class="val" title="Needs an Annual/Monthly Sales Target set on the customer — most customers don't have one yet">{{ $overviewTargets['ytd_sales_tgt_ach_pct'] ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">MTD Sales TGT Ach%</span><span class="val" title="Needs an Annual/Monthly Sales Target set on the customer — most customers don't have one yet">{{ $overviewTargets['mtd_sales_tgt_ach_pct'] ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">YTD Collection TGT Ach%</span><span class="val" title="Needs an Annual/Monthly Collection Target set on the customer — most customers don't have one yet">{{ $overviewTargets['ytd_collection_tgt_ach_pct'] ?? '—' }}</span></div>
+                                <div class="c-row"><span class="label">MTD Collection TGT Ach%</span><span class="val" title="Needs an Annual/Monthly Collection Target set on the customer — most customers don't have one yet">{{ $overviewTargets['mtd_collection_tgt_ach_pct'] ?? '—' }}</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {{-- Sales — real data from customer_sales_behavior + customer_sales_recommendations --}}
+                <div x-show="tab === 'sales'" x-cloak>
+                    <div class="section-head"><h2><span class="section-icon">▦</span>Sales</h2></div>
+
+                    @include('customers.partials.kpi-table', ['table' => $salesKpiTable, 'kpis' => ['Net Sales', 'Gross Sales', 'Sales Average', 'Sales Median', 'Revenue Volatility %', 'Revenue Contribution %', 'Revenue Rank - Company', 'Invoice Count', 'Average Invoice Value', 'Largest Invoice', 'SKU Count', 'Average SKU Revenue', 'Average Purchase Interval']])
+
+                    @if (! empty($salesCharts))
+                        <div class="charts-label">Charts</div>
+                        <div class="chart-grid">
+                            @foreach ($salesCharts as $metric => $points)
+                                @include('customers.partials.line-chart', ['title' => $metric, 'points' => $points, 'color' => ['#2f7de1', '#21a59a', '#7b61d8', '#ef9a42', '#2f9b61', '#d05a7a', '#3979a8'][$loop->index % 7]])
+                            @endforeach
+                        </div>
+                    @endif
+
+                </div>
+
+                {{-- Return — quantity-based real data (no reliable monetary column on return_items) --}}
+                <div x-show="tab === 'return'" x-cloak>
+                    <div class="section-head"><h2><span class="section-icon">▦</span>Return</h2></div>
+                    @include('customers.partials.kpi-table', ['table' => $returnKpiTable, 'kpis' => ['Return Quantity', 'Credit Notes Count', 'SKU Count', 'Return Average', 'Return Rate %', 'Average Credit Note', 'Average SKU Revenue']])
+                    <div class="placeholder-card" style="margin-top:8px;font-size:11.5px">"(est.)" values = quantity × current catalog price from <code>inventory_items</code> — <code>return_items</code> itself has no price column, so this is an estimate, not the exact price on that specific return.</div>
+
+                    @if (! empty($returnCharts))
+                        <div class="charts-label">Charts</div>
+                        <div class="chart-grid">
+                            @foreach ($returnCharts as $metric => $points)
+                                @include('customers.partials.line-chart', ['title' => $metric, 'points' => $points, 'color' => ['#ad4056', '#a96d12', '#6c50b2', '#2f7de1'][$loop->index % 4]])
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+
+                {{-- Sales Orders — quantity-based real data (no reliable monetary/fulfillment column on sale_items) --}}
+                <div x-show="tab === 'sales_orders'" x-cloak>
+                    <div class="section-head"><h2><span class="section-icon">▦</span>Sales Orders</h2></div>
+                    @include('customers.partials.kpi-table', ['table' => $salesOrdersKpiTable, 'kpis' => ['Order Quantity', 'Sales Order Value', 'SKU Count', 'Pending Quantity', 'Pending Value', 'Pending SKU Count', 'Pending Rate %', 'Lost Quantity', 'Lost Sales Value', 'Lost SKU Count', 'Lost Sales Rate %', 'Quantity Fulfillment Rate %', 'Value Fulfillment Rate %', 'SKU Fulfillment Rate %']])
+                    <div class="placeholder-card" style="margin-top:8px;font-size:11.5px">"Lost" = cancelled/void orders, "Fulfilled" = completed/confirmed/fulfilled orders — a reasonable status mapping, not yet confirmed by Dr. Ahmed. Value figures (est.) = quantity × current catalog price from <code>inventory_items</code> — <code>sale_items</code> itself has no price column, so this is an estimate, not the exact price on that specific order.</div>
+
+                    @if (! empty($salesOrdersCharts))
+                        <div class="charts-label">Charts</div>
+                        <div class="chart-grid">
+                            @foreach ($salesOrdersCharts as $metric => $points)
+                                @include('customers.partials.line-chart', ['title' => $metric, 'points' => $points, 'color' => ['#2f7de1', '#139653', '#ad4056', '#a96d12'][$loop->index % 4]])
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+
+                {{-- Item Performance — real data: sales_item_performance joined to item_owners (Zoho
+                     "Items" export) by zoho_item_id. "Owner" = Purchaser responsible for the item's
+                     SKUs (Dr. Ahmed, voice note 2026-09-27), ranked by this customer's own Lifetime
+                     Net Sales — not a fixed roster, a customer with fewer owners just shows fewer tabs. --}}
+                <div x-show="tab === 'item_performance'" x-cloak x-data="{ ownerIdx: 0 }">
+                    <div class="section-head"><h2><span class="section-icon">▦</span>Item Performance</h2></div>
+                    @if (empty($itemPerformanceOwners))
+                        <div class="placeholder-card">No item-level sales history found for this customer.</div>
+                    @else
+                        <div class="owner-tabs">
+                            @foreach ($itemPerformanceOwners as $i => $owner)
+                                <button type="button" @click="ownerIdx = {{ $i }}" :class="ownerIdx === {{ $i }} ? 'owner-tab active' : 'owner-tab'">{{ $owner['label'] }}</button>
+                            @endforeach
+                        </div>
+                        <div style="font-size:10.5px;color:var(--muted);margin:6px 0 10px">Purchaser / item owner responsible for the assigned SKUs</div>
+
+                        @foreach ($itemPerformanceOwners as $i => $owner)
+                            <div x-show="ownerIdx === {{ $i }}" x-cloak>
+                                <div style="font-size:11.5px;font-weight:700;color:#21496f;margin-bottom:8px">Selected owner: {{ $owner['label'] }} — {{ $owner['name'] }} · 7 KPIs across Lifetime, Previous Year, YTD, Previous Month, MTD, Yesterday and Today</div>
+                                @include('customers.partials.kpi-table', ['table' => $owner['table'], 'kpis' => ['Net Sales', 'Avg Sales', 'Sales Contribution %', 'SKU Count', 'SKU Avg Sales', 'Profit %', 'Profit Contribution %']])
+
+                                @if (! empty($owner['charts']))
+                                    <div class="charts-label">Charts</div>
+                                    <div class="chart-grid">
+                                        @foreach ($owner['charts'] as $metric => $points)
+                                            @include('customers.partials.line-chart', ['title' => $metric, 'points' => $points, 'color' => ['#2f7de1', '#21a59a', '#7b61d8', '#ef9a42', '#2f9b61', '#d05a7a', '#3979a8'][$loop->index % 7]])
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+
+                {{-- Profitability — real data from ar_ledger_entries + the Profitability Classification detail --}}
+                <div x-show="tab === 'profitability'" x-cloak>
+                    <div class="section-head"><h2><span class="section-icon">▦</span>Profitability</h2></div>
+                    @include('customers.partials.kpi-table', ['table' => $profitabilityKpiTable, 'kpis' => ['Gross Profit', 'Gross Margin %', 'GP Contribution %', 'GP Rank', 'Average GP% per Invoice']])
+
+                    @if (! empty($profitabilityCharts))
+                        <div class="charts-label">Charts</div>
+                        <div class="chart-grid">
+                            @foreach ($profitabilityCharts as $metric => $points)
+                                @include('customers.partials.line-chart', ['title' => $metric, 'points' => $points, 'color' => ['#2f7de1', '#21a59a'][$loop->index % 2]])
+                            @endforeach
+                        </div>
+                    @endif
+
+                </div>
+
+                {{-- Collection — real data from ar_ledger_entries + Collection Classification detail --}}
+                <div x-show="tab === 'collection'" x-cloak>
+                    <div class="section-head"><h2><span class="section-icon">▦</span>Collection</h2></div>
+                    @include('customers.partials.kpi-table', ['table' => $collectionKpiTable, 'kpis' => ['Collection', 'Collection Ratio vs Sales', 'Collection Average', 'Collection Median', 'Collection Volatility %', 'Collection Contribution %', 'Collection Rank - Company', 'Payment Count', 'Average Payment Value', 'Largest Payment Value', 'Average Payment Interval']])
+
+                    @if (! empty($collectionCharts))
+                        <div class="charts-label">Charts</div>
+                        <div class="chart-grid">
+                            @foreach ($collectionCharts as $metric => $points)
+                                @include('customers.partials.line-chart', ['title' => $metric, 'points' => $points, 'color' => ['#2f7de1', '#21a59a', '#7b61d8'][$loop->index % 3]])
+                            @endforeach
+                        </div>
+                    @endif
+
+                </div>
+
+                {{-- Accounts Receivable — real data from invoice_documents, period-bucketed by
+                     invoice_date (see buildArKpiTable's docblock for why: AR balance is a running
+                     total, not a dated transaction, so periods bucket by invoice date and report
+                     today's balance for those invoices — same convention as every other tab, not a
+                     fabricated historical snapshot) --}}
+                <div x-show="tab === 'ar'" x-cloak>
+                    <div class="section-head"><h2><span class="section-icon">▦</span>Accounts Receivable</h2></div>
+                    @include('customers.partials.kpi-table', ['table' => array_intersect_key($arKpiTable, ['Lifetime' => true]), 'kpis' => ['Outstanding AR', 'Outstanding Invoices Count', 'Outstanding Contribution %', 'Overdue Amount', 'Overdue Invoices Count', 'Overdue Ratio %', 'Overdue Contribution %', 'Due This Month', 'Due This Month Ratio %', 'Open Invoices Count']])
+
+                    <div class="charts-label">Charts</div>
+                    <div class="chart-grid">
+                        @php
+                            $arDonuts = [
+                                ['key' => 'outstanding_contribution_pct', 'title' => 'Outstanding Contribution %', 'legend' => 'Customer AR / Company AR', 'sub' => 'Share of company outstanding debt', 'color' => 'var(--blue)'],
+                                ['key' => 'overdue_ratio_pct', 'title' => 'Overdue Ratio %', 'legend' => 'Customer overdue / Customer AR', 'sub' => 'Overdue share of this customer debt', 'color' => 'var(--teal)'],
+                                ['key' => 'overdue_contribution_pct', 'title' => 'Overdue Contribution %', 'legend' => 'Customer overdue / Company overdue', 'sub' => 'Share of company overdue debt', 'color' => 'var(--violet)'],
+                                ['key' => 'due_this_month_ratio_pct', 'title' => 'Due This Month Ratio %', 'legend' => 'Due this month / Customer AR', 'sub' => 'Share due this month from customer debt', 'color' => 'var(--amber)'],
+                            ];
+                        @endphp
+                        @foreach ($arDonuts as $d)
+                            @php $pct = $arSnapshot[$d['key']] ?? null; @endphp
+                            <div class="chart-card">
+                                <div class="chart-title">{{ $d['title'] }}</div>
+                                <div style="font-size:9.5px;color:#8a9bb2;margin:-4px 0 6px">Current ratio snapshot</div>
+                                <div class="donut-wrap">
+                                    <div class="donut" style="--p:{{ $pct !== null ? number_format(min(100, $pct), 1) : 0 }};--donutColor:{{ $d['color'] }}">
+                                        <div class="donut-center">{{ $pct !== null ? number_format($pct, 1).'%' : '—' }}</div>
+                                    </div>
+                                    <div class="donut-legend">
+                                        <div><span class="legend-dot" style="background:{{ $d['color'] }}"></span>{{ $d['legend'] }}</div>
+                                        <div><span class="legend-dot light"></span>{{ $d['sub'] }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Due Ages — real data from invoice_documents (balance + invoice_date, bucketed live) --}}
+                <div x-show="tab === 'due_ages'" x-cloak>
+                    <div class="section-head"><h2><span class="section-icon">▦</span>Due Ages</h2></div>
+                    @php $agingTotal = $arAging->sum('total'); @endphp
+                    <table class="kpi-table">
+                        <thead><tr><th>Aging Bucket</th><th>Balance</th><th>%</th></tr></thead>
+                        <tbody>
+                            @forelse ($arAging as $bucket)
+                                <tr>
+                                    <td>{{ $bucket->balance_aging }}</td>
+                                    <td>{{ number_format((float) $bucket->total, 2) }} SAR</td>
+                                    <td>{{ $agingTotal > 0 ? number_format((float) $bucket->total / $agingTotal * 100, 1).'%' : '—' }}</td>
+                                </tr>
+                            @empty
+                                <tr><td colspan="3" style="text-align:center;color:var(--muted)">No data</td></tr>
+                            @endforelse
+                            <tr style="font-weight:800">
+                                <td>Outstanding AR</td>
+                                <td>{{ number_format((float) $agingTotal, 2) }} SAR</td>
+                                <td>{{ $agingTotal > 0 ? '100.0%' : '—' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    @if (! empty($dueAgesChart['months']))
+                        <div class="charts-label">Charts</div>
+                        <div class="chart-card">
+                            <div class="chart-title">Due Ages Composition</div>
+                            <div class="chart-sub">Stacked bars by debt age · rolling last 12 months · current month is MTD</div>
+                            <div class="sbar-wrap">
+                                @foreach ($dueAgesChart['months'] as $i => $month)
+                                    <div class="sbar-col">
+                                        <div class="sbar-bar">
+                                            @foreach (array_reverse($dueAgesChart['buckets']) as $bucket)
+                                                @php $share = $month['shares'][$bucket] ?? 0; @endphp
+                                                @if ($share > 0)
+                                                    <div class="sbar-seg" style="height:{{ number_format($share, 2) }}%;background:{{ $dueAgesChart['colors'][$bucket] }}" title="{{ $bucket }}: {{ $share }}%"></div>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                        <span class="sbar-label {{ $i === count($dueAgesChart['months']) - 1 ? 'current' : '' }}">{{ $month['label'] }}{{ $i === count($dueAgesChart['months']) - 1 ? '*' : '' }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="sbar-legend">
+                                @foreach ($dueAgesChart['buckets'] as $bucket)
+                                    <span><span class="legend-dot" style="background:{{ $dueAgesChart['colors'][$bucket] }}"></span>{{ str_replace('Aging ', '', $bucket) }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                {{-- Credit Limit — real data from customer_credit_usage --}}
+                <div x-show="tab === 'credit_limit'" x-cloak>
+                    <div class="section-head"><h2><span class="section-icon">▦</span>Credit Limit</h2></div>
+                    @if ($creditUsage)
+                        <div class="group-grid">
+                            <div class="group">
+                                <div class="c-rows">
+                                    <div class="c-row"><span class="label">Credit Limit</span><span class="val">{{ $creditUsage->credit_limit !== null ? number_format((float) $creditUsage->credit_limit, 2).' SAR' : '—' }}</span></div>
+                                    <div class="c-row"><span class="label">Used Credit</span><span class="val">{{ $creditUsage->used_credit !== null ? number_format((float) $creditUsage->used_credit, 2).' SAR' : '—' }}</span></div>
+                                    <div class="c-row"><span class="label">Credit Utilisation %</span><span class="val {{ $creditUsage->credit_utilization_pct > 90 ? 'rose' : '' }}">{{ $creditUsage->credit_utilization_pct !== null ? number_format((float) $creditUsage->credit_utilization_pct, 1).'%' : '—' }}</span></div>
+                                    <div class="c-row"><span class="label">Remaining Credit</span><span class="val">{{ $creditUsage->remaining_credit !== null ? number_format((float) $creditUsage->remaining_credit, 2).' SAR' : '—' }}</span></div>
+                                    <div class="c-row"><span class="label">Available Credit %</span><span class="val">{{ $creditUsage->available_credit_pct !== null ? number_format((float) $creditUsage->available_credit_pct, 1).'%' : '—' }}</span></div>
+                                    <div class="c-row"><span class="label">Credit Status</span><span class="val {{ str_contains((string) $creditUsage->credit_status, 'Exceed') ? 'rose' : 'green' }}">{{ $creditUsage->credit_status ?: '—' }}</span></div>
+                                </div>
+                            </div>
+                            @if ($creditUsage->credit_utilization_pct !== null)
+                                @php
+                                    $utilPct = max(0, min(100, (float) $creditUsage->credit_utilization_pct));
+                                    $donutColor = $utilPct >= 90 ? 'var(--rose)' : ($utilPct >= 70 ? 'var(--amber)' : 'var(--blue)');
+                                @endphp
+                                <div class="group">
+                                    <div class="chart-card" style="border:0;box-shadow:none">
+                                        <div class="chart-title">Credit Utilisation</div>
+                                        <div class="donut-wrap">
+                                            <div class="donut" style="--p:{{ number_format($utilPct, 1) }};--donutColor:{{ $donutColor }}">
+                                                <div class="donut-center">{{ number_format($utilPct, 0) }}%</div>
+                                            </div>
+                                            <div class="donut-legend">
+                                                <div><span class="legend-dot" style="background:{{ $donutColor }}"></span>Used</div>
+                                                <div><span class="legend-dot light"></span>Available</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    @else
+                        <div class="placeholder-card">No data</div>
+                    @endif
+                    <div class="c-rows" style="margin-top:10px;border:1px solid var(--line2);border-radius:9px;overflow:hidden">
+                        <div class="c-row"><span class="label">DSO (12M)</span><span class="val">{{ $creditDso['dso_12m'] ?? '—' }}</span></div>
+                        <div class="c-row"><span class="label">DSO (6M)</span><span class="val">{{ $creditDso['dso_6m'] ?? '—' }}</span></div>
+                        <div class="c-row"><span class="label">DSO (3M)</span><span class="val">{{ $creditDso['dso_3m'] ?? '—' }}</span></div>
+                        <div class="c-row"><span class="label">DSO Insight / Trend</span><span class="val">{{ $creditDso['dso_trend'] ?? '—' }}</span></div>
+                        <div class="c-row"><span class="label">Recommended Credit Limit</span><span class="val" title="Average Daily Net Sales (L12M) × the customer's own Payment Terms days — a standard estimate, not yet confirmed by Dr. Ahmed">{{ $creditDso['recommended_credit_limit'] ?? '—' }}</span></div>
+                    </div>
+                </div>
+
+                {{-- Insights — one card per category, only for categories with something to flag
+                     (per Dr. Ahmed's direction: no forced fixed list, empty tab for a clean customer) --}}
+                <div x-show="tab === 'insights'" x-cloak>
+                    <div class="section-head"><h2><span class="section-icon">i</span>Insights ({{ count($insights) }})</h2></div>
+
+                    @if (empty($insights))
+                        <div class="placeholder-card">No issues flagged for this customer.</div>
+                    @else
+                        <div style="display:flex;flex-direction:column;gap:8px">
+                            @foreach ($insights as $insight)
+                                <div class="group">
+                                    <div class="group-title tint-{{ $insight['tint'] }}">
+                                        {{ $insight['title'] }}
+                                        @if ($insight['meta'])
+                                            <span style="font-weight:600;opacity:.75"> — {{ $insight['meta'] }}</span>
+                                        @endif
+                                    </div>
+                                    <div style="padding:9px 11px;font-size:12.5px">{{ $insight['body'] }}</div>
+
+                                    @if ($insight['key'] === 'sales' && $salesRecommendation)
+                                        <div class="c-rows">
+                                            <div class="c-row"><span class="label">Key Risk</span><span class="val rose" style="font-weight:600">{{ $salesRecommendation->key_risk ?: '—' }}</span></div>
+                                            <div class="c-row"><span class="label">Key Opportunity</span><span class="val green" style="font-weight:600">{{ $salesRecommendation->key_opportunity ?: '—' }}</span></div>
+                                        </div>
+                                        @if ($salesRecommendation->recommended_sales_rep_action)
+                                            <div style="font-size:12px;background:#f7fbff;border-top:1px solid var(--line2);padding:8px 11px">
+                                                <b>Suggested action:</b> {{ $salesRecommendation->recommended_sales_rep_action }}
+                                            </div>
+                                        @endif
+                                    @endif
+
+                                    @if ($insight['key'] === 'documents')
+                                        <div class="c-rows" style="grid-template-columns:1fr">
+                                            @foreach ($documentInsightRows as $row)
+                                                <div class="c-row" style="display:block">
+                                                    <div style="font-weight:700">{{ $row->action }}</div>
+                                                    @if ($row->why)
+                                                        <div style="color:var(--muted);font-size:11.5px">{{ $row->why }}</div>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+
+                {{-- Sales History tab — scoped to the rolling last 12 months, same window as every chart on this page --}}
+                <div x-show="tab === 'sales_history'" x-cloak class="space-y-4">
+                    <p class="text-xs text-gray-500">Rolling last 12 months</p>
+                    <form method="GET" class="flex flex-wrap gap-3 items-end">
+                        <input type="hidden" name="tab" value="sales_history">
+                        <div class="flex-1 min-w-[240px]">
+                            <label class="block text-xs font-medium text-gray-500 uppercase mb-1">Search document # / SKU</label>
+                            <input type="text" name="sales_search" value="{{ $salesSearch }}"
+                                   class="w-full rounded-md border-gray-300 text-sm focus:border-gray-500 focus:ring-gray-500">
+                        </div>
+                        <button type="submit" class="px-4 py-2 bg-gray-800 text-white text-sm font-semibold rounded-md hover:bg-gray-700">
+                            Search
+                        </button>
+                        @if ($salesSearch)
+                            <a href="{{ route('customers.show', $customer) }}" class="text-sm text-gray-500 hover:text-gray-700">Clear</a>
+                        @endif
+                    </form>
+
+                    <div class="flex flex-wrap gap-2 text-xs text-gray-500">
+                        @foreach ($salesCountsByType as $type => $count)
+                            <span class="px-3 py-1.5 rounded-full bg-gray-100">{{ $sourceLabels[$type] }}s: {{ $count }}</span>
+                        @endforeach
+                    </div>
+
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Document #</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">SKU</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Quantity</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">View</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse ($salesHistory as $row)
+                                    @php
+                                        $reportType = match ($row->type) { 'sales' => 'sales', 'invoices' => 'invoices', 'returns' => 'returns', default => $row->type };
+                                    @endphp
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm text-gray-500">{{ $sourceLabels[$row->type] ?? $row->type }}</td>
+                                        <td class="px-4 py-3 text-sm text-gray-500">
+                                            <a href="{{ route('reports.document', [$reportType, $row->document_number]) }}" class="underline decoration-dotted hover:text-gray-900">
+                                                {{ $row->document_number }}
+                                            </a>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">{{ $row->sku }}</td>
+                                        <td class="px-4 py-3 text-sm text-right text-gray-500">{{ number_format($row->quantity) }}</td>
+                                        <td class="px-4 py-3 text-sm text-gray-500">{{ \Illuminate\Support\Carbon::parse($row->transaction_date)->format('Y-m-d') }}</td>
+                                        <td class="px-4 py-3 text-sm">
+                                            <span class="px-2 py-1 rounded text-xs font-semibold bg-gray-100 text-gray-700 whitespace-nowrap">
+                                                {{ str($row->status)->title() }}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-center">
+                                            <a href="{{ route('reports.document', [$reportType, $row->document_number]) }}"
+                                               class="inline-flex items-center justify-center w-8 h-8 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="px-6 py-8 text-center text-sm text-gray-500">
+                                            No sales history found for this customer.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{ $salesHistory->links() }}
+                </div>
+
+                {{-- Change History tab (existing functionality, preserved) --}}
+                <div x-show="tab === 'history'" x-cloak class="space-y-4">
+                    <p class="text-sm text-gray-500">
+                        Every field change detected on this customer since the change log started tracking (2026-09-22) — earlier history can't be reconstructed.
+                    </p>
+
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Field</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Old Value</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">New Value</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse ($changeLogs as $log)
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">{{ $log->changed_at->format('Y-m-d H:i') }}</td>
+                                        <td class="px-4 py-3 text-sm text-gray-800">{{ str($log->field)->replace('_', ' ')->title() }}</td>
+                                        <td class="px-4 py-3 text-sm text-gray-500">{{ $log->old_value ?? '—' }}</td>
+                                        <td class="px-4 py-3 text-sm text-gray-800">{{ $log->new_value ?? '—' }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="px-6 py-8 text-center text-sm text-gray-500">
+                                            No tracked changes for this customer yet.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{ $changeLogs->links() }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</x-app-layout>

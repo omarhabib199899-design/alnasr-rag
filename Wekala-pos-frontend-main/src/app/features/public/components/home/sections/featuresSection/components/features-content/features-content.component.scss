@@ -1,0 +1,35 @@
+@use '../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   FEATURES CONTENT
+========================================================== */
+
+.features-content {
+    // Restricting width for better focus and readability
+    max-width: 40rem;
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.features-content__title {
+    font-size: map-get($font-sizes, 'display-2');
+    line-height: map-get($line-heights, 'none');
+    font-weight: map-get($font-weights, 'bold');
+    color: var(--foreground);
+    // Tightening spacing for a modern, bold headline aesthetic
+    word-spacing: -8px;
+    letter-spacing: -.02em;
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.features-content__description {
+    // Using a snug line-height to maintain clear text block hierarchy
+    line-height: map-get($line-heights, 'snug');
+    color: var(--muted);
+}

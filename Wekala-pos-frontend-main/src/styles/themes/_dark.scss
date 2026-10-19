@@ -1,0 +1,65 @@
+@use '../abstract/variables' as *;
+
+[data-theme='dark'] {
+
+  /* Background */
+
+  --background: #{$dark-background};
+  --foreground: #{$dark-foreground};
+
+  --surface: #{$dark-surface};
+  --surface-2: #{$dark-surface-2};
+
+  /* Cards */
+
+  --card: #{$dark-card};
+  --card-foreground: #{$dark-foreground};
+
+  --popover: #{$dark-popover};
+  --popover-foreground: #{$dark-foreground};
+
+  /* Brand */
+
+  --primary: #{$dark-primary};
+  --primary-surface: color-mix(in oklab, var(--primary) 8%, var(--surface));
+  --primary-hover: #{$dark-primary-hover};
+  --primary-soft: #{$dark-primary-soft};
+  --primary-foreground: #{$white};
+
+  /* Accent */
+
+  --accent: #{$dark-accent};
+  --accent-hover: #{$dark-accent-hover};
+  --accent-foreground: #{$gray-900};
+
+  /* Secondary */
+
+  --secondary: #{$dark-secondary};
+  --secondary-foreground: #{$dark-foreground};
+
+  /* Muted */
+
+  --muted: #{$dark-muted};
+  --muted-foreground: #{$dark-muted-foreground};
+
+  /* Status */
+
+  --success: #{$dark-success};
+  --warning: #{$dark-warning};
+  --danger: #{$dark-error};
+  --info: #{$dark-info};
+
+  /* Inputs */
+
+  --border: #{$dark-border};
+  --input: #{$dark-input};
+  --ring: #{$dark-ring};
+
+  /* Shadows */
+
+  --shadow-sm: 0 1px 0 0 rgba(0, 0, 0, 0.4), 0 4px 10px -4px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 1px 0 0 rgba(0, 0, 0, 0.4), 0 10px 30px -12px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 1px 0 0 rgba(0, 0, 0, 0.4), 0 20px 40px -16px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 1px 0 0 rgba(0, 0, 0, 0.4), 0 30px 60px -20px rgba(0, 0, 0, 1);
+
+}

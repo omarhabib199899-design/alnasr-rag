@@ -1,0 +1,55 @@
+@use '../../../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.orders-table__header{
+
+
+    @include border(bottom);
+
+    background:color-mix(
+        in oklab,
+        var(--background) 65%,
+        white
+    );
+
+}
+
+
+
+
+/* ==========================================================
+   ROW
+========================================================== */
+
+.orders-table__row{
+
+    @include smooth-transition(
+        .2s,
+        background
+    );
+
+}
+
+.orders-table__row:not(:last-child){
+
+    @include border(bottom);
+
+}
+
+.orders-table__row:hover{
+
+    background:
+        color-mix(
+            in oklab,
+            var(--primary) 4%,
+            white
+        );
+
+}
+
+
+

@@ -1,0 +1,42 @@
+@use '../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   DEVELOPED SECTION
+========================================================== */
+
+.developed-section {
+    position: relative;
+    margin-top: map-get($spacings, '48');
+}
+
+/* ==========================================================
+   WRAPPER
+========================================================== */
+
+.developed-section__wrapper {
+    overflow: hidden;
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@include respond-to('lg', 'down') {
+    .developed-section__wrapper {
+        // Apply consistent padding for smaller viewports
+        @include spacing(p, 24);
+    }
+}
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+
+@include respond-to('lg') {
+    .developed-section__wrapper {
+        // Increase horizontal and vertical padding for desktop layout
+        @include spacing(px, 56);
+        @include spacing(py, 48);
+    }
+}

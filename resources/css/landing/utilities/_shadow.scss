@@ -1,0 +1,34 @@
+@use '../abstract/mixins' as *;
+
+/* ==========================================================
+   SHADOW UTILITIES
+========================================================== */
+
+.shadow-sm {
+  @include shadow-sm;
+}
+
+.shadow-md {
+  @include shadow-md;
+}
+
+.shadow-lg {
+  @include shadow-lg;
+}
+
+// .shadow-hover {
+//   @include shadow-hover;
+// }
+
+.hover-lift {
+  @include hover-lift;
+}
+
+.hover-zoom {
+  @include hover-scale(1.05);
+}
+
+.pop-out-hover {
+  @include hover-lift;
+  @include active-press;
+}

@@ -1,0 +1,25 @@
+@use '../abstract/mixins' as *;
+
+$flex-utilities: (
+  "center": flex-center,
+  "between": flex-between,
+  "around": flex-around,
+  "evenly": flex-evenly,
+  "start": flex-start,
+  "end": flex-end,
+  "column": flex-column,
+  "inline-center": inline-flex-center
+);
+
+@each $name, $mixin-name in $flex-utilities {
+  .flex-#{$name} {
+    @if $mixin-name == "flex-center" { @include flex-center; }
+    @else if $mixin-name == "flex-between" { @include flex-between; }
+    @else if $mixin-name == "flex-around" { @include flex-around; }
+    @else if $mixin-name == "flex-evenly" { @include flex-evenly; }
+    @else if $mixin-name == "flex-start" { @include flex-start; }
+    @else if $mixin-name == "flex-end" { @include flex-end; }
+    @else if $mixin-name == "flex-column" { @include flex-column; }
+    @else if $mixin-name == "inline-flex-center" { @include inline-flex-center; }
+  }
+}

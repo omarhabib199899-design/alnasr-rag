@@ -1,0 +1,204 @@
+// @use '../../../styles/abstract/variables' as *;
+// @use '../../../styles/abstract/mixins' as *;
+
+// /* ==========================================================
+//    LIST
+// ========================================================== */
+
+// .data-list{
+
+//     @include flex-column;
+
+// }
+
+// /* ==========================================================
+//    HEADER
+// ========================================================== */
+
+// .data-list__header{
+
+//     padding-bottom:16px;
+
+//     border-bottom:1px solid var(--border);
+
+// }
+
+// .data-list__title{
+
+//     font-size:14px;
+
+//     font-weight:map-get($font-weights,'semibold');
+
+//     color:var(--foreground);
+
+// }
+
+// /* ==========================================================
+//    BODY
+// ========================================================== */
+
+// .data-list__body{
+
+//     @include flex-column;
+
+// }
+
+// /* ==========================================================
+//    ROW
+// ========================================================== */
+
+// .data-list__row{
+
+//     @include flex-between;
+
+//     gap:16px;
+
+//     padding:14px 0;
+
+//     border-bottom:1px solid var(--border);
+
+//     @include smooth-transition(.25s);
+
+//     &:last-child{
+
+//         border-bottom:none;
+
+//     }
+
+//     &:hover{
+
+//         padding-inline:8px;
+
+//         background:rgba(0,0,0,.02);
+
+//     }
+
+// }
+
+// /* ==========================================================
+//    LEFT
+// ========================================================== */
+
+// .data-list__left{
+
+//     display:flex;
+
+//     gap:12px;
+
+//     align-items:center;
+
+// }
+
+// .data-list__id{
+
+//     color:var(--muted);
+
+//     font-size:11px;
+
+//     font-family:monospace;
+
+//     min-width:42px;
+
+// }
+
+// /* ==========================================================
+//    CONTENT
+// ========================================================== */
+
+// .data-list__content{
+
+//     @include flex-column;
+
+//     gap:2px;
+
+// }
+
+// .data-list__name{
+
+//     font-size:13px;
+
+//     color:var(--foreground);
+
+//     font-weight:500;
+
+// }
+
+// .data-list__subtitle{
+
+//     font-size:12px;
+
+//     color:var(--muted);
+
+// }
+
+// /* ==========================================================
+//    RIGHT
+// ========================================================== */
+
+// .data-list__right{
+
+//     @include flex-column;
+
+//     align-items:flex-end;
+
+//     gap:4px;
+
+// }
+
+// .data-list__value{
+
+//     font-size:13px;
+
+//     font-weight:700;
+
+//     color:var(--primary);
+
+// }
+
+// /* ==========================================================
+//    BADGE
+// ========================================================== */
+
+// .data-list__badge{
+
+//     padding:2px 8px;
+
+//     border-radius:999px;
+
+//     font-size:11px;
+
+//     font-weight:600;
+
+// }
+
+// .data-list__badge--success{
+
+//     color:#16a34a;
+
+//     background:rgba(34,197,94,.12);
+
+// }
+
+// .data-list__badge--warning{
+
+//     color:#d97706;
+
+//     background:rgba(245,158,11,.12);
+
+// }
+
+// .data-list__badge--danger{
+
+//     color:#dc2626;
+
+//     background:rgba(239,68,68,.12);
+
+// }
+
+// .data-list__badge--primary{
+
+//     color:var(--primary);
+
+//     background:color-mix(in oklab,var(--primary) 12%,transparent);
+
+// }

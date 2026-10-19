@@ -1,0 +1,13 @@
+<div class="stats mt-4 grid grid-cols-3 gap-3">
+    <!-- Iterate through the statistics cards array -->
+    @for (card of cards; track card.title) {
+        <app-stat-card
+            className="card flex-column card--secondry p-12"
+            [title]="card.title"
+            [value]="card.value"
+            [prefix]="card.prefix ?? ''"
+            [suffix]="card.suffix ?? ''"
+            [badge]="card.badge">
+        </app-stat-card>
+    }
+</div>

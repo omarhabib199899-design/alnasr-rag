@@ -1,0 +1,53 @@
+@use '../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   HERO DASHBOARD
+========================================================== */
+
+.hero-dashboard {
+    position: relative;
+    width: 100%;
+    margin-inline: auto;
+    max-width: 640px;
+    z-index: 2;
+    transition: filter .6s ease;
+}
+
+/* ==========================================================
+   WINDOW
+========================================================== */
+
+.hero-dashboard__window {
+    position: relative;
+    overflow: hidden;
+    border-radius: map-get($radius, '2xl');
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+    background: color-mix(
+        in oklab,
+        var(--background) 96%,
+        white
+    );
+    backdrop-filter: blur(18px);
+    @include shadow-xl;
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md') {
+    .hero-dashboard {
+        max-width: 700px;
+    }
+}
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+
+@include respond-to('lg') {
+    .hero-dashboard {
+        max-width: 620px;
+    }
+}

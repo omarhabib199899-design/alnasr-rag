@@ -1,0 +1,19 @@
+@use '../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../styles/abstract/mixins' as *;
+/* ==========================================================
+   TITLE
+========================================================== */
+.about-content__title{
+    font-size: map-get($font-sizes,'display-2');
+    line-height: map-get($line-heights, 'none');
+    font-weight: map-get($font-weights,'bold');
+    color: var(--foreground);
+    letter-spacing: -0.1rem;
+    word-spacing: -5px;
+}
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+.about-content__description{
+    line-height: map-get($line-heights, 'snug');
+}

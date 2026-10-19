@@ -1,0 +1,30 @@
+@use '../abstract/mixins' as *;
+@use '../abstract/variables' as *;
+
+/* ==========================================================
+   RADIUS UTILITIES
+========================================================== */
+
+.radius-sm {
+  @include radius(map-get($radius,'sm'));
+}
+
+.radius-md {
+  @include radius(map-get($radius,'md'));
+}
+
+.radius-lg {
+  @include radius(map-get($radius,'lg'));
+}
+
+.radius-xl {
+  @include radius(map-get($radius,'xl'));
+}
+
+.radius-full {
+ @include radius(map-get($radius,'full'));
+} 
+
+.radius-rounded {
+ @include radius(map-get($radius,'rounded'));
+} 

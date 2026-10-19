@@ -1,0 +1,291 @@
+@use '../../../../styles/abstract/variables' as *;
+@use '../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   TOKENS
+========================================================== */
+
+$button-sizes: (
+  xs: (
+    py: map-get($spacings, '6'),
+    px: map-get($spacings, '12'),
+    fs: map-get($font-sizes, '12'),
+    icon: 14px
+  ),
+  sm: (
+    py: map-get($spacings, '8'),
+    px: map-get($spacings, '16'),
+    fs: map-get($font-sizes, '14'),
+    icon: 16px
+  ),
+  md: (
+    py: map-get($spacings, '10'),
+    px: map-get($spacings, '20'),
+    fs: map-get($font-sizes, '16'),
+    icon: 18px
+  ),
+  lg: (
+    py: map-get($spacings, '12'),
+    px: map-get($spacings, '24'),
+    fs: map-get($font-sizes, '18'),
+    icon: 20px
+  ),
+  xl: (
+    py: map-get($spacings, '14'),
+    px: map-get($spacings, '32'),
+    fs: map-get($font-sizes, '20'),
+    icon: 22px
+  )
+);
+
+$button-variants: (
+  primary: (
+    bg: var(--primary),
+    color: var(--primary-foreground),
+    border: transparent,
+    box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+    ),
+    hover: (
+      bg: var(--primary-hover),
+      box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+      )
+    )
+  ),
+  secondary: (
+    bg: var(--secondary),
+    color: var(--secondary-foreground),
+    border: transparent,
+    hover: (
+      bg: var(--surface-2),
+    )
+  ),
+  outline: (
+    bg: transparent,
+    color: var(--primary),
+    border: var(--primary),
+    hover: (
+      bg: var(--primary-soft),
+    )
+  ),
+  ghost: (
+    bg: transparent,
+    color: var(--foreground),
+    border: transparent,
+    hover: (
+      bg: var(--surface-2),
+      box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+      )
+    )
+  ),
+  success: (
+    bg: var(--success),
+    color: #fff,
+    border: transparent,
+    hover: (
+      bg: color-mix(in srgb, var(--success) 88%, black),
+      box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+      )
+    )
+  ),
+  warning: (
+    bg: var(--warning),
+    color: #fff,
+    border: transparent,
+    hover: (
+      bg: color-mix(in srgb, var(--warning) 88%, black),
+      box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+      )
+    )
+  ),
+  danger: (
+    bg: var(--danger),
+    color: #fff,
+    border: transparent,
+    hover: (
+      bg: color-mix(in srgb, var(--danger) 88%, black),
+      box-shadow: (
+        0 1px 0 0 oklab(100% 0 5.96046e-8 / .25) inset, 
+        0 10px 24px -10px color-mix(in oklab, var(--primary) 60%, transparent)
+      )
+    )
+  )
+);
+
+/* ==========================================================
+   BASE
+========================================================== */
+
+.app-btn {
+  @include inline-flex-center;
+  gap: map-get($spacings, '10');
+  position: relative;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-weight: map-get($font-weights, 'semibold');
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  overflow: hidden;
+  user-select: none;
+  @include smooth-transition(
+    .25s,
+    background-color,
+    color,
+    border-color,
+    box-shadow,
+    transform,
+    opacity
+  );
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    @include shadow-sm;
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--ring);
+  }
+
+  &:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+  }
+}
+
+/* ==========================================================
+   SIZES
+========================================================== */
+
+@each $size, $config in $button-sizes {
+  .app-btn--#{$size} {
+    padding-block: map-get($config, py);
+    padding-inline: map-get($config, px);
+    font-size: map-get($config, fs);
+  }
+
+  .app-btn--#{$size} .app-btn__icon {
+    width: map-get($config, icon);
+    height: map-get($config, icon);
+    font-size: map-get($config, icon);
+  }
+}
+
+/* ==========================================================
+   RADIUS
+========================================================== */
+
+@each $name, $value in $radius {
+  .app-btn--radius-#{$name} {
+    border-radius: $value;
+  }
+}
+
+/* ==========================================================
+   VARIANTS
+========================================================== */
+
+@each $name, $config in $button-variants {
+  $hover-config: map-get($config, hover);
+
+  .app-btn--#{$name} {
+    background: map-get($config, bg);
+    color: map-get($config, color);
+    border-color: map-get($config, border);
+    box-shadow: map-get($config, box-shadow);
+  }
+
+  .app-btn--#{$name}:hover:not(:disabled) {
+    background-color: map-get($hover-config, bg);
+    box-shadow: map-get($hover-config, box-shadow);
+  }
+}
+
+/* ==========================================================
+   MODIFIERS
+========================================================== */
+
+.app-btn--block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.app-btn--rounded {
+  border-radius: 999px !important;
+}
+
+.app-btn--elevated {
+  @include shadow-md;
+}
+
+.app-btn--loading {
+  pointer-events: none;
+}
+
+.app-btn--loading .app-btn__content,
+.app-btn--loading .app-btn__icon {
+  opacity: 0;
+}
+
+.app-btn--icon {
+  padding-inline: map-get($spacings, '10');
+}
+
+.app-btn--icon .app-btn__content {
+  display: none;
+}
+
+/* ==========================================================
+   ELEMENTS
+========================================================== */
+
+.app-btn__content {
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-btn__icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.app-btn__spinner {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  translate: -50% -50%;
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: app-btn-spin .7s linear infinite;
+}
+
+/* ==========================================================
+   ANIMATION
+========================================================== */
+
+@keyframes app-btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

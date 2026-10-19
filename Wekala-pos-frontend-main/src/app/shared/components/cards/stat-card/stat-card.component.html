@@ -1,0 +1,57 @@
+<article [ngClass]="classes()">
+
+    <!-- Render icon if provided -->
+    @if(icon()) {
+
+        <div class="stat-card__icon">
+
+            <i
+                class="ic-base"
+                [class]="'ic-base ic-' + icon()">
+            </i>
+
+        </div>
+
+    }
+
+    <!-- Display the stat card title -->
+    <span class="stat-card__title">
+
+        {{ title() }}
+
+    </span>
+
+    <!-- Display value; uses animated count-up component if value is numeric -->
+    <h3 class="stat-card__value">
+
+        @if(isNumber()) {
+
+            <app-count-up
+                [value]="$any(value())"
+                [prefix]="prefix()"
+                [suffix]="suffix()"
+                [duration]="duration()"
+                [decimals]="decimals()"
+                [separator]="separator()">
+            </app-count-up>
+
+        } @else {
+
+            {{ value() }}
+
+        }
+
+    </h3>
+
+    <!-- Optional badge indicator -->
+    @if(badge()) {
+
+        <span class="stat-card__badge">
+
+            {{ badge() }}
+
+        </span>
+
+    }
+
+</article>

@@ -1,0 +1,62 @@
+@use '../../../../../../../../../styles/abstract/mixins' as *;
+@use '../../../../../../../../../styles/abstract/variables' as *;
+
+.hero-content {
+    max-width: 650px;
+}
+
+/* ========================================
+   Badge
+======================================== */
+
+.hero-content__badge {
+    @include inline-flex-center;
+    gap: map-get($spacings, '8');
+    padding: map-get($spacings, '6') map-get($spacings, '12');
+    background-color: var(--primary-surface);
+    @include border;
+    font-size: map-get($font-sizes, '12');
+    font-weight: map-get($font-weights, 'semibold');
+    border-radius: map-get($radius, 'full');
+}
+
+/* ========================================
+   Heading
+======================================== */
+
+.hero-content__title {
+    font-size: map-get($font-sizes, 'display-1');
+    line-height: map-get($line-heights, 'none');
+    font-weight: map-get($font-weights, 'bold');
+    color: var(--foreground);
+    letter-spacing: -0.25rem;
+}
+
+/* ========================================
+   Description
+======================================== */
+
+.hero-content__description {
+    line-height: map-get($line-heights, 'snug');
+}
+
+/* ========================================
+   Features
+======================================== */
+
+.hero-content__feature {
+    @include inline-flex-center;
+    gap: map-get($spacings, '8');
+    font-weight: map-get($font-weights, 'medium');
+    color: var(--foreground);
+}
+
+/* ========================================
+   Desktop
+======================================== */
+
+@include respond-to('lg') {
+    .hero-content {
+        max-width: 650px;
+    }
+}

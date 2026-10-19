@@ -1,0 +1,35 @@
+@use '../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+.developed-content {
+    // Restricting width for optimal readability
+    max-width: 38rem;
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.developed-content__title {
+    font-size: map-get($font-sizes, 'display-2');
+    line-height: map-get($line-heights, 'none');
+    font-weight: map-get($font-weights, 'bold');
+    color: var(--foreground);
+    // Adjusted spacing for balanced typography
+    letter-spacing: -.02em;
+    word-spacing: -8px;
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.developed-content__description {
+    // Ensuring readability with relaxed line height for longer text
+    line-height: map-get($line-heights, 'relaxed');
+    color: var(--muted);
+}

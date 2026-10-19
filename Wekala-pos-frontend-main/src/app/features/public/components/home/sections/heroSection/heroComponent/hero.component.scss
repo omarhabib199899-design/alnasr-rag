@@ -1,0 +1,67 @@
+@use '../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   HERO BACKGROUND EFFECTS
+========================================================== */
+
+// Base decorative background gradients
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        // Top-right accent glow
+        radial-gradient(
+            900px 500px at 85% -10%,
+            color-mix(in oklab, var(--accent) 18%, transparent),
+            transparent 60%
+        ),
+        // Bottom-left primary glow
+        radial-gradient(
+            900px 500px at -10% 10%,
+            color-mix(in oklab, var(--primary) 18%, transparent),
+            transparent 55%
+        ),
+        // Surface background base
+        linear-gradient(
+            180deg,
+            var(--surface),
+            var(--surface-2)
+        );
+}
+
+// Grid overlay effect with radial mask
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+        linear-gradient(
+            to right,
+            color-mix(in oklab, var(--primary) 8%, transparent) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            color-mix(in oklab, var(--primary) 8%, transparent) 1px,
+            transparent 1px
+        );
+    background-size: 48px 48px;
+
+    // Fading the grid towards the edges for a cleaner focus
+    mask-image: radial-gradient(
+        circle,
+        #000 35%,
+        transparent 90%
+    );
+}
+
+
+@include respond-to('md', 'down'){
+    .hero__container{
+        @include spacing(g, 40)
+    }
+}

@@ -1,0 +1,15 @@
+@use '../abstract/mixins' as *;
+@use '../abstract/variables' as *;
+.main-content__badge {
+    width:fit-content;
+    gap: map-get($spacings, '8');
+    padding:
+        map-get($spacings, '6')
+        map-get($spacings, '12');
+    background-color: var(--primary-surface);
+    color: var(--primary);
+    @include border;
+    font-size: map-get($font-sizes, '12');
+    font-weight: map-get($font-weights, 'semibold');
+    @include radius(map-get($radius,'full'));
+}

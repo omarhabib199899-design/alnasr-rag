@@ -1,0 +1,18 @@
+<article class="growth-card card card--glass growth-card-float radius-lg">
+    <!-- Metric icon area -->
+    <div class="growth-card__icon radius-rounded flex items-center p-10">
+        <i class="ic-base ic-s12 ic-arrow-trend-up text-success bg-cover"></i>
+    </div>
+    <!-- Metric content details -->
+    <div class="growth-card__content flex flex-col">
+        <span class="growth-card__title fs-10 text-muted">
+            {{ title() }}
+        </span>
+        <h3 class="growth-card__value fs-12 fw-bold text-foreground leading-normal">
+            {{ value() }}
+            <span class="growth-card__subtitle">
+                {{ subtitle() }}
+            </span>
+        </h3>
+    </div>
+</article>

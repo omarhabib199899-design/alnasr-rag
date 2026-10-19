@@ -1,0 +1,27 @@
+@use '../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   BUSINESS SECTION
+========================================================== */
+
+.business-section {
+    position: relative;
+    // padding-block gives the section its own internal breathing room; margin-top adds a
+    // further break from whatever section sits above it, so adjacent sections never touch
+    // even when their own padding is thin.
+    margin-top: map-get($spacings, '48');
+    padding-block: map-get($spacings, '64');
+
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@include respond-to('md') {
+    .business-section__wrapper {
+        // Increase gap for better visual separation on tablet screens
+        gap: map-get($spacings, '48');
+    }
+}

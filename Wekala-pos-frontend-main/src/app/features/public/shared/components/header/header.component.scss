@@ -1,0 +1,114 @@
+@use '../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../styles/abstract/mixins' as *;
+
+.header {
+    position: sticky;
+    height: 60px;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(16px);
+    background: color-mix(in srgb, var(--background) 88%, transparent);
+    @include border(bottom);
+    @include spacing(py, 6)
+}
+
+/*====================================*/
+
+.header__wrapper {
+    @include flex-between;
+}
+
+/*====================================*/
+
+.header__nav {
+    display: none;
+}
+
+/*====================================*/
+
+.header__toggle {
+    background: transparent;
+    cursor: pointer;
+    @include border;
+    color: var(--foreground);
+    @include flex-center;
+}
+
+/* Mobile navigation overlay */
+.header__mobile {
+    position: fixed;
+    z-index: 1;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: var(--background);
+    @include border('bottom');
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-16px);
+    @include smooth-transition(
+        .35s,
+        max-height,
+        opacity,
+        transform
+    );
+    
+    a {
+        font-size: map-get($font-sizes, '14');
+        font-weight: map-get($font-weights, 'medium');
+        color: var(--foreground);
+        transition: .25s;
+        
+        &:hover {
+            color: var(--primary);
+        }
+    }
+}
+
+.header__mobile--open {
+    max-height: 450px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/*====================================*/
+/* Desktop View */
+/*====================================*/
+
+@include respond-to('lg') {
+    .header__cta {
+        display: flex !important;
+    }
+
+    .header__auth-actions {
+        display: flex !important;
+    }
+
+    .header__toggle {
+        display: none;
+    }
+    
+    .header__nav {
+        @include flex-center;
+        @include spacing(g, 40);
+        
+        a {
+            font-size: map-get($font-sizes, '14');
+            font-weight: map-get($font-weights, 'medium');
+            color: var(--muted-foreground);
+            transition: .25s;
+            
+            &:hover {
+                color: var(--primary);
+                font-weight: map-get($font-weights, 'bold');
+            }
+        }
+    }
+    
+    .header__mobile {
+        display: none;
+    }
+}

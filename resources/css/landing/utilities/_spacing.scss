@@ -1,0 +1,202 @@
+@use '../abstract/mixins' as *;
+@use '../abstract/variables' as *;
+
+/* ==========================================================
+   SPACING UTILITIES
+   ========================================================== */
+
+/**
+ * Utility Generator
+ * ----------------------------------------------------------
+ * Generates:
+ * Padding
+ * Margin
+ * Gap
+ * RTL/LTR Safe
+ * Physical Utilities
+ */
+
+@each $size, $value in $spacings {
+
+  /* =======================================================
+     Padding
+  ======================================================= */
+
+  .p-#{$size} {
+    padding: $value !important;
+  }
+
+  .px-#{$size} {
+    padding-inline: $value !important;
+  }
+
+  .py-#{$size} {
+    padding-block: $value !important;
+  }
+
+  .pt-#{$size} {
+    padding-top: $value !important;
+  }
+
+  .pb-#{$size} {
+    padding-bottom: $value !important;
+  }
+
+  .ps-#{$size} {
+    padding-inline-start: $value !important;
+  }
+
+  .pe-#{$size} {
+    padding-inline-end: $value !important;
+  }
+
+  /* Physical */
+
+  .pl-#{$size} {
+    padding-left: $value !important;
+  }
+
+  .pr-#{$size} {
+    padding-right: $value !important;
+  }
+
+  /* =======================================================
+     Margin
+  ======================================================= */
+
+  .m-#{$size} {
+    margin: $value !important;
+  }
+
+  .mx-#{$size} {
+    margin-inline: $value !important;
+  }
+
+  .my-#{$size} {
+    margin-block: $value !important;
+  }
+
+  .mt-#{$size} {
+    margin-top: $value !important;
+  }
+
+  .mb-#{$size} {
+    margin-bottom: $value !important;
+  }
+
+  .ms-#{$size} {
+    margin-inline-start: $value !important;
+  }
+
+  .me-#{$size} {
+    margin-inline-end: $value !important;
+  }
+
+  /* Physical */
+
+  .ml-#{$size} {
+    margin-left: $value !important;
+  }
+
+  .mr-#{$size} {
+    margin-right: $value !important;
+  }
+
+  /* =======================================================
+     Gap
+  ======================================================= */
+
+  .gap-#{$size} {
+    gap: $value !important;
+  }
+
+  /* =======================================================
+     Negative Margin
+  ======================================================= */
+
+  .mt-n#{$size} {
+    margin-top: -#{$value} !important;
+  }
+
+  .mb-n#{$size} {
+    margin-bottom: -#{$value} !important;
+  }
+
+  .ms-n#{$size} {
+    margin-inline-start: -#{$value} !important;
+  }
+
+  .me-n#{$size} {
+    margin-inline-end: -#{$value} !important;
+  }
+
+}
+
+/* ==========================================================
+   AUTO MARGINS
+   ========================================================== */
+
+.mx-auto {
+  margin-inline: auto !important;
+}
+
+.ms-auto {
+  margin-inline-start: auto !important;
+}
+
+.me-auto {
+  margin-inline-end: auto !important;
+}
+
+/* ==========================================================
+   SEMANTIC LAYOUT HELPERS
+   ========================================================== */
+
+/**
+ * Main Page Container
+ */
+
+.page-container {
+  @include spacing(p, 24);
+}
+
+/**
+ * Section Vertical Spacing
+ */
+
+.section-spacing {
+  padding-block: $section-padding-y;
+
+  @include respond-to(md, down) {
+    padding-block: $section-padding-mobile;
+  }
+}
+
+/**
+ * Navigation Links Padding
+ */
+
+.links-padding {
+  @include spacing(px, 16);
+  @include spacing(py, 12);
+}
+
+/**
+ * Default Content Wrapper
+ */
+
+.content-wrapper {
+  max-width: $content-max-width;
+  margin-inline: auto;
+  @include spacing(px, 24);
+}
+
+/* =======================================================
+   Line Heights Utilities
+   ======================================================= */
+
+@each $name, $value in $line-heights {
+  .lh-#{$name} {
+    line-height: $value !important;
+  }
+}

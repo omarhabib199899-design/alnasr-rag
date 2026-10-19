@@ -1,0 +1,51 @@
+<div class="contact-content flex flex-col items-start gap-28">
+
+    <div class="contact-content__header fade-up flex flex-col items-start gap-20">
+
+        <span class="main-content__badge">
+
+            {{ badge() }}
+
+        </span>
+
+        <h2 class="contact-content__title font-monospace">
+
+            {{ title() }}
+
+        </h2>
+
+        <p class="contact-content__description fs-16 text-muted">
+
+            {{ description() }}
+
+        </p>
+
+    </div>
+
+    <div class="contact-content__cards flex flex-col gap-12 w-full">
+
+        @for(contact of contacts(); track contact.title){
+
+            <app-info-card
+
+                size="lg"
+
+                className="card main-card radius-xl p-18 gap-16 card--hover-primary flex items-start"
+
+                [variant]="contact.variant"
+                [link]="contact.link"
+                [icon]="contact.icon"
+
+                [badge]="contact.badge"
+
+                [title]="contact.title"
+
+                [arrow]="true">
+
+            </app-info-card>
+
+        }
+
+    </div>
+
+</div>

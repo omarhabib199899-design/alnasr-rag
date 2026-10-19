@@ -1,0 +1,41 @@
+/* ==========================================================
+   OPACITY
+========================================================== */
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-25 {
+  opacity: .25;
+}
+
+.opacity-50 {
+  opacity: .5;
+}
+
+.opacity-60 {
+  opacity: .6;
+}
+
+.opacity-70 {
+  opacity: .7;
+}
+
+.opacity-80 {
+  opacity: .8;
+}
+
+.opacity-95 {
+  opacity: .95;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+.disabled-layer {
+  opacity: .6;
+  pointer-events: none;
+  filter: grayscale(1);
+}

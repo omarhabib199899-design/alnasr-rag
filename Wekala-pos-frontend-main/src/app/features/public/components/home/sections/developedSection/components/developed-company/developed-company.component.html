@@ -1,0 +1,12 @@
+<div class="developed-company flex aitems-center justify-start">
+    <!-- Iterate through company details and display within an info card -->
+    @for(company of companies(); track company.title){
+        <app-info-card
+            size="lg"
+            className="card main-card flex-center radius-lg p-14 gap-16 bg-primary-surface"
+            [leading]="company.leading"
+            [badge]="company.badge"
+            [title]="company.title">
+        </app-info-card>
+    }
+</div>

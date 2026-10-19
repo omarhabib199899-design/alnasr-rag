@@ -1,0 +1,418 @@
+@use 'variables' as *;
+
+/* =========================================================
+   MIXINS: TYPOGRAPHY
+   ========================================================= */
+
+/**
+ * Font Face Declaration
+ * Dynamically registers fonts with different weights
+ */
+@mixin font-face($family, $weight, $folderName, $fileName) {
+  @font-face {
+    font-family: $family;
+    src: url('/assets/fonts/#{$folderName}/#{$fileName}.woff2') format('woff2');
+    font-weight: $weight;
+    font-style: normal;
+    font-display: swap;
+  }
+}
+
+
+/* =========================================================
+   MIXINS: SPACING SYSTEM
+   ========================================================= */
+
+/**
+ * Dynamic spacing generator
+ * Supports:
+ * p-16
+ * px-20
+ * py-24
+ * pt-32
+ * mb-16
+ * gap-24
+ */
+
+@mixin spacing($short, $size) {
+
+  $value: map-get($spacings, "#{$size}");
+
+  $first-char: str-slice($short,1,1);
+
+  $prop:
+    if($first-char == 'p',
+      'padding',
+      if($first-char == 'm','margin','gap'));
+
+  $dir:
+    if(str-length($short) > 1, str-slice($short,2,2), 'all');
+    @if $value != null {
+    @if $prop == 'gap' {
+      gap:$value !important;
+    } @else {
+      @if $dir == 'all' {
+        #{$prop}:$value !important;
+      } @else if $dir == 'x' {
+        #{$prop}-inline:$value !important;
+      } @else if $dir == 'y' {
+        #{$prop}-block:$value !important;
+      } @else if $dir == 't' {
+        #{$prop}-top:$value !important;
+      } @else if $dir == 'b' {
+        #{$prop}-bottom:$value !important;
+      } @else if $dir == 's' {
+        #{$prop}-inline-start:$value !important;
+      } @else if $dir == 'e' {
+        #{$prop}-inline-end:$value !important;
+      }
+    }
+  } @else {
+    @warn "Spacing '#{$size}' doesn't exist.";
+  }
+}
+
+
+/* =========================================================
+   MIXINS: FLEXBOX
+   ========================================================= */
+@mixin flex-center {
+  display:flex ;
+  justify-content:center ;
+  align-items:center ;
+}
+
+@mixin flex-between {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+@mixin flex-around {
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+@mixin flex-evenly {
+  display:flex;
+  justify-content:space-evenly;
+  align-items:center;
+}
+
+@mixin flex-start {
+  display:flex;
+  justify-content:flex-start;
+  align-items: start;
+}
+
+@mixin flex-end {
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+}
+
+@mixin flex-column {
+  display:flex;
+  flex-direction:column;
+}
+
+@mixin inline-flex-center{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+}
+
+
+/* =========================================================
+   MIXINS: GRID
+   ========================================================= */
+
+@mixin grid($columns,$gap:24px){
+  display:grid;
+  grid-template-columns:repeat($columns,1fr);
+  gap:$gap;
+}
+
+@mixin auto-grid($min:280px,$gap:24px){
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax($min,1fr));
+  gap:$gap;
+}
+
+
+/* =========================================================
+   MIXINS: TRANSITIONS
+   ========================================================= */
+$transition-base:.3s;
+@mixin smooth-transition($duration:.3s,$properties...){
+  $spec:();
+  @each $prop in $properties{
+    $spec:append(
+      $spec,
+      #{$prop} $duration cubic-bezier(.4,0,.2,1),
+      comma
+    );
+  }
+  @if length($properties)==0{
+    transition:all $duration cubic-bezier(.4,0,.2,1);
+  } @else{
+    transition:$spec;
+    will-change:#{$properties};
+  }
+
+}
+
+@mixin transition($props...){
+  transition:$props $transition-base ease;
+}
+
+
+/* =========================================================
+   MIXINS: HOVER EFFECTS
+   ========================================================= */
+
+@mixin hover-lift(
+  $y:-6px,
+  $shadow:0 15px 35px rgba(0,0,0,.08)
+)
+{
+  @include smooth-transition(.35s,transform,box-shadow);
+  &:hover{
+    transform:translateY($y);
+    box-shadow:$shadow;
+  }
+}
+
+@mixin hover-scale($scale:1.03){
+  @include smooth-transition(.25s,transform);
+  &:hover{
+    transform:scale($scale);
+  }
+}
+@mixin hover-opacity($opacity:.85){
+  @include smooth-transition(.25s,opacity);
+  &:hover{
+    opacity:$opacity;
+  }
+}
+
+@mixin active-press($scale:.96){
+  @include smooth-transition(.1s,transform);
+  &:active{
+    transform:scale($scale);
+  }
+}
+
+/* =========================================================
+   MIXINS: SHADOWS
+   ========================================================= */
+@mixin shadow-sm{
+  box-shadow:var(--shadow-sm);
+}
+
+@mixin shadow-md{
+  box-shadow:var(--shadow-md);
+}
+
+@mixin shadow-lg{
+  box-shadow:var(--shadow-lg);
+}
+
+@mixin shadow-xl{
+  box-shadow:var(--shadow-xl);
+}
+
+
+/* =========================================================
+   MIXINS: BORDER
+   ========================================================= */
+
+@mixin border(
+  $sides: 'all',      
+  $width: 1px,
+  $color: var(--border)
+) {
+  $border-style: #{$width} solid #{$color};
+
+  @if $sides == 'all' {
+    border: $border-style;
+  } @else {
+    @each $side in $sides {
+      border-#{$side}: $border-style;
+    }
+  }
+}
+
+
+/* =========================================================
+   MIXINS: BORDER RADIUS
+   ========================================================= */
+
+@mixin radius(
+  $size:var(--radius),
+  $position:'all'
+){
+
+  @if $position=='all'{
+    border-radius:$size;
+  }
+  @else if $position=='top'{
+    border-top-left-radius:$size;
+    border-top-right-radius:$size;
+  }
+  @else if $position=='bottom'{
+    border-bottom-left-radius:$size;
+    border-bottom-right-radius:$size;
+  }
+  @else if $position=='start'{
+    border-start-start-radius:$size;
+    border-end-start-radius:$size;
+  }
+  @else if $position=='end'{
+    border-start-end-radius:$size;
+    border-end-end-radius:$size;
+  }
+  @else{
+    border-#{$position}-radius:$size;
+  }
+}
+
+
+/* =========================================================
+   MIXINS: RESPONSIVE
+   ========================================================= */
+
+@mixin respond-to($breakpoint, $direction: 'up') {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $width: map-get($breakpoints, $breakpoint);
+    
+    @if $direction == 'up' {
+      @media (min-width: $width) { @content; }
+    } @else if $direction == 'down' {
+      @media (max-width: ($width - 0.02px)) { @content; }
+    }
+  } @else {
+    @error " #{$breakpoint}";
+  }
+}
+
+
+/* =========================================================
+   MIXINS: IMAGES
+   ========================================================= */
+
+@mixin img-cover{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+@mixin img-contain{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+@mixin bg-cover{
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+
+
+/* =========================================================
+   MIXINS: SCROLLBAR
+   ========================================================= */
+
+@mixin scrollbar{
+  &::-webkit-scrollbar{
+    width:8px;
+    height:8px;
+  }
+  &::-webkit-scrollbar-track{
+    background:var(--surface-2);
+  }
+  &::-webkit-scrollbar-thumb{
+    background:var(--border);
+    border-radius:50px;
+    &:hover{
+      background:var(--primary);
+    }
+  }
+}
+
+
+/* =========================================================
+   MIXINS: TEXT
+   ========================================================= */
+
+@mixin line-clamp($lines:2){
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:$lines;
+  line-clamp:$lines;
+  overflow:hidden;
+}
+
+@mixin text-ellipsis{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
+/* =========================================================
+   MIXINS: ABSOLUTE POSITION
+   ========================================================= */
+
+@mixin absolute-center{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+
+
+/* =========================================================
+   MIXINS: CONTAINER
+   ========================================================= */
+
+@mixin container{
+  width:min(1200px,calc(100% - 48px));
+  margin-inline:auto;
+}
+
+
+/* =========================================================
+   MIXINS: GLASS EFFECT
+   ========================================================= */
+
+@mixin glass{
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.3);
+}
+
+
+/* =========================================================
+   MIXINS: SECTION
+   ========================================================= */
+
+@mixin section-padding{
+  padding-block:96px;
+  @include respond-to(md,down){
+    padding-block:72px;
+  }
+}
+/* =========================================================
+   MIXINS: IMAGES
+   ========================================================= */
+
+/**
+ * Base background image behavior
+ */
+@mixin img-base {
+  background-position: center;
+  background-repeat: no-repeat;
+}

@@ -1,0 +1,12 @@
+<div class="features-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-20">
+    <!-- Iterate through all system features to display in a grid -->
+    @for(feature of features(); track feature.title){
+        <app-feature-card
+            size="md"
+            className="flex flex-col items-start gap-12 card main-card radius-xl card--hover-primary p-24 h-full"
+            [icon]="feature.icon"
+            [title]="feature.title"
+            [description]="feature.description">
+        </app-feature-card>
+    }
+</div>

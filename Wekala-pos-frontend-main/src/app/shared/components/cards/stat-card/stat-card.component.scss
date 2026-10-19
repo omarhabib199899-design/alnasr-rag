@@ -1,0 +1,54 @@
+@use '../../../../../styles/abstract/variables' as *;
+@use '../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+// Base styling for the statistic card container
+.stat-card {
+    gap: map-get($spacings,'4');
+    border-radius: map-get($radius,'xl');
+
+}
+
+/*==========================================================
+   TITLE
+=========================================== */
+
+// Label styling for the statistic description
+.stat-card__title {
+
+    font-size: map-get($font-sizes,'10');
+
+    text-transform: uppercase;
+
+    letter-spacing: .08em;
+
+    font-weight: map-get($font-weights,'medium');
+
+    color: var(--muted);
+
+}
+
+/* ==========================================================
+   VALUE
+========================================================== */
+
+// Main display value styling
+.stat-card__value {
+    font-size: map-get($font-sizes,'14');
+    font-weight: map-get($font-weights,'bold');
+    color: var(--foreground);
+}
+
+/* ==========================================================
+   BADGE
+========================================================== */
+
+ // Status indicator styling
+ .stat-card__badge {
+    font-size: map-get($font-sizes,'12');
+    font-weight: map-get($font-weights,'semibold');
+    color: var(--success);
+ }

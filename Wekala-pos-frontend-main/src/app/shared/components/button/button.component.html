@@ -1,0 +1,53 @@
+<ng-template #content>
+  <!-- Show spinner if the button is in a loading state -->
+  @if (loading()) {
+
+    <span class="app-btn__spinner"></span>
+
+  } @else {
+
+    <!-- Render left icon if provided -->
+    @if (leftIcon()) {
+      <span class="app-btn__icon flex-center app-btn__icon--left">
+        <i class="ic-base" [class]="'ic-base ic-' + leftIcon()"></i>
+      </span>
+    }
+
+    <!-- Render main button content if not in icon-only mode -->
+    @if (!iconOnly()) {
+      <span class="app-btn__content flex-center">
+        <ng-content />
+      </span>
+    }
+
+    <!-- Render right icon if provided -->
+    @if (rightIcon()) {
+      <span class="app-btn__icon app-btn__icon--right">
+        <i class="ic-base" [class]="'ic-base ic-' + rightIcon()"></i>
+      </span>
+    }
+
+  }
+</ng-template>
+
+<!-- Render as an anchor tag if a link is provided -->
+@if(link()){
+  <a
+    [href]="link()" [type]="type()"
+      [attr.aria-label]="ariaLabel() || null"
+    [ngClass]="classes()">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+  </a>
+
+<!-- Render as a standard button if no link is provided -->
+} @else{
+    <button
+      [type]="type()" [disabled]="isDisabled()"
+      [attr.aria-label]="ariaLabel() || null"
+      [ngClass]="classes()">
+
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+
+
+    </button>
+}

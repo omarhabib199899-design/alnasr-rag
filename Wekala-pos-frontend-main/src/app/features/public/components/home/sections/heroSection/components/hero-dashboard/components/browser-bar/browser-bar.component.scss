@@ -1,0 +1,32 @@
+@use '../../../../../../../../../../../styles/abstract/variables' as *;
+@use '../../../../../../../../../../../styles/abstract/mixins' as *;
+
+/* ==========================================================
+   BROWSER
+========================================================== */
+
+.browser {
+    @include border(bottom);
+    background: var(--background);
+}
+
+
+
+/* ==========================================================
+   CENTER
+========================================================== */
+
+.browser__title {
+
+    text-align: center;
+
+    font-size: map-get($font-sizes,'10');
+    font-weight:map-get($font-weights,'semibold');
+
+    color: var(--muted);
+
+    letter-spacing: .3px;
+
+    user-select: none;
+
+}

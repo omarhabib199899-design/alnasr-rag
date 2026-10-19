@@ -1,0 +1,81 @@
+<!-- <section class="data-list card card--glass">
+
+    <header class="data-list__header">
+
+        <h3 class="data-list__title">
+
+            {{ title() }}
+
+        </h3>
+
+    </header>
+
+    <div class="data-list__body">
+
+        @for(item of items(); track item.id){
+
+            <article class="data-list__row">
+
+                <div class="data-list__left">
+
+                    <span class="data-list__id">
+
+                        #{{ item.id }}
+
+                    </span>
+
+                    <div class="data-list__content">
+
+                        <span class="data-list__name">
+
+                            {{ item.title }}
+
+                        </span>
+
+                        @if(item.subtitle){
+
+                            <span class="data-list__subtitle">
+
+                                {{ item.subtitle }}
+
+                            </span>
+
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="data-list__right">
+
+                    @if(item.badge){
+
+                        <span
+                            class="data-list__badge"
+                            [class]="'data-list__badge--' + (item.status ?? 'success')">
+
+                            {{ item.badge }}
+
+                        </span>
+
+                    }
+
+                    @if(item.value){
+
+                        <span class="data-list__value">
+
+                            {{ item.value }}
+
+                        </span>
+
+                    }
+
+                </div>
+
+            </article>
+
+        }
+
+    </div>
+
+</section> -->
