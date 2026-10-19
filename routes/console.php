@@ -361,8 +361,7 @@ Schedule::command('insights:snapshot')->dailyAt('06:00')->timezone('Asia/Riyadh'
 // Zoho Analytics → our copy of the raw tables + Dr. Ahmed's queries (Customer 360 / Entity 360 data), same cadence as the
 // Lovable portal: hourly 08:00–19:00 Asia/Riyadh except Friday, plus a nightly run with the classifications. Incremental
 // pulls only (--no-full inside zoho:refresh), so no run ever exports a whole table. A cycle takes ~10 minutes.
-Schedule::command('zoho:refresh')->hourly()->between('08:00', '19:00')->days([0, 1, 2, 3, 4, 6])
-    ->timezone('Asia/Riyadh')->name('zoho-analytics-refresh')->withoutOverlapping(90)->runInBackground();
+Schedule::command('zoho:refresh')->hourly()->between('07:00', '20:00')->days([0, 1, 2, 3, 4, 6])    ->timezone('Asia/Riyadh')->name('zoho-analytics-refresh')->withoutOverlapping(90)->runInBackground();
 Schedule::command('zoho:refresh --nightly')->dailyAt('23:00')->timezone('Asia/Riyadh')
     ->name('zoho-analytics-refresh-nightly')->withoutOverlapping(90)->runInBackground();
 

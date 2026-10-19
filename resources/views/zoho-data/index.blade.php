@@ -39,7 +39,7 @@
                     <div class="zd-card"><div class="l">Total live rows</div><div class="v" dir="ltr" x-text="num(liveRows)"></div></div>
                     <div class="zd-card"><div class="l">Runs (24h)</div><div class="v" dir="ltr" x-text="num(data.summary.runs_24h)"></div><div class="s" x-text="data.summary.running_now + ' running now'"></div></div>
                     <div class="zd-card"><div class="l">Last run finished</div><div class="v" dir="ltr" style="font-size: 14px" x-text="data.summary.last_finished_at || '—'"></div><div class="s">Asia/Riyadh</div></div>
-                    <div class="zd-card"><div class="l">Next refresh</div><div class="v" dir="ltr" style="font-size: 14px" x-text="data.summary.next_refresh_at || '—'"></div><div class="s">Hourly 08:00–19:00 (not Friday) + 23:00</div></div>
+                    <div class="zd-card"><div class="l">Next refresh</div><div class="v" dir="ltr" style="font-size: 14px" x-text="data.summary.next_refresh_at || '—'"></div><div class="s">Hourly 07:00–20:00 (not Friday) + 23:00</div></div>
                 </div>
 
                 <div class="lv-scroll" style="flex: none; max-height: none; min-height: 0; border: 1px solid var(--border)">

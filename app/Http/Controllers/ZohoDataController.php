@@ -27,8 +27,7 @@ class ZohoDataController extends Controller
 {
     private const TZ = 'Asia/Riyadh';
 
-    private const FREQ_HOURLY = 'Hourly (08:00–19:00, not Friday) + 23:00';
-
+    private const FREQ_HOURLY = 'Hourly (07:00–20:00, not Friday) + 23:00';
     private static function authorize(): void
     {
         abort_unless(auth()->user()?->hasPermission('nav.configuration'), 403);
@@ -55,7 +54,7 @@ class ZohoDataController extends Controller
     {
         $t = $now->copy()->setTimezone(self::TZ)->startOfHour()->addHour();
         for ($i = 0; $i < 24 * 8; $i++, $t->addHour()) {
-            if ($t->hour === 23 || ($group === 'hourly' && $t->hour >= 8 && $t->hour <= 19 && ! $t->isFriday())) {
+            if ($t->hour === 23 || ($group === 'hourly' && $t->hour >= 7 && $t->hour <= 20 && ! $t->isFriday())) {
                 return $t;
             }
         }
