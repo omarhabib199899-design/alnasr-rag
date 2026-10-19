@@ -83,10 +83,20 @@ Route::middleware(['auth', 'activity.log'])->group(function () {
     Route::get('/management/{name}/360/action-customers', [Entity360Controller::class, 'actionCustomers'])->name('management.action-customers');
     Route::get('/management/{name}/360/action-detail', [Entity360Controller::class, 'actionDetail'])->name('management.action-detail');
     Route::get('/sales-kpis', [SalesKpisController::class, 'index'])->name('sales-kpis.index');
-    Route::get('/payments-received', [PaymentsReceivedController::class, 'index'])->name('payments-received.index');
-    Route::get('/sales-operations', [SalesOperationsController::class, 'index'])->name('sales-operations.index');
-    Route::get('/credit-notes', [CreditNotesController::class, 'index'])->name('credit-notes.index');
-    Route::get('/credit-notes/{documentNumber}', [CreditNotesController::class, 'show'])->name('credit-notes.show');
+    // Payments Received: the Lovable copy is the main page; the earlier page stays reachable at /payments-received/legacy.
+    Route::get('/payments-received', [\App\Http\Controllers\PaymentsReceivedListController::class, 'index'])->name('payments-received.index');
+    Route::get('/payments-received/data', [\App\Http\Controllers\PaymentsReceivedListController::class, 'data'])->name('payments-received.data');
+    Route::get('/payments-received/facets', [\App\Http\Controllers\PaymentsReceivedListController::class, 'facets'])->name('payments-received.facets');
+    Route::get('/payments-received/legacy', [PaymentsReceivedController::class, 'index'])->name('payments-received.legacy');
+    Route::get('/payments-received/{payment}/allocations', [\App\Http\Controllers\PaymentsReceivedListController::class, 'allocations'])->whereNumber('payment')->name('payments-received.allocations');    Route::get('/sales-operations', [SalesOperationsController::class, 'index'])->name('sales-operations.index');
+        // Credit Notes: the Lovable copy is the main page; the earlier pages stay reachable under /credit-notes/legacy.
+    Route::get('/credit-notes', [\App\Http\Controllers\CreditNoteListController::class, 'index'])->name('credit-notes.index');
+    Route::get('/credit-notes/data', [\App\Http\Controllers\CreditNoteListController::class, 'data'])->name('credit-notes.data');
+    Route::get('/credit-notes/facets', [\App\Http\Controllers\CreditNoteListController::class, 'facets'])->name('credit-notes.facets');
+    Route::get('/credit-notes/legacy', [CreditNotesController::class, 'index'])->name('credit-notes.legacy');
+    Route::get('/credit-notes/legacy/{documentNumber}', [CreditNotesController::class, 'show'])->name('credit-notes.show-legacy');
+    Route::get('/credit-notes/{creditNote}', [\App\Http\Controllers\CreditNoteListController::class, 'show'])->whereNumber('creditNote')->name('credit-notes.show');
+    Route::get('/credit-notes/{creditNote}/items', [\App\Http\Controllers\CreditNoteListController::class, 'items'])->whereNumber('creditNote')->name('credit-notes.items');
     // Invoices: the Lovable copy is the main page; the earlier page stays reachable at /invoices/legacy.
     Route::get('/invoices', [\App\Http\Controllers\InvoiceListController::class, 'index'])->name('invoices.index');
     Route::get('/invoices/data', [\App\Http\Controllers\InvoiceListController::class, 'data'])->name('invoices.data');

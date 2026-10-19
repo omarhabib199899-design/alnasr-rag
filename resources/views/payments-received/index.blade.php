@@ -73,7 +73,7 @@
                         Filter
                     </button>
                     @if ($payment_number || $customer_number || $customer_name || $reference_number || $payment_mode || $account_name || $description || $invoice_number || $dateFrom || $dateTo)
-                        <a href="{{ route('payments-received.index') }}" class="text-sm text-gray-500 hover:text-gray-700">Clear all filters</a>
+                        <a href="{{ route('payments-received.legacy') }}" class="text-sm text-gray-500 hover:text-gray-700">Clear all filters</a>
                     @endif
                 </div>
             </form>

@@ -9,7 +9,7 @@
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <div>
-                <a href="{{ route('credit-notes.index') }}" class="text-sm text-gray-500 hover:text-gray-700">
+                <a href="{{ route('credit-notes.legacy') }}" class="text-sm text-gray-500 hover:text-gray-700">
                     &larr; Back to Credit Notes
                 </a>
             </div>

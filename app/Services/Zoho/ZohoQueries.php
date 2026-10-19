@@ -29,6 +29,8 @@ class ZohoQueries
                 'indexes' => [['customer_id', 'transaction_date'], ['item_id'], ['transaction_date']]],
             'sales_operations' => ['zoho_name' => 'Sales Operations', 'group' => 'hourly',
                 'indexes' => [['invoice_id'], ['invoice_number', 'customer_id']]],
+            'customer_payment' => ['zoho_name' => 'Customer Payment', 'group' => 'hourly',
+                'indexes' => [['payment_id'], ['customer_id'], ['payment_date']]],
             'collection_classification_staging' => ['zoho_name' => 'Collection_Classification_Staging', 'group' => 'nightly', 'indexes' => [['customer_id']]],
             'collection_classification' => ['zoho_name' => 'Collection_Classification', 'group' => 'nightly', 'indexes' => [['customer_id']]],
             'documents_classification' => ['zoho_name' => 'Documents_Classification', 'group' => 'nightly', 'indexes' => [['customer_id']]],

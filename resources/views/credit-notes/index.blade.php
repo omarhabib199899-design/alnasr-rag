@@ -49,7 +49,7 @@
                             Filter
                         </button>
                         @if ($search || $dateFrom || $dateTo)
-                            <a href="{{ route('credit-notes.index') }}" class="text-sm text-gray-500 hover:text-gray-700">Clear search</a>
+                            <a href="{{ route('credit-notes.legacy') }}" class="text-sm text-gray-500 hover:text-gray-700">Clear search</a>
                         @endif
                     </form>
                 </div>
@@ -78,7 +78,7 @@
                                     <td class="px-5 py-3 text-sm text-gray-500 whitespace-nowrap" title="{{ $cn->updated_at }}">{{ $cn->updated_at ? \Illuminate\Support\Carbon::parse($cn->updated_at)->diffForHumans() : '—' }}</td>
                                     <td class="px-5 py-3 text-sm text-center">
                                         @if ($cn->transaction_number && isset($hasItems[$cn->transaction_number]))
-                                            <a href="{{ route('credit-notes.show', $cn->transaction_number) }}"
+                                            <a href="{{ route('credit-notes.show-legacy', $cn->transaction_number) }}"
                                                title="View credit note details"
                                                class="inline-flex items-center justify-center w-8 h-8 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
