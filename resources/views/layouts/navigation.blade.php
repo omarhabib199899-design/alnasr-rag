@@ -94,7 +94,7 @@
         ], 'visible' => $canReports],
         ['kind' => 'group', 'label' => 'Reports', 'items' => [
             $item('Reports', route('reports.index'), request()->routeIs('reports.*') && ! in_array($txType, ['sales', 'purchase-orders'], true)),
-            $item('ZOHO Data'),
+                        $item('ZOHO Data', route('zoho-data.index'), request()->routeIs('zoho-data.*'), $user->hasPermission('nav.configuration')),
         ], 'visible' => $canReports],
         ['kind' => 'group', 'label' => 'Administration', 'items' => [
             $item('Dashboard', route('dashboard'), request()->routeIs('dashboard'), $user->hasPermission('nav.dashboard')),

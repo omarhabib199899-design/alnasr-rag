@@ -113,7 +113,12 @@ Route::middleware(['auth', 'activity.log'])->group(function () {
     Route::get('/sales-orders', [\App\Http\Controllers\SalesOrdersController::class, 'index'])->name('sales-orders.index');
 
     Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index');
+        // ZOHO Data: read-only Zoho sync monitor (admins — Configuration permission, checked in the controller).
+    Route::get('/reports/zoho-data', [\App\Http\Controllers\ZohoDataController::class, 'index'])->name('zoho-data.index');
+    Route::get('/reports/zoho-data/overview', [\App\Http\Controllers\ZohoDataController::class, 'overview'])->name('zoho-data.overview');
+    Route::get('/reports/zoho-data/dataset', [\App\Http\Controllers\ZohoDataController::class, 'dataset'])->name('zoho-data.dataset');
     Route::get('/reports/warehouses', [ReportsController::class, 'warehouses'])->name('reports.warehouses');
+
     Route::get('/reports/sfda-price-checks', [ReportsController::class, 'sfdaPriceChecks'])->name('reports.sfda-price-checks');
     Route::get('/reports/sfda-changes', [ReportsController::class, 'sfdaChanges'])->name('reports.sfda-changes');
     Route::get('/reports/sfda-market-changes', [ReportsController::class, 'sfdaMarketChanges'])->name('reports.sfda-market-changes');
