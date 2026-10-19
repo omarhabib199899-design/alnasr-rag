@@ -75,6 +75,13 @@ Route::middleware(['auth', 'activity.log'])->group(function () {
         Route::get("/{$prefix}/{name}/360/action-customers", [Entity360Controller::class, 'actionCustomers'])->name("{$prefix}.action-customers");
         Route::get("/{$prefix}/{name}/360/action-detail", [Entity360Controller::class, 'actionDetail'])->name("{$prefix}.action-detail");
     }
+        // Management: same directory + Entity 360 pages, scoped by the customer's MANAGEMENT field (no legacy page).
+    Route::get('/management', [Entity360Controller::class, 'index'])->name('management.index');
+    Route::get('/management/{name}', [Entity360Controller::class, 'show'])->name('management.show');
+    Route::get('/management/{name}/360/ar-details', [Entity360Controller::class, 'arDetails'])->name('management.ar-details');
+    Route::get('/management/{name}/360/classification-customers', [Entity360Controller::class, 'classificationCustomers'])->name('management.classification-customers');
+    Route::get('/management/{name}/360/action-customers', [Entity360Controller::class, 'actionCustomers'])->name('management.action-customers');
+    Route::get('/management/{name}/360/action-detail', [Entity360Controller::class, 'actionDetail'])->name('management.action-detail');
     Route::get('/sales-kpis', [SalesKpisController::class, 'index'])->name('sales-kpis.index');
     Route::get('/payments-received', [PaymentsReceivedController::class, 'index'])->name('payments-received.index');
     Route::get('/sales-operations', [SalesOperationsController::class, 'index'])->name('sales-operations.index');

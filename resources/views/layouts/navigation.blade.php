@@ -64,7 +64,7 @@
             $item('Sales Reps', route('sales-reps.index'), request()->routeIs('sales-reps.*')),
             $item('Sales Owners', route('sales-owners.index'), request()->routeIs('sales-owners.*')),
             $item('Data Entry', route('data-entry.index'), request()->routeIs('data-entry.*')),
-            $item('Management'),
+            $item('Management', route('management.index'), request()->routeIs('management.*')),
             $item('Sales KPIs', route('sales-kpis.index'), request()->routeIs('sales-kpis.*')),
             $item('Sales Orders', route('sales-orders.index'), request()->routeIs('sales-orders.*') || $txType === 'sales', $canReports),
             $item('Invoices', route('invoices.index'), request()->routeIs('invoices.*'), $canReports),

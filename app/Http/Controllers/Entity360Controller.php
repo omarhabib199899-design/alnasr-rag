@@ -21,6 +21,7 @@ class Entity360Controller extends Controller
         'salesRep' => ['rep_name', 'sales-reps', 'Sales Reps', 'Sales Rep 360', 'Back to Sales Reps'],
         'salesOwner' => ['sales_owner', 'sales-owners', 'Sales Owners', 'Sales Owner 360', 'Back to Sales Owners'],
         'dataEntry' => ['data_entry', 'data-entry', 'Data Entry', 'Data Entry 360', 'Back to Data Entry'],
+        'management' => ['management', 'management', 'Management', 'Management 360', 'Back to Management'],
     ];
 
     /** Their 10 tabs, in order (Due Ages merged into Accounts Receivable); same permission keys as Customer 360. */
@@ -42,6 +43,7 @@ class Entity360Controller extends Controller
         'data_entry' => ['rep_name', 'sales_owner'],
         'sales_owner' => ['rep_name', 'data_entry'],
         'rep_name' => ['sales_owner', 'data_entry'],
+        'management' => ['data_entry', 'rep_name', 'sales_owner'],
     ];
 
     public function index(Request $request)
