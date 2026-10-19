@@ -153,7 +153,7 @@
                     </thead>
                     <tbody>
                         @forelse ($customers as $customer)
-                            @php $showUrl = route('customers.show', ['customer' => $customer, 'tab' => 'overview']); @endphp
+                            @php $showUrl = route('customers.show', ['customer' => $customer->customer_id, 'tab' => 'overview']); @endphp
                             <tr onclick="if (! event.target.closest('a')) window.location='{{ $showUrl }}'">
                                 <td dir="auto">
                                     <a href="{{ $showUrl }}" class="cl-link" dir="auto">{{ $customer->customer_name ?: $dash }}</a>

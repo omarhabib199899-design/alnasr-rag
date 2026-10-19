@@ -73,17 +73,39 @@ class CustomerController extends Controller
      * never remove ours" rule.
      */
     private const CUSTOMER_FACETS = [
-        'status' => 'customers.status',
-        'sales_rep' => 'customers.rep_name',
-        'account_type' => 'customers.account_type',
-        'payment_term' => 'customers.payment_terms_label',
-        'management' => 'customer_credit_usage.management',
-        'customer_number' => 'customers.customer_number',
-        'sales_owner' => 'customers.sales_owner',
+        'status' => 'b.status',
+        'sales_rep' => 'b.rep_name',
+        'account_type' => 'b.account_type',
+        'payment_term' => 'b.payment_terms_label',
+        'management' => 'b.management',
+        'customer_number' => 'b.customer_number',
+        'sales_owner' => 'b.sales_owner',
     ];
 
     /** Facets whose pre-multi-select plain-string form was a partial (LIKE) match, kept that way for old links/bookmarks. */
     private const CUSTOMER_FACETS_LEGACY_LIKE = ['sales_rep', 'account_type', 'management', 'customer_number', 'sales_owner'];
+
+    /**
+     * Customers list — every column from Zoho Analytics, as the Lovable portal's customers_list():
+     * zoho_raw_customers (refreshed hourly) for the customer itself, Outstanding Balance =
+     * SUM(zoho_ar_sales.statement_amount) per customer, 0 when none. The earliest unpaid due date
+     * behind the "Overdue" filter comes from zoho_ar_sales' invoice rows too. Customer 360 opens by the
+     * Zoho customer id (see Customer::resolveRouteBinding), so every listed customer links.
+     */
+    private function customerListBase()
+    {
+        $ar = DB::table('zoho_ar_sales')->groupBy('customer_id')->select('customer_id')
+            ->selectRaw('SUM(statement_amount) as outstanding_balance')
+            ->selectRaw("MIN(CASE WHEN entity_type = 'invoice' AND balance > 0 THEN inv_balance_due_date END) as earliest_unpaid_due_date");
+
+        return DB::table('zoho_raw_customers as c')
+            ->leftJoinSub($ar, 'a', 'a.customer_id', '=', 'c.customer_id')
+            ->select('c.customer_id', 'c.customer_name', 'c.display_name', 'c.company_name', 'c.status',
+                'c.customer_number', 'c.rep_name', 'c.data_entry', 'c.sales_owner', 'c.account_type', 'c.management',
+                'c.credit_limit as live_credit_limit', 'c.portal_enabled', 'a.earliest_unpaid_due_date')
+            ->selectRaw('CAST(c.payments_due AS CHAR) as payment_terms_label, c.payments_due as payment_terms_days')
+            ->selectRaw('COALESCE(a.outstanding_balance, 0) as outstanding_balance');
+    }
 
     public function index(Request $request)
     {
@@ -105,78 +127,34 @@ class CustomerController extends Controller
         $filter = $request->query('filter');
         $portal = $request->query('portal');
 
-        $sortableColumns = [
-            'customer_number' => 'customers.customer_number',
-            'customer_name' => 'customers.customer_name',
-            'rep_name' => 'customers.rep_name',
-            'data_entry' => 'customers.data_entry',
-            'sales_owner' => 'customers.sales_owner',
-            'account_type' => 'customers.account_type',
-            'payment_terms_label' => 'customers.payment_terms_label',
-            'management' => 'customer_credit_usage.management',
-            'live_credit_limit' => 'customer_credit_usage.credit_limit',
-            'outstanding_balance' => 'outstanding_balance',
-            'status' => 'customers.status',
-        ];
-        $sort = array_key_exists($request->query('sort'), $sortableColumns) ? $sortableColumns[$request->query('sort')] : null;
+        $sortableColumns = ['customer_number', 'customer_name', 'rep_name', 'data_entry', 'sales_owner', 'account_type',
+            'payment_terms_label', 'management', 'live_credit_limit', 'outstanding_balance', 'status'];
+        $sort = in_array($request->query('sort'), $sortableColumns, true) ? 'b.'.$request->query('sort') : null;
+        $sort = $sort === 'b.payment_terms_label' ? 'b.payment_terms_days' : $sort; // numeric order (30 before 120)
         $direction = $request->query('direction') === 'asc' ? 'asc' : 'desc';
-
-        // invoice_documents only for earliest_unpaid_due_date now (a genuinely
-        // invoice-level concept — due dates only exist on invoices) — the
-        // Outstanding Balance figure itself moved to $ledgerBalances below.
-        $balances = DB::table('invoice_documents')
-            ->where('status', '!=', 'draft')
-            ->select('zoho_customer_id')
-            ->selectRaw('MIN(CASE WHEN balance > 0 THEN due_date END) as earliest_unpaid_due_date')
-            ->groupBy('zoho_customer_id');
-
-        // Same customerLedgerBalance() used on the detail page's Outstanding AR
-        // (see that method's docblock — ar_ledger_entries, not
-        // invoice_documents, because invoice_documents structurally can't hold
-        // manual journal-entry AR adjustments) — otherwise the list page and a
-        // customer's own AR tab show two different Outstanding Balance numbers.
-        $ledgerBalances = DB::table('ar_ledger_entries')
-            ->select('zoho_customer_id')
-            ->selectRaw('SUM(statement_amount) as outstanding_balance')
-            ->groupBy('zoho_customer_id');
-
-        $query = Customer::query()
-            ->whereNull('customers.zoho_missing_since')
-            ->leftJoinSub($balances, 'balances', 'balances.zoho_customer_id', '=', 'customers.zoho_contact_id')
-            ->leftJoinSub($ledgerBalances, 'ledger_balances', 'ledger_balances.zoho_customer_id', '=', 'customers.zoho_contact_id')
-            ->leftJoin('customer_credit_usage', 'customer_credit_usage.zoho_customer_id', '=', 'customers.zoho_contact_id')
-            // customer_credit_usage.credit_limit, not customers.credit_limit — the latter
-            // comes from a one-time manual Analytics import (2026-09-22, never refreshed
-            // since) while customer_credit_usage is kept live by the daily
-            // reports:sync-customer-credit-usage job. Confirmed live 2026-10-01 (Ahmed
-            // Mohsen, CUS-3): customers.credit_limit was stale by exactly 2,000,000 SAR
-            // after a real limit change in Zoho post-dated the one-time import.
-            ->select('customers.*', 'balances.earliest_unpaid_due_date', 'customer_credit_usage.management', 'customer_credit_usage.credit_limit as live_credit_limit')
-            ->selectRaw('COALESCE(ledger_balances.outstanding_balance, 0) as outstanding_balance');
 
         $applyNonFacetFilters = function ($q) use ($search, $customerName, $filter, $portal) {
             // The reference portal's single search box: matches any column shown in the table.
             if ($search !== '') {
                 $q->where(function ($w) use ($search) {
-                    foreach (['customers.customer_name', 'customers.display_name', 'customers.company_name', 'customers.customer_number',
-                        'customers.rep_name', 'customers.data_entry', 'customers.sales_owner', 'customers.account_type',
-                        'customers.payment_terms_label', 'customers.status', 'customer_credit_usage.management'] as $column) {
-                        $w->orWhere($column, 'like', "%{$search}%");
+                    foreach (['customer_name', 'display_name', 'company_name', 'customer_number', 'rep_name', 'data_entry',
+                        'sales_owner', 'account_type', 'payment_terms_label', 'status', 'management'] as $column) {
+                        $w->orWhere("b.{$column}", 'like', "%{$search}%");
                     }
                 });
             }
             if ($customerName !== null && $customerName !== '') {
                 $q->where(function ($w) use ($customerName) {
-                    $w->where('customers.customer_name', 'like', "%{$customerName}%")
-                        ->orWhere('customers.display_name', 'like', "%{$customerName}%")
-                        ->orWhere('customers.company_name', 'like', "%{$customerName}%");
+                    $w->where('b.customer_name', 'like', "%{$customerName}%")
+                        ->orWhere('b.display_name', 'like', "%{$customerName}%")
+                        ->orWhere('b.company_name', 'like', "%{$customerName}%");
                 });
             }
             $this->applyBalanceFilter($q, $filter);
             $this->applyPortalFilter($q, $portal);
         };
 
-        $applyNonFacetFilters($query);
+        $query = DB::query()->fromSub($this->customerListBase(), 'b')->select('b.*')->tap($applyNonFacetFilters);
         foreach (self::CUSTOMER_FACETS as $param => $column) {
             if ($selections[$param] === []) {
                 continue;
@@ -190,27 +168,15 @@ class CustomerController extends Controller
 
         $customers = $query
             ->when($sort !== null, fn ($q) => $q->orderBy($sort, $direction))
-            ->orderBy('customer_name')
+            ->orderBy('b.customer_name')
             ->paginate(50)->withQueryString();
 
         // Facet option counts + the stats strip, the reference portal's way:
         // each filter's counts reflect every OTHER active filter, and the
         // stats reflect all of them. One small query (≈1.5k customers) with
-        // the non-facet filters applied, then the facet logic in PHP — avoids
-        // re-running the heavy ledger-balance join once per facet.
-        $facetRows = Customer::query()
-            ->whereNull('customers.zoho_missing_since')
-            ->leftJoin('customer_credit_usage', 'customer_credit_usage.zoho_customer_id', '=', 'customers.zoho_contact_id')
-            ->when(in_array($filter, self::BALANCE_FILTERS, true), fn ($q) => $q
-                ->leftJoinSub($balances, 'balances', 'balances.zoho_customer_id', '=', 'customers.zoho_contact_id')
-                ->leftJoinSub($ledgerBalances, 'ledger_balances', 'ledger_balances.zoho_customer_id', '=', 'customers.zoho_contact_id'))
-            ->tap($applyNonFacetFilters)
-            ->toBase()
-            ->get([
-                'customers.status as status', 'customers.rep_name as sales_rep', 'customers.account_type as account_type',
-                'customers.payment_terms_label as payment_term', 'customer_credit_usage.management as management',
-                'customers.customer_number as customer_number', 'customers.sales_owner as sales_owner',
-            ]);
+        // the non-facet filters applied, then the facet logic in PHP.
+        $facetRows = DB::query()->fromSub($this->customerListBase(), 'b')->tap($applyNonFacetFilters)
+            ->get(array_map(fn ($param, $column) => "{$column} as {$param}", array_keys(self::CUSTOMER_FACETS), self::CUSTOMER_FACETS));
 
         $rowMatches = function ($row, ?string $exceptParam) use ($selections, $legacyString) {
             foreach ($selections as $param => $values) {
@@ -256,9 +222,8 @@ class CustomerController extends Controller
             'total' => $customers->total(),
             'active' => $matchingRows->where('status', 'Active')->count(),
             'inactive' => $matchingRows->where('status', 'Inactive')->count(),
-            // Every distinct rep_name, placeholders included — same definition
-            // as the Sales Reps page's "Total Reps" so the two always agree.
-            'reps' => $matchingRows->pluck('sales_rep')->filter(fn ($v) => $v !== null && $v !== '')->unique()->count(),
+            // Distinct non-blank Rep Name, as the reference portal's "Number of reps".
+            'reps' => $matchingRows->pluck('sales_rep')->filter(fn ($v) => $v !== null && trim($v) !== '')->unique()->count(),
         ];
 
         return view('customers.index', [
@@ -270,37 +235,33 @@ class CustomerController extends Controller
             'filter' => $filter,
             'portal' => $portal,
             'stats' => $stats,
-            'totalUnfiltered' => Customer::whereNull('zoho_missing_since')->count(),
+            'totalUnfiltered' => DB::table('zoho_raw_customers')->count(),
             'sortKey' => $sort !== null ? $request->query('sort') : null,
             'sortDirection' => $direction,
-            'lastUpdated' => Customer::max('live_contact_synced_at'),
+            // Last successful Analytics pull of the Customers table.
+            'lastUpdated' => DB::table('zoho_raw_sync_runs')->where('table_key', 'customers')->where('status', 'succeeded')->max('finished_at'),
         ]);
     }
 
     private function applyBalanceFilter($query, ?string $filter): void
     {
-        // Same expression as index()'s own outstanding_balance select (the
-        // ar_ledger_entries-based true balance — see customerLedgerBalance()'s
-        // docblock) — kept in sync so a customer's filter-bucket membership
-        // always matches the number shown in their own row.
-        $outstandingExpr = 'COALESCE(ledger_balances.outstanding_balance, 0)';
-
         match ($filter) {
-            'unpaid' => $query->whereRaw("{$outstandingExpr} > 0"),
-            'overdue' => $query->whereRaw("{$outstandingExpr} > 0")
-                ->whereNotNull('balances.earliest_unpaid_due_date')
-                ->where('balances.earliest_unpaid_due_date', '<', now()->toDateString()),
-            'credit_limit_exceeded' => $query->whereNotNull('customer_credit_usage.credit_limit')
-                ->whereRaw("{$outstandingExpr} > customer_credit_usage.credit_limit"),
+            'unpaid' => $query->where('b.outstanding_balance', '>', 0),
+            'overdue' => $query->where('b.outstanding_balance', '>', 0)
+                ->whereNotNull('b.earliest_unpaid_due_date')
+                ->where('b.earliest_unpaid_due_date', '<', now()->toDateString()),
+            'credit_limit_exceeded' => $query->whereNotNull('b.live_credit_limit')
+                ->whereColumn('b.outstanding_balance', '>', 'b.live_credit_limit'),
             default => null,
         };
     }
 
     private function applyPortalFilter($query, ?string $portal): void
     {
+        // Analytics stores Portal Enabled as a Yes/No flag (1/0).
         match ($portal) {
-            'enabled' => $query->whereRaw('LOWER(customers.portal_enabled) = ?', ['yes']),
-            'disabled' => $query->whereRaw('LOWER(customers.portal_enabled) = ?', ['no']),
+            'enabled' => $query->where('b.portal_enabled', 1),
+            'disabled' => $query->where('b.portal_enabled', 0),
             default => null,
         };
     }
