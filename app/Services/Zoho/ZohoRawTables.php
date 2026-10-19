@@ -37,7 +37,8 @@ class ZohoRawTables
     public const WEEKLY_FULL = [
               5 => ['accrual_transactions', 'customers', 'accounts', 'items', 'invoices', 'invoice_payments', 'customer_payments',
             'credit_notes', 'creditnotes_invoice', 'credit_note_items', 'sales_orders', 'batch_number_in',
-                        'locations', 'sales_order_invoice', 'price_lists'], // ~2.7M rows
+                        'locations', 'sales_order_invoice', 'price_lists',
+            'purchase_orders', 'purchase_order_items', 'vendors', 'purchase_receive', 'purchase_receive_items'], // ~2.7M rows
         6 => ['invoice_items', 'sales_order_items', 'stock_out_flow_table', 'fifo_mapping_table', 'batch_number_out'], // ~3.9M // ~2.7M rows~3.9M
     ];
 
@@ -67,6 +68,14 @@ class ZohoRawTables
              'locations' => ['view_id' => '100722000001322031', 'name' => 'Locations', 'mode' => 'incremental', 'key' => ['location_id']],
             'sales_order_invoice' => ['view_id' => '100722000003538381', 'name' => 'Sales Order Invoice', 'mode' => 'incremental', 'key' => ['invoice_id', 'sales_order_id']],
             'price_lists' => ['view_id' => '100722000001580879', 'name' => 'Price lists', 'mode' => 'incremental', 'key' => ['pricelist_id']],
+            // Purchasing (2026-10-19): replaces the Inventory API purchase-order sync. Item ID = the PO line's own id.
+            'purchase_orders' => ['view_id' => '100722000001474112', 'name' => 'Purchase Orders', 'mode' => 'incremental', 'key' => ['purchase_order_id']],
+            'purchase_order_items' => ['view_id' => '100722000001474461', 'name' => 'Purchase Order Items', 'mode' => 'incremental', 'key' => ['item_id']],
+            'vendors' => ['view_id' => '100722000000376171', 'name' => 'Vendors', 'mode' => 'incremental', 'key' => ['vendor_id']],
+            // Receives give each PO line its received quantity (Analytics' Purchase Order Status is the billing status).
+            // Warehouses (100722000001474210) is empty in Analytics — warehouses are Locations here.
+            'purchase_receive' => ['view_id' => '100722000002256081', 'name' => 'Purchase Receive', 'mode' => 'incremental', 'key' => ['purchase_receive_id']],
+            'purchase_receive_items' => ['view_id' => '100722000002256097', 'name' => 'Purchase Receive Items', 'mode' => 'incremental', 'key' => ['purchase_receive_id', 'purchase_order_item_id']],
         ];
     }
 
@@ -87,12 +96,17 @@ class ZohoRawTables
         'fifo_mapping_table' => [['stock_out_flow_id']],
         'batch_number_out' => [['invoice_item_id'], ['batch_in_id']],
         'sales_order_invoice' => [['invoice_id'], ['sales_order_id']],
+        'purchase_orders' => [['vendor_id']],
+        'purchase_order_items' => [['purchase_order_id'], ['product_id']],
+        'purchase_receive' => [['purchase_order_id']],
+        'purchase_receive_items' => [['purchase_order_item_id']],
     ];
 
     /** Plain-text columns kept as VARCHAR (indexable / compared) even in very wide tables. */
     public const VARCHAR_COLUMNS = [
         'customer_number', 'entity_type', 'debit_or_credit', 'account_type', 'account_name', 'status',
         'invoice_status', 'transaction_number', 'invoice_number', 'credit_note_number', 'sales_order', 'batch_number',
+        'purchase_order_number', 'purchase_order_status',
     ];
 
     public static function get(string $key): array

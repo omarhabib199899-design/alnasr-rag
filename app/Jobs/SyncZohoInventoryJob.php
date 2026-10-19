@@ -7,14 +7,10 @@ use App\Models\InventoryItem;
 use App\Models\ItemOwner;
 use App\Models\ZohoConnection;
 use App\Services\Inventory\InventoryRowsPersister;
-use App\Services\Zoho\ZohoApiThrottle;
-use App\Services\Zoho\ZohoInventoryClient;
-use App\Services\Zoho\ZohoItemMapper;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
-use Throwable;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Fetches Zoho Inventory items a small batch at a time and re-queues itself
@@ -46,21 +42,19 @@ use Throwable;
  * LIST response the whole time (confirmed against ZohoItemMapper's own
  * field list), so this is the only thing the detail call was ever still
  * needed for. A full generation now finishes in minutes, not days.
+ *
+ * Items from Zoho Analytics (2026-10-19): the item list itself now comes from zoho_raw_items (the Analytics
+ * "Items" table, refreshed hourly by zoho:refresh) instead of the Inventory API's /items pages, so this job makes
+ * no Inventory API call at all. Same fields: SKU, Item Name, Sales Price (price), Purchase Price (cost), Usage unit,
+ * RSP, OWNER. Category is left empty (it was empty for every Zoho item). SFDA No. is not in the Analytics table, so
+ * each item keeps the value from the previous snapshot. The whole list (~6.4k rows) is built in one run; the
+ * page/index arguments are kept only so ResolveInventoryStockMapJob's redispatch still matches.
  */
 class SyncZohoInventoryJob implements ShouldQueue
 {
     use Queueable;
 
     public int $tries = 1;
-
-    // Raised from 20 (the pre-2026-10-14 figure, sized around the HTTP
-    // latency of a per-item detail call) now that each item is pure array
-    // work against an already-fetched page plus an in-memory stock lookup —
-    // no per-item network round-trip left to bound against the host's
-    // CPU/time kill limit.
-    private const ITEMS_PER_RUN = 500;
-
-    private const THROTTLE_RETRY_DELAY_MINUTES = 10;
 
     public function __construct(
         public readonly ZohoConnection $zohoConnection,
@@ -69,43 +63,28 @@ class SyncZohoInventoryJob implements ShouldQueue
         public readonly int $index = 0,
     ) {}
 
-    public function handle(
-        ZohoInventoryClient $inventoryClient,
-        ZohoItemMapper $itemMapper,
-        InventoryRowsPersister $persister,
-        ZohoApiThrottle $throttle,
-    ): void {
+    public function handle(InventoryRowsPersister $persister): void
+    {
         $import = $this->importId
             ? Import::findOrFail($this->importId)
             : Import::create([
                 'user_id' => $this->zohoConnection->user_id,
                 'type' => 'inventory',
                 'source' => 'zoho',
-                'original_filename' => 'Zoho sync — '.now()->toDateTimeString(),
+                'original_filename' => 'Zoho Analytics — '.now()->toDateTimeString(),
                 'stored_path' => null,
                 'source_signature' => 'zoho:'.$this->zohoConnection->id,
                 'status' => 'processing',
                 'row_count' => 0,
             ]);
 
-        if ($throttle->tooManyAttempts($this->zohoConnection)) {
-            $import->touch();
-            self::dispatch($this->zohoConnection, $import->id, $this->page, $this->index)
-                ->delay(now()->addMinutes(self::THROTTLE_RETRY_DELAY_MINUTES));
-
-            return;
-        }
-
         // Resolved by a SEPARATE chained job (ResolveInventoryStockMapJob —
         // see its own docblock for why), never inline here: polling Zoho
         // Analytics needs up to several minutes across several poll
         // attempts, comfortably past this host's queue worker's 50-second
         // max-time ceiling if done with a blocking sleep() inside this
-        // job's single execution (confirmed live 2026-10-14 — the import
-        // just stopped being touched at all, no failed_jobs entry, nothing
-        // to retry). Hand off and return immediately; once the map is
-        // ready, ResolveInventoryStockMapJob redispatches this exact job at
-        // this exact page/index to resume.
+        // job's single execution. Hand off and return immediately; once the
+        // map is ready, ResolveInventoryStockMapJob redispatches this job.
         $stockMapCacheKey = "zoho_inventory_stock_map:{$import->id}";
         if (! Cache::has($stockMapCacheKey)) {
             $import->touch();
@@ -114,86 +93,64 @@ class SyncZohoInventoryJob implements ShouldQueue
             return;
         }
 
-        $page = $this->page;
-        $index = $this->index;
-        $itemsThisRun = 0;
-        $isComplete = false;
+        $stockByItemId = Cache::get($stockMapCacheKey, []);
         $now = now();
 
-        try {
-            $stockByItemId = Cache::get($stockMapCacheKey, []);
+        // SFDA No. per item from the last good snapshot (not in the Analytics Items table).
+        $previousIds = Import::where('type', 'inventory')->where('source', 'zoho')->where('status', 'completed')
+            ->where('id', '!=', $import->id)->pluck('id');
+        $sfdaByItemId = InventoryItem::whereIn('import_id', $previousIds)
+            ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(extra, '$.zoho_item_id')) as item_id, JSON_UNQUOTE(JSON_EXTRACT(extra, '$.sfda_reg_no')) as sfda")
+            ->toBase()->get()
+            ->filter(fn ($r) => $r->item_id !== null && $r->sfda !== null && $r->sfda !== '' && $r->sfda !== 'null')
+            ->pluck('sfda', 'item_id')->all();
 
-            $throttle->hit($this->zohoConnection);
-            $result = $inventoryClient->fetchItemsPage($this->zohoConnection, $page);
-            $pageItems = $result['items'];
-            $hasMore = $result['has_more'];
+        // A run interrupted mid-way (or an older API-paged generation picked up after the deploy) may have left rows on
+        // this import — start it clean so nothing is doubled.
+        InventoryItem::where('import_id', $import->id)->delete();
+        $import->update(['row_count' => 0]);
 
-            $itemRows = [];
-
-            // No per-item REST call left (stock now comes from the bulk
-            // Analytics map above, everything else was already on this page
-            // response) — the per-item throttle check this loop used to
-            // need is gone with it; only the one fetchItemsPage call above
-            // still spends real REST budget, already covered by the
-            // top-of-method throttle check.
-            while ($index < count($pageItems) && $itemsThisRun < self::ITEMS_PER_RUN) {
-                $summary = $pageItems[$index];
-                $itemId = (string) ($summary['item_id'] ?? '');
-
-                if ($itemId !== '') {
-                    $rows = $itemMapper->mapToRows($summary, $import->id, $now, $stockByItemId[$itemId] ?? 0);
-                    array_push($itemRows, ...array_filter($rows, fn (array $row) => $row['sku'] !== '' && $row['name'] !== ''));
-
-                    // Owner (Purchaser) — cf_owner is already flattened onto
-                    // the LIST response (confirmed in ZohoItemMapper's own
-                    // docblock), so this no longer needs the detail call
-                    // either; same live-within-a-cycle reasoning as before
-                    // (2026-09-27), now within minutes instead of a day.
-                    $owner = $itemMapper->extractOwner($summary);
-                    if ($owner !== null) {
-                        ItemOwner::query()->updateOrCreate(
-                            ['zoho_item_id' => $itemId],
-                            [
-                                'sku' => trim((string) ($summary['sku'] ?? '')) ?: null,
-                                'item_name' => trim((string) ($summary['name'] ?? '')) ?: null,
-                                'owner' => $owner,
-                                'updated_at' => $now,
-                            ],
-                        );
-                    }
-                }
-
-                $index++;
-                $itemsThisRun++;
+        $itemRows = [];
+        $owners = [];
+        foreach (DB::table('zoho_raw_items')->orderBy('item_id')->get() as $item) {
+            $itemId = (string) $item->item_id;
+            $sku = trim((string) $item->sku);
+            $name = trim((string) $item->item_name);
+            $owner = trim((string) $item->owner) ?: null;
+            if ($itemId === '' || $sku === '' || $name === '') {
+                continue;
             }
-
-            if (! empty($itemRows)) {
-                $persister->insertChunk($import, $itemRows);
+            $itemRows[] = [
+                'import_id' => $import->id,
+                'sku' => $sku,
+                'name' => $name,
+                'price' => (float) ($item->sales_price ?? 0),
+                'cost' => $item->purchase_price !== null ? (float) $item->purchase_price : null,
+                'category' => null,
+                'stock' => (int) ($stockByItemId[$itemId] ?? 0),
+                'extra' => json_encode([
+                    'zoho_item_id' => $itemId,
+                    'unit' => $item->usage_unit,
+                    'sfda_reg_no' => $sfdaByItemId[$itemId] ?? null,
+                    'rsp' => $item->rsp,
+                    'owner' => $owner,
+                ]),
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
+            if ($owner !== null) {
+                $owners[] = ['zoho_item_id' => $itemId, 'sku' => $sku, 'item_name' => $name, 'owner' => $owner, 'created_at' => $now, 'updated_at' => $now];
             }
-
-            if ($index >= count($pageItems)) {
-                if ($hasMore) {
-                    $page++;
-                    $index = 0;
-                } else {
-                    $isComplete = true;
-                }
-            }
-        } catch (Throwable $e) {
-            Log::warning("SyncZohoInventoryJob failed on page {$page} index {$index}, retrying in ".self::THROTTLE_RETRY_DELAY_MINUTES.'m: '.$e->getMessage());
-            $import->touch();
-            self::dispatch($this->zohoConnection, $import->id, $page, $index)
-                ->delay(now()->addMinutes(self::THROTTLE_RETRY_DELAY_MINUTES));
-
-            return;
         }
 
-        if (! $isComplete) {
-            $import->touch();
-            self::dispatch($this->zohoConnection, $import->id, $page, $index);
-
-            return;
+        foreach (array_chunk($itemRows, 500) as $chunk) {
+            $persister->insertChunk($import, $chunk);
         }
+        // Owner (Purchaser) per item, as before — one bulk upsert instead of one query per item.
+        foreach (array_chunk($owners, 500) as $chunk) {
+            ItemOwner::query()->upsert($chunk, ['zoho_item_id'], ['sku', 'item_name', 'owner', 'updated_at']);
+        }
+        $import->refresh();
 
         // Confirmed live 2026-09-23: Zoho's items list endpoint silently
         // returned zero items across every page for 14 straight hourly runs
@@ -208,7 +165,7 @@ class SyncZohoInventoryJob implements ShouldQueue
         if ($import->row_count === 0) {
             $import->update([
                 'status' => 'failed',
-                'error_message' => 'Zoho inventory sync returned 0 items across the whole run — refusing to delete the previous snapshot.',
+                'error_message' => 'zoho_raw_items gave 0 usable items — refusing to delete the previous snapshot.',
             ]);
 
             return;
@@ -258,6 +215,14 @@ class SyncZohoInventoryJob implements ShouldQueue
             }
 
             InventoryItem::whereIn('import_id', $staleImportIds)->delete();
+        }
+
+        // Rows left behind by older generations that never completed (failed, or abandoned mid-way under the old API
+        // paging) — readers that do not filter by import (skuPriceMap, the sku maps, SFDA checks) would otherwise see them.
+        $abandonedIds = Import::where('type', 'inventory')->where('source', 'zoho')->whereIn('status', ['processing', 'failed'])
+            ->where('id', '<', $import->id)->pluck('id');
+        if ($abandonedIds->isNotEmpty()) {
+            InventoryItem::whereIn('import_id', $abandonedIds)->delete();
         }
 
         $import->update(['status' => 'completed', 'error_message' => null]);

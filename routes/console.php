@@ -298,10 +298,10 @@ Schedule::command('reports:recompute-sales-item-monthly-performance')
 // list-page calls only unless it finds a real delta (~8 calls per run most
 // of the time), so 6x/day costs little. Offset 15 minutes past the hour so
 // it never collides with the hourly ZohoSyncService tick itself.
-Schedule::command('reports:reconcile-customers')
-    ->cron('15 */4 * * *')
-    ->name('reconcile-customers')
-    ->withoutOverlapping(20);
+// Schedule::command('reports:reconcile-customers')
+//     ->cron('15 */4 * * *')
+//     ->name('reconcile-customers')
+//     ->withoutOverlapping(20);
 
 // Same ReconcileCustomers pattern, applied to purchase orders (2026-10-14):
 // SyncZohoTransactionTypeJob's incremental upsert can never notice a
@@ -316,10 +316,11 @@ Schedule::command('reports:reconcile-customers')
 // (~5,000 documents => ~25 list-page calls most runs), so every 4 hours
 // costs little — offset 30 minutes past the hour so it doesn't collide
 // with reconcile-customers (15 min) or the hourly ZohoSyncService tick.
-Schedule::command('reports:reconcile-transactions purchase_orders')
-    ->cron('30 */4 * * *')
-    ->name('reconcile-purchase-orders')
-    ->withoutOverlapping(20);
+// Stopped 2026-10-19 — purchase orders now come from Zoho Analytics (zoho:feed-legacy-tables), no Inventory API calls.
+// Schedule::command('reports:reconcile-transactions purchase_orders')
+//     ->cron('30 */4 * * *')
+//     ->name('reconcile-purchase-orders')
+//     ->withoutOverlapping(20);
 
 // Same mechanism, extended to invoices (2026-10-15): the hourly "_recent"
 // watermark chain can silently skip an invoice the exact same way
@@ -334,10 +335,10 @@ Schedule::command('reports:reconcile-transactions purchase_orders')
 // to guarantee same-day convergence without meaningfully competing with the
 // hourly transaction syncs' own budget. Offset to :45 so it never collides
 // with reconcile-customers (:15) or reconcile-purchase-orders (:30).
-Schedule::command('reports:reconcile-transactions invoices')
-    ->cron('45 */12 * * *')
-    ->name('reconcile-invoices')
-    ->withoutOverlapping(30);
+// Schedule::command('reports:reconcile-transactions invoices')
+//     ->cron('45 */12 * * *')
+//     ->name('reconcile-invoices')
+//     ->withoutOverlapping(30);
 
 // Same mechanism, extended to sales orders (2026-10-16): confirmed live the
 // same day that sales had zero reconcile coverage at all (unlike customers/
@@ -349,10 +350,10 @@ Schedule::command('reports:reconcile-transactions invoices')
 // daily cadence for the same reason. Offset to :05 so it never collides
 // with reconcile-customers (:15), reconcile-purchase-orders (:30), or
 // reconcile-invoices (:45).
-Schedule::command('reports:reconcile-transactions sales')
-    ->cron('5 */12 * * *')
-    ->name('reconcile-sales')
-    ->withoutOverlapping(30);
+// Schedule::command('reports:reconcile-transactions sales')
+//     ->cron('5 */12 * * *')
+//     ->name('reconcile-sales')
+//     ->withoutOverlapping(30);
 
 // Entity 360 "Customer Actions" daily snapshot — the Lovable portal runs it at 06:00 Asia/Riyadh (pg_cron 03:00 UTC).
 // A run takes minutes; the 4-hour overlap expiry self-heals a killed run (see the withoutOverlapping() note above).

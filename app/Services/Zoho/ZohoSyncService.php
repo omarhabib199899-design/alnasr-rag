@@ -2,12 +2,8 @@
 
 namespace App\Services\Zoho;
 
-use App\Jobs\CustomerPaymentSyncJob;
-use App\Jobs\SyncInvoicesViaBooksJob;
-use App\Jobs\SyncSalesViaBooksJob;
 use App\Jobs\SyncZohoInventoryJob;
 use App\Jobs\SyncZohoTransactionTypeJob;
-use App\Jobs\ZohoContactSyncJob;
 use App\Models\Import;
 use App\Models\InventoryItem;
 use App\Models\ZohoConnection;
@@ -29,7 +25,9 @@ use App\Models\ZohoConnection;
  */
 class ZohoSyncService
 {
-    private const TRANSACTION_TYPES = ['sales', 'purchase_orders', 'returns', 'invoices'];
+    // Emptied 2026-10-19: purchase_order_items, sale_items, invoice_items and return_items are now fed from Zoho
+    // Analytics by zoho:feed-legacy-tables — no Inventory API calls for any transaction type any more.
+    private const TRANSACTION_TYPES = [];
 
     public function sync(ZohoConnection $connection): void
     {
@@ -82,19 +80,8 @@ class ZohoSyncService
         // one hourly tick, same cadence as the four transaction types above.
         // Kept manually-triggerable too (reports:sync-contacts-live) for
         // testing without waiting for the schedule.
-        if (! $this->alreadyRunning($connection, 'contacts')) {
-            ZohoContactSyncJob::dispatch($connection);
-        }
-
-        // Added 2026-10-14, per the manager's direction to stop depending
-        // on the Zoho Analytics "AR Ledger Master" view for Payments
-        // Received and sync Zoho's real Customer Payments module directly
-        // instead — same hourly cadence as everything else above. A
-        // one-time Excel export seeded the table with all 15,397 payments
-        // the same day; this keeps it current going forward.
-        if (! $this->alreadyRunning($connection, 'customer_payments')) {
-            CustomerPaymentSyncJob::dispatch($connection);
-        }
+        // Stopped 2026-10-19: customers are kept in step with Zoho Analytics by zoho:feed-legacy-tables, and Payments
+        // Received reads the Analytics Customer Payment table — no Books Contacts / Customer Payments API calls any more.
 
         // The two Books-API lanes (invoices, added 2026-10-15; sales, added
         // 2026-10-17) used to be dispatched right here on every hourly tick
@@ -130,13 +117,8 @@ class ZohoSyncService
      */
     public function syncBooksLanes(ZohoConnection $connection, array $skuByItemId): void
     {
-        if (! $this->alreadyRunning($connection, 'invoices_books')) {
-            SyncInvoicesViaBooksJob::dispatch($connection, $skuByItemId);
-        }
-
-        if (! $this->alreadyRunning($connection, 'sales_books')) {
-            SyncSalesViaBooksJob::dispatch($connection, $skuByItemId);
-        }
+        // Stopped 2026-10-19: invoice_items and sale_items come from Zoho Analytics (zoho:feed-legacy-tables), so the
+        // Books-API invoice/sales lanes no longer run. Kept as a no-op so the 15-minute schedule entry stays valid.
     }
 
     /**
