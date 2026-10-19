@@ -37,7 +37,8 @@ class ZohoRawTables
     public const WEEKLY_FULL = [
               5 => ['accrual_transactions', 'customers', 'accounts', 'items', 'invoices', 'invoice_payments', 'customer_payments',
             'credit_notes', 'creditnotes_invoice', 'credit_note_items', 'sales_orders', 'batch_number_in',
-            'locations', 'sales_order_invoice', 'price_lists'], // ~2.7M rows~3.9M
+                        'locations', 'sales_order_invoice', 'price_lists'], // ~2.7M rows
+        6 => ['invoice_items', 'sales_order_items', 'stock_out_flow_table', 'fifo_mapping_table', 'batch_number_out'], // ~3.9M // ~2.7M rows~3.9M
     ];
 
     public const OVERLAP_MINUTES = 180;
