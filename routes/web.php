@@ -88,8 +88,14 @@ Route::middleware(['auth', 'activity.log'])->group(function () {
     Route::get('/payments-received/data', [\App\Http\Controllers\PaymentsReceivedListController::class, 'data'])->name('payments-received.data');
     Route::get('/payments-received/facets', [\App\Http\Controllers\PaymentsReceivedListController::class, 'facets'])->name('payments-received.facets');
     Route::get('/payments-received/legacy', [PaymentsReceivedController::class, 'index'])->name('payments-received.legacy');
-    Route::get('/payments-received/{payment}/allocations', [\App\Http\Controllers\PaymentsReceivedListController::class, 'allocations'])->whereNumber('payment')->name('payments-received.allocations');    Route::get('/sales-operations', [SalesOperationsController::class, 'index'])->name('sales-operations.index');
-        // Credit Notes: the Lovable copy is the main page; the earlier pages stay reachable under /credit-notes/legacy.
+    Route::get('/payments-received/{payment}/allocations', [\App\Http\Controllers\PaymentsReceivedListController::class, 'allocations'])->whereNumber('payment')->name('payments-received.allocations');  
+    // Sales Operations: copy of the Lovable dashboard; the earlier per-invoice table stays reachable at /sales-operations/legacy.
+    Route::get('/sales-operations', [\App\Http\Controllers\SalesOperationsDashboardController::class, 'index'])->name('sales-operations.index');
+    Route::get('/sales-operations/overview', [\App\Http\Controllers\SalesOperationsDashboardController::class, 'overview'])->name('sales-operations.overview');
+    Route::get('/sales-operations/employees', [\App\Http\Controllers\SalesOperationsDashboardController::class, 'employees'])->name('sales-operations.employees');
+    Route::get('/sales-operations/audit', [\App\Http\Controllers\SalesOperationsDashboardController::class, 'auditSummary'])->name('sales-operations.audit');
+    Route::get('/sales-operations/audit-list', [\App\Http\Controllers\SalesOperationsDashboardController::class, 'auditList'])->name('sales-operations.audit-list');
+    Route::get('/sales-operations/legacy', [SalesOperationsController::class, 'index'])->name('sales-operations.legacy');        // Credit Notes: the Lovable copy is the main page; the earlier pages stay reachable under /credit-notes/legacy.
     Route::get('/credit-notes', [\App\Http\Controllers\CreditNoteListController::class, 'index'])->name('credit-notes.index');
     Route::get('/credit-notes/data', [\App\Http\Controllers\CreditNoteListController::class, 'data'])->name('credit-notes.data');
     Route::get('/credit-notes/facets', [\App\Http\Controllers\CreditNoteListController::class, 'facets'])->name('credit-notes.facets');

@@ -48,7 +48,7 @@
                             Filter
                         </button>
                         @if ($search || $dateFrom || $dateTo)
-                            <a href="{{ route('sales-operations.index') }}" class="text-sm text-gray-500 hover:text-gray-700">Clear search</a>
+                            <a href="{{ route('sales-operations.legacy') }}" class="text-sm text-gray-500 hover:text-gray-700">Clear search</a>
                         @endif
                     </form>
                 </div>
